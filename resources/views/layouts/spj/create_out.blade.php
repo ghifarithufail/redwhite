@@ -145,8 +145,8 @@
                         @csrf
                         <button type="submit" class="btn btn-primary me-sm-3 me-1">Print SPJ Keluar</button>
                     </form>
-                    <a href="/spj/detail/{{ $spj->booking_details->booking_id }}" target="_blank">
-                        <button type="submit" class="btn btn-success me-sm-3 me-1">SPJ KELUAR SELESAI</button>
+                    <a href="/spj/detail/{{ $spj->booking_details->booking_id }}" onclick="return confirm('Apakah Anda yakin bahwa SPJ ini telah selesai?')">
+                        <button type="button" class="btn btn-success me-sm-3 me-1">SPJ KELUAR SELESAI</button>
                     </a>
                 </div>
                 @endif

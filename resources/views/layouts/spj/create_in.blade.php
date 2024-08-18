@@ -34,15 +34,6 @@
                                     disabled class="form-control" />
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-sm-3">End Date</label>
-                            <div class="col-sm-9">
-                                <input type="date"
-                                    value="{{ Carbon\Carbon::parse($spj->booking_details->bookings->end_date)->format('Y-m-d') }}"
-                                    disabled class="form-control" />
-                            </div>
-                        </div>
                     </div>
 
                     <div class="col-xs-12 col-sm-6">
@@ -57,12 +48,20 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="control-label col-sm-3">End Date</label>
+                            <div class="col-sm-9">
+                                <input type="date"
+                                    value="{{ Carbon\Carbon::parse($spj->booking_details->bookings->end_date)->format('Y-m-d') }}"
+                                    disabled class="form-control" />
+                            </div>
+                        </div>
+                        {{-- <div class="form-group">
                             <label class="control-label col-sm-3">Tujuan :</label>
                             <div class="col-sm-9">
                                 <input type="text" value="{{ $spj->booking_details->bookings->tujuan_id }}" disabled
                                     class="form-control" />
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <h4 class="mt-4">
@@ -183,7 +182,7 @@
                                 @csrf
                                 <button type="submit" class="btn btn-primary me-sm-3 me-1">Print SPJ Masuk</button>
                             </form>
-                            <a href="/spj/detail/{{ $spj->booking_details->booking_id }}" target="_blank">
+                            <a href="/spj/detail/{{ $spj->booking_details->booking_id }}" onclick="return confirm('Apakah Anda yakin bahwa SPJ Masuk ini telah selesai?')">
                                 <button type="submit" class="btn btn-success me-sm-3 me-1">SPJ Masuk SELESAI</button>
                             </a>
                         </div>

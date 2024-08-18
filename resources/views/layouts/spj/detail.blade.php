@@ -16,6 +16,7 @@
                         <th>Pengemudi</th>
                         <th>Kondektur</th>
                         <th class="text-center">SPJ</th>
+                        <th class="text-center">Biaya Lain</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
@@ -57,11 +58,16 @@
                                 @endif
                             </td>
                             @if ($data->spjs && $data->is_in == null)
-                            <td>
+                            <td class="text-center">
                                 <a href="{{ route('spj/data', $data->spjs->id) }}">
                                     <button type="button" class="btn rounded-pill btn-warning" fdprocessedid="c80zr4">Biaya
                                         Lain</button>
                                 </a>
+                            </td>
+                            @else
+                            <td class="text-center">
+                                    <button type="button" class="btn rounded-pill btn-warning" fdprocessedid="c80zr4" disabled>Biaya
+                                        Lain</button>
                             </td>
                             @endif
 

@@ -281,7 +281,11 @@
                     <tr>
                         <td width="170">Selesai Pemakaian & Bis Tiba di Pool</td>
                         <td width="1%">:</td>
-                        <td>{{ \Carbon\Carbon::parse($spj->date_masuk)->format('d F Y H:i') }} WIB</td>
+                        <td>
+                            @if ($spj->date_masuk)
+                                {{ \Carbon\Carbon::parse($spj->date_masuk)->format('d F Y H:i') }} WIB
+                            @endif
+                        </td>
                     </tr>
                 </table>
             </div>

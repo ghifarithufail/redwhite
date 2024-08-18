@@ -24,7 +24,7 @@ class SpjController extends Controller
         $no_booking = $request->input('no_booking');
 
         $bookings = Booking::whereHas('details', function ($details) {
-            // $details->where('is_in', null);
+            $details->where('is_in', null);
         })
             ->where('payment_status', 1)
             ->orderBy('created_at', 'desc');
