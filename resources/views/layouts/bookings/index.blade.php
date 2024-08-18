@@ -80,18 +80,18 @@
                             <td>{{ number_format($data->biaya_jemput, 0, ',', '.') }}</td>
                             <td class="text-right">{{ number_format($data->grand_total, 0, ',', '.') }}</td>
                             <td>
-                                <a href="{{ route('booking/edit', ['id' => $data->id, 'start' => $data->date_start, 'end' => $data->date_end]) }}">
-                                    <button type="button" class="btn rounded-pill btn-primary" fdprocessedid="c80zr4">
-                                        Edit</button>
-                                </a>
                                 <a href="{{ route('input/pengemudi', $data->id) }}">
                                     <button type="button" class="btn rounded-pill btn-primary" fdprocessedid="c80zr4">Input
                                         Pengemudi</button>
                                 </a>
-                                <a href="{{ route('booking.edit', $data->id) }}">
+                                <a href="{{ route('booking/edit', ['id' => $data->id, 'start' => $data->date_start, 'end' => $data->date_end]) }}">
+                                    <button type="button" class="btn rounded-pill btn-warning" fdprocessedid="c80zr4">
+                                        Edit</button>
+                                </a>
+                                {{-- <a href="{{ route('booking.edit', $data->id) }}">
                                     <button type="button" class="btn rounded-pill btn-warning"
                                         fdprocessedid="c80zr4">detail</button>
-                                </a>
+                                </a> --}}
                             </td>
                         </tr>
                     @endforeach
