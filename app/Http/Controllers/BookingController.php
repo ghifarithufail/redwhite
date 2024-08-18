@@ -210,8 +210,12 @@ class BookingController extends Controller
     public function pengemudi($id)
     {
         $booking = Booking::find($id);
-        $pengemudi = Pengemudi::orderBy('created_at', 'desc')->get();
-        $kondektur = Kondektur::orderBy('created_at', 'desc')->get();
+        $pengemudi = Pengemudi::whereHas('users', function($users){
+            $users->orderBy('name','asc');
+        })->get();
+        $kondektur = Kondektur::whereHas('users', function($users){
+            $users->orderBy('name','asc');
+        })->get();
 
         return view('layouts.booking.edit', [
             'booking' => $booking,
