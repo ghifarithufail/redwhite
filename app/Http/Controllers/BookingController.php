@@ -217,10 +217,18 @@ class BookingController extends Controller
             $users->orderBy('name','asc');
         })->get();
 
+        $buses = Armada::whereDoesntHave('booking_details.bookings', function ($query) use ($booking) {
+            $query->whereDate('date_start', '<=', $booking->date_end)
+                ->whereDate('date_end', '>=', $booking->date_start)
+                ->where('booking_status', 1);
+        })
+            ->orderBy('id', 'asc')->get();
+
         return view('layouts.booking.edit', [
             'booking' => $booking,
             'pengemudi' => $pengemudi,
             'kondektur' => $kondektur,
+            'buses' => $buses,
 
         ]);
     }
@@ -308,6 +316,10 @@ class BookingController extends Controller
 
             $detail->supir_id = $request->input('supir_id');
             $detail->Kondektur_id = $request->input('kondektur_id');
+            $detail->armada_id = $request->input('armada_id');
+            // \Log::info($detail->armada_id);
+            // return 123;
+
             $detail->save();
 
             DB::commit();

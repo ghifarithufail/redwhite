@@ -87,13 +87,16 @@
                                 @foreach ($booking->details as $detail)
                                     <tr>
                                         <td>{{ $detail->armadas->nobody }}</td>
-                                        <td>{{ $detail->pengemudis ? $detail->pengemudis->nopengemudi : '' }} - {{ $detail->pengemudis ? $detail->pengemudis->users->name : '' }}</td>
-                                        <td>{{ $detail->kondekturs ? $detail->kondekturs->nokondektur : ''  }} - {{ $detail->kondekturs ? $detail->kondekturs->users->name : '' }}</td>
+                                        <td>{{ $detail->pengemudis ? $detail->pengemudis->nopengemudi : '' }} -
+                                            {{ $detail->pengemudis ? $detail->pengemudis->users->name : '' }}</td>
+                                        <td>{{ $detail->kondekturs ? $detail->kondekturs->nokondektur : '' }} -
+                                            {{ $detail->kondekturs ? $detail->kondekturs->users->name : '' }}</td>
                                         <td class="text-center">
                                             <button type="button" class="btn btn-primary launch-modal"
                                                 data-bs-toggle="modal" data-bs-target="#basicModal"
                                                 data-supir="{{ $detail->supir_id }}"
                                                 data-bus="{{ $detail->armadas->nobody }}"
+                                                data-armada="{{ $detail->armadas->id }}"
                                                 data-kondektur="{{ $detail->kondektur_id }}"
                                                 data-booking-id="{{ $detail->id }}"
                                                 data-armada-id="{{ $detail->armada_id }}">
@@ -114,45 +117,63 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Edit Supir Dan Kondektur</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="row">
                                                     <div class="col mb-3">
                                                         <label for="bus" class="form-label">Bus</label>
                                                         <input type="text" id="bus" class="form-control" disabled>
+                                                        <select class="form-select" id="armada_id" name="armada_id">
+                                                            <option value="" selected disabled>Silahkan pilih Bus
+                                                            </option>
+                                                            @foreach ($buses as $item)
+                                                                <option value="{{ $item->id }}">{{ $item->nobody }} -
+                                                                    {{ $item->merk }}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="row g-2">
                                                     <div class="col mb-0">
                                                         <label for="supir_id" class="form-label">Pengemudi</label>
                                                         <select class="form-select" id="supir_id" name="supir_id">
-                                                            <option value="" selected disabled>Silahkan pilih pengemudi</option>
+                                                            <option value="" selected disabled>Silahkan pilih
+                                                                pengemudi</option>
                                                             @foreach ($pengemudi as $item)
-                                                                <option value="{{ $item->id }}">{{ $item->nopengemudi }} - {{ $item->users->name }}</option>
+                                                                <option value="{{ $item->id }}">
+                                                                    {{ $item->nopengemudi }} - {{ $item->users->name }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col mb-0">
                                                         <label for="kondektur_id" class="form-label">Kondektur</label>
-                                                        <select class="form-select" id="kondektur_id" name="kondektur_id">
-                                                            <option value="" selected disabled>Silahkan pilih Kondektur</option>
+                                                        <select class="form-select" id="kondektur_id"
+                                                            name="kondektur_id">
+                                                            <option value="" selected disabled>Silahkan pilih
+                                                                Kondektur</option>
                                                             @foreach ($kondektur as $item)
-                                                                <option value="{{ $item->id }}">{{ $item->nokondektur }} - {{ $item->users->name }}</option>
+                                                                <option value="{{ $item->id }}">
+                                                                    {{ $item->nokondektur }} - {{ $item->users->name }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary" id="saveChangesBtn">Save changes</button>
+                                                <button type="button" class="btn btn-outline-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary" id="saveChangesBtn">Save
+                                                    changes</button>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                             </div>
-                            
+
                         </div>
 
                         <script>
@@ -178,20 +199,24 @@
                 $('.launch-modal').click(function() {
                     var supirId = $(this).data('supir');
                     var bus = $(this).data('bus');
+                    var armadaId = $(this).data('armada-id');
                     var kondekturId = $(this).data('kondektur');
                     var bookingId = $(this).data('booking-id');
-        
+                    var bus_id = $(this).data('booking-id');
+
+                    $('#armada_id').val(armadaId);
                     $('#bus').val(bus);
                     $('#supir_id').val(supirId);
                     $('#kondektur_id').val(kondekturId);
                     $('#bookingId').val(bookingId);
                 });
-        
+
                 $('#saveChangesBtn').click(function() {
                     var bookingId = $('#bookingId').val();
                     var supirId = $('#supir_id').val();
                     var kondekturId = $('#kondektur_id').val();
-        
+                    var armada_id = $('#armada_id').val();
+
                     $.ajax({
                         url: '/update-data',
                         method: "POST",
@@ -201,7 +226,8 @@
                         data: {
                             booking_id: bookingId,
                             supir_id: supirId,
-                            kondektur_id: kondekturId
+                            kondektur_id: kondekturId,
+                            armada_id: armada_id,
                         },
                         success: function(response) {
                             alert("Data saved, page will be refreshed");
@@ -215,5 +241,4 @@
                 });
             });
         </script>
-        
     @endsection

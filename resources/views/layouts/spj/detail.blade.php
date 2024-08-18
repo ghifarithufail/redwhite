@@ -57,7 +57,7 @@
                                     done
                                 @endif
                             </td>
-                            @if ($data->spjs && $data->is_in == null)
+                            @if ($data->spjs && $data->spjs->user_masuk == null)
                             <td class="text-center">
                                 <a href="{{ route('spj/data', $data->spjs->id) }}">
                                     <button type="button" class="btn rounded-pill btn-warning" fdprocessedid="c80zr4">Biaya
