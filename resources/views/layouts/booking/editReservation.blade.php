@@ -39,12 +39,10 @@
                     <form>
                         <div class="form-group row">
                             <div class="col-sm-3 mt-2">
-                                <input type="date" class="form-control" placeholder="NIK" name="start"
-                                    value="{{ $request['start'] }}" id="start">
+                                <input type="date" class="form-control" name="start" value="{{ old('start', $request['start']) }}" id="start">
                             </div>
                             <div class="col-sm-3 mt-2">
-                                <input type="date" class="form-control" placeholder="NIK" name="end"
-                                    value="{{ $request['end'] }}" id="end">
+                                <input type="date" class="form-control" name="end" value="{{ old('end', $request['end']) }}" id="end">
                             </div>
                             <div class="col-sm-3 mt-2">
                                 <select class="form-control input-goldbrand" name="type">
@@ -54,8 +52,7 @@
                                 </select>
                             </div>
                             <div class="col-sm-3">
-                                <button type="submit filter" class="btn btn-primary rounded text-white mt-2 mr-2"
-                                    style="height: 40px" id="search_btn">Search</button>
+                                <button type="submit" class="btn btn-primary rounded text-white mt-2 mr-2" style="height: 40px" id="search_btn">Search</button>
                             </div>
                         </div>
                     </form>

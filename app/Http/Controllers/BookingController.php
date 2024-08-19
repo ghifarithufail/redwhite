@@ -210,11 +210,11 @@ class BookingController extends Controller
     public function pengemudi($id)
     {
         $booking = Booking::find($id);
-        $pengemudi = Pengemudi::whereHas('users', function($users){
-            $users->orderBy('name','asc');
+        $pengemudi = Pengemudi::whereHas('users', function ($users) {
+            $users->orderBy('name', 'asc');
         })->get();
-        $kondektur = Kondektur::whereHas('users', function($users){
-            $users->orderBy('name','asc');
+        $kondektur = Kondektur::whereHas('users', function ($users) {
+            $users->orderBy('name', 'asc');
         })->get();
 
         $buses = Armada::whereDoesntHave('booking_details.bookings', function ($query) use ($booking) {
@@ -385,27 +385,24 @@ class BookingController extends Controller
         $booking = Booking::findOrFail($id);
         $pengemudi = Pengemudi::orderBy('created_at', 'desc')->get();
 
-        $start = $booking->date_start;
-        $end = $booking->date_end;
-
-        $tanggal_mulai = date('Y-m-d', strtotime($request->input('start')));
-        $tanggal_akhir = date('Y-m-d', strtotime($request->input('end')));
+        $start = $request->input('start') ?? $booking->date_start->format('Y-m-d');
+        $end = $request->input('end') ?? $booking->date_end->format('Y-m-d');
 
         $selectedBuses = $booking->details->pluck('armada_id')->toArray();
 
         // Ambil bus yang sudah dipilih dalam booking atau tidak memiliki booking_status 1
-        $buses = Armada::where(function ($query) use ($tanggal_mulai, $tanggal_akhir, $selectedBuses) {
-            $query->whereDoesntHave('booking_details.bookings', function ($query) use ($tanggal_mulai, $tanggal_akhir) {
-                $query->whereDate('date_start', '<=', $tanggal_akhir)
-                    ->whereDate('date_end', '>=', $tanggal_mulai)
+        $buses = Armada::where(function ($query) use ($start, $end, $selectedBuses) {
+            $query->whereDoesntHave('booking_details.bookings', function ($query) use ($start, $end) {
+                $query->whereDate('date_start', '<=', $end)
+                    ->whereDate('date_end', '>=', $start)
                     ->where('booking_status', 1);
             })
                 ->orWhereIn('id', $selectedBuses);
         })
             ->orderBy('id', 'asc');
 
-        if ($request['type']) {
-            $buses = $buses->where('keterangan', $request['type']);
+        if ($request->has('type')) {
+            $buses = $buses->where('keterangan', $request->input('type'));
         }
 
         $bus = $buses->get();
@@ -428,6 +425,7 @@ class BookingController extends Controller
         ]);
     }
 
+
     public function update($id, Request $request)
     {
         try {
@@ -448,10 +446,10 @@ class BookingController extends Controller
             $booking->harga_std = $request->input('harga_std');
             $booking->save();
 
-            if($booking->grand_total > $booking->total_payment){
+            if ($booking->grand_total > $booking->total_payment) {
                 $booking->payment_status = '2';
                 $booking->save();
-                \Log::info('booking payment : '.$booking->payment_status);
+                \Log::info('booking payment : ' . $booking->payment_status);
             }
 
             // Simpan atau perbarui Booking_detail untuk setiap bus_id yang dipilih
