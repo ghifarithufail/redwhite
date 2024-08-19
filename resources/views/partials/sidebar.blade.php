@@ -195,11 +195,11 @@
                 </a>
 
                 <ul class="menu-sub">
-                    <li class="menu-item">
+                    {{-- <li class="menu-item">
                         <a href="{{ route('schedule') }}" class="menu-link">
                             <div data-i18n="Schedule">Schedule</div>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="menu-item">
                         <a href="{{ route('schedule.show') }}" class="menu-link">
                             <div data-i18n="Jadwal Bus">Jadwal Bus</div>
