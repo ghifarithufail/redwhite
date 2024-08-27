@@ -35,7 +35,7 @@
                                     </form>
                                     
                                 @elseif($data->supir_id == null || $data->kondektur_id == null || $data->armada_id == null)
-                                    <button type="button" class="btn rounded-pill btn-warning" fdprocessedid="c80zr4" disabled>Supir Dan Kondektur Blm ditentukan Silahkan hubungi CSO</button>
+                                    <button type="button" class="btn rounded-pill btn-warning" fdprocessedid="c80zr4" disabled>Supir, Bus Dan Kondektur Blm ditentukan Silahkan hubungi CSO</button>
                                 
                                 @elseif($data->is_out != null && $data->spjs->user_keluar == null)
                                 <a href="{{ url('spj/print/out', $data->spjs->id) }}">
