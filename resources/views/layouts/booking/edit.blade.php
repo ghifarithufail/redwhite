@@ -86,7 +86,7 @@
                             <tbody class="table-border-bottom-0">
                                 @foreach ($booking->details as $detail)
                                     <tr>
-                                        <td>{{ $detail->armadas->nobody }}</td>
+                                        <td>{{ $detail->armadas?->nobody }}</td>
                                         <td>{{ $detail->pengemudis ? $detail->pengemudis->nopengemudi : '' }} -
                                             {{ $detail->pengemudis ? $detail->pengemudis->users->name : '' }}</td>
                                         <td>{{ $detail->kondekturs ? $detail->kondekturs->nokondektur : '' }} -
@@ -95,8 +95,8 @@
                                             <button type="button" class="btn btn-primary launch-modal"
                                                 data-bs-toggle="modal" data-bs-target="#basicModal"
                                                 data-supir="{{ $detail->supir_id }}"
-                                                data-bus="{{ $detail->armadas->nobody }}"
-                                                data-armada="{{ $detail->armadas->id }}"
+                                                data-bus="{{ $detail->armadas ? $detail->armadas->nobody : '-' }}"
+                                                data-armada="{{ $detail->armadas ? $detail->armadas->id : '-' }}"
                                                 data-kondektur="{{ $detail->kondektur_id }}"
                                                 data-booking-id="{{ $detail->id }}"
                                                 data-armada-id="{{ $detail->armada_id }}">
