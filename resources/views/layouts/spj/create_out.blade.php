@@ -141,10 +141,13 @@
                     </div>
                 </div>
                 <div class="mt-5 d-flex justify-content-center">
-                    <form method="POST" action="{{ route('spj/save_detail_out', $spj->id) }}" target="_blank"> 
+                    <form method="POST" action="{{ route('spj/save_detail_out', $spj->id) }}" onclick="return confirm('Apakah Anda yakin ingin print SPJ Keluar?')" target="_blank"> 
                         @csrf
-                        <button type="submit" class="btn btn-primary me-sm-3 me-1">Print SPJ Keluar</button>
+                        <button type="submit" class="btn btn-danger me-sm-3 me-1">Print SPJ Keluar</button>
                     </form>
+                    <a href="/spj/detail/{{ $spj->booking_details->booking_id }}" onclick="return confirm('Apakah Anda yakin ingin kembali')">
+                        <button type="button" class="btn btn-primary me-sm-3 me-1">Kembali</button>
+                    </a>
                     <a href="/spj/detail/{{ $spj->booking_details->booking_id }}" onclick="return confirm('Apakah Anda yakin bahwa SPJ ini telah selesai?')">
                         <button type="button" class="btn btn-success me-sm-3 me-1">SPJ KELUAR SELESAI</button>
                     </a>
