@@ -41,7 +41,7 @@
                             <label class="control-label col-sm-4">Armada :</label>
                             <div class="col-sm-9">
                                 <input type="text"
-                                    value="{{ $spj->booking_details->armadas->merk }} - {{ $spj->booking_details->armadas->nopolisi }} "
+                                    value="{{ $spj->booking_details->armadas ? $spj->booking_details->armadas->merk : '-' }} - {{ $spj->booking_details->armadas ? $spj->booking_details->armadas->nopolisi : '-' }}"
                                     disabled class="form-control" />
 
                             </div>
