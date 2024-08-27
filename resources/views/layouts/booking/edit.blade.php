@@ -124,7 +124,10 @@
                                                 <div class="row">
                                                     <div class="col mb-3">
                                                         <label for="bus" class="form-label">Bus</label>
+                                                        <!-- The input field where the bus name or number is displayed -->
                                                         <input type="text" id="bus" class="form-control" disabled>
+
+                                                        <!-- The select element for choosing a bus -->
                                                         <select class="form-select" id="armada_id" name="armada_id">
                                                             <option value="" selected disabled>Silahkan pilih Bus
                                                             </option>
@@ -135,6 +138,7 @@
                                                         </select>
                                                     </div>
                                                 </div>
+
                                                 <div class="row g-2">
                                                     <div class="col mb-0">
                                                         <label for="supir_id" class="form-label">Pengemudi</label>
@@ -202,13 +206,24 @@
                     var armadaId = $(this).data('armada-id');
                     var kondekturId = $(this).data('kondektur');
                     var bookingId = $(this).data('booking-id');
-                    var bus_id = $(this).data('booking-id');
 
-                    $('#armada_id').val(armadaId);
+                    // Set input values in the modal
                     $('#bus').val(bus);
                     $('#supir_id').val(supirId);
                     $('#kondektur_id').val(kondekturId);
                     $('#bookingId').val(bookingId);
+
+                    // Check if armadaId is null, if so, set it based on the bus value
+                    if (!armadaId) {
+                        // Find the select option with the value equal to the bus's name or id
+                        $('#armada_id').find('option').each(function() {
+                            if ($(this).text().includes(bus)) {
+                                $(this).prop('selected', true);
+                            }
+                        });
+                    } else {
+                        $('#armada_id').val(armadaId);
+                    }
                 });
 
                 $('#saveChangesBtn').click(function() {

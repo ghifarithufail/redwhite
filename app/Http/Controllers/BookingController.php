@@ -316,7 +316,9 @@ class BookingController extends Controller
 
             $detail->supir_id = $request->input('supir_id');
             $detail->Kondektur_id = $request->input('kondektur_id');
-            $detail->armada_id = $request->input('armada_id');
+            if($request->input('armada_id') != null){
+                $detail->armada_id = $request->input('armada_id');
+            }
             // \Log::info($detail->armada_id);
             // return 123;
 
