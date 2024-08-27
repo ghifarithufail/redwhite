@@ -56,16 +56,16 @@
                                     done
                                 @endif
                             </td>
-                            @if ($data->spjs && $data->spjs->user_masuk == null)
+                            @if($data->supir_id == null || $data->kondektur_id == null || $data->armada_id == null)
+                            <td>
+                                -
+                            </td>
+                            @elseif ($data->spjs && $data->spjs->user_masuk == null)
                             <td class="text-center">
                                 <a href="{{ route('spj/data', $data->spjs->id) }}">
                                     <button type="button" class="btn rounded-pill btn-warning" fdprocessedid="c80zr4">Biaya
                                         Lain</button>
                                 </a>
-                            </td>
-                            @elseif($data->supir_id == null || $data->kondektur_id == null || $data->armada_id == null)
-                            <td>
-                                -
                             </td>
                             @else
                             <td class="text-center">
