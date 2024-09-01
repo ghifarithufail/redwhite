@@ -70,6 +70,9 @@
 
                 </tbody>
             </table>
+            <div class="d-flex justify-content-end p-3">
+                {{ $booking->links() }}
+            </div>
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>

@@ -43,7 +43,7 @@ class PaymentController extends Controller
         $bookings->where('no_booking', $request['no_booking']);
     }
 
-    $booking = $bookings->get();
+    $booking = $bookings->paginate(10);
 
     return view('layouts.payment.index', [
         'booking' => $booking,
