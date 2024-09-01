@@ -140,7 +140,7 @@ class SpjController extends Controller
 
     public function print($id)
     {
-        $spj = Spj::with('bookingDetails.pengemudi.user')->find($id);
+        $spj = Spj::with('pengemudis.user')->find($id);
 
         if (!$spj) {
             return redirect()->back()->with('error', 'SPJ not found');
@@ -251,6 +251,10 @@ class SpjController extends Controller
         $spj->user_masuk = Auth::user()->id;
         $spj->date_masuk = Carbon::now();
         $spj->save();
+
+        $booking = Booking::where('id', $spj->booking_details->booking_id)->first();
+        $booking->booking_status = 0;
+        $booking->save();
 
         return redirect('/spj/print_out/' .$spj->id);
     }

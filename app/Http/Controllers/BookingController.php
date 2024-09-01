@@ -210,9 +210,16 @@ class BookingController extends Controller
     public function pengemudi($id)
     {
         $booking = Booking::find($id);
-        $pengemudi = Pengemudi::whereHas('users', function ($users) {
-            $users->orderBy('name', 'asc');
-        })->get();
+        $pengemudi = Pengemudi::whereDoesntHave('booking_details.bookings', function ($query) use ($booking) {
+            $query->whereDate('date_start', '<=', $booking->date_end)
+                ->whereDate('date_end', '>=', $booking->date_start)
+                ->where('booking_status', 1);
+        })
+        // ->whereHas('users', function ($users) {
+        //     $users->orderBy('name', 'asc');
+        // })
+        ->get();
+        
         $kondektur = Kondektur::whereHas('users', function ($users) {
             $users->orderBy('name', 'asc');
         })->get();

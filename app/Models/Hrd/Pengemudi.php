@@ -6,6 +6,7 @@ use App\Models\Spj;
 use App\Models\User;
 use App\Models\Admin\Pool;
 use App\Models\Admin\Rute;
+use App\Models\Booking_detail;
 use App\Models\Cso\Booking;
 use App\Models\Hrd\Biodata;
 use Illuminate\Database\Eloquent\Model;
@@ -58,6 +59,11 @@ class Pengemudi extends Model
     public function pools()
     {
         return $this->belongsTo(Pool::class, 'pool_id', 'id');
+    }
+
+    public function booking_details()
+    {
+        return $this->belongsTo(Booking_detail::class, 'id', 'supir_id');
     }
 
     public function rutes()
