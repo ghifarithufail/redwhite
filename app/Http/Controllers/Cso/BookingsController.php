@@ -24,7 +24,7 @@ class BookingsController extends Controller
         $date_start = $request->input('date_start', Carbon::now()->startOfMonth()->format('Y-m-d'));
         $date_end = $request->input('date_end', Carbon::now()->endOfMonth()->format('Y-m-d'));
         $type_id = $request->input('type_id');
-        $perPage = $request->input('per_page', 10);
+        $perPage = $request->input('per_page', 20);
 
         // Query untuk Booking
         $query = Booking::with(['bookingDetails', 'armada', 'pengemudi', 'kondektur', 'spjs', 'tujuan'])
