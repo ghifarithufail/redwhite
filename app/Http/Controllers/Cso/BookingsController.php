@@ -24,7 +24,7 @@ class BookingsController extends Controller
         $date_start = $request->input('date_start', Carbon::now()->startOfMonth()->format('Y-m-d'));
         $date_end = $request->input('date_end', Carbon::now()->endOfMonth()->format('Y-m-d'));
         $type_id = $request->input('type_id');
-        $perPage = $request->input('per_page', 100);
+        $perPage = $request->input('per_page', 10);
 
         // Query untuk Booking
         $query = Booking::with(['bookingDetails', 'armada', 'pengemudi', 'kondektur', 'spjs', 'tujuan'])
@@ -35,7 +35,8 @@ class BookingsController extends Controller
                 DB::raw('DATEDIFF(bookings.date_end, bookings.date_start) as duration_days')
             ])
             ->leftJoin('booking_details', 'bookings.id', '=', 'booking_details.booking_id')
-            ->groupBy('bookings.id');
+            ->groupBy('bookings.id')
+            ->orderBy('created_at','desc');
 
         // Query untuk Armada yang belum terbooking
         $unavailableBusIds = BookingDetail::join('bookings', 'booking_details.booking_id', '=', 'bookings.id')

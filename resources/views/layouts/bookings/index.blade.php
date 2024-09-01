@@ -81,16 +81,13 @@
                             <td class="text-right">{{ number_format($data->grand_total, 0, ',', '.') }}</td>
                             <td>
                                 <a href="{{ route('input/pengemudi', $data->id) }}">
-                                    <button type="button" class="btn rounded-pill btn-primary" fdprocessedid="c80zr4">Input
-                                        Pengemudi</button>
+                                    <button type="button" class="btn rounded-pill btn-primary" fdprocessedid="c80zr4">Input Pengemudi</button>
                                 </a>
                                 <a href="{{ route('booking/edit', ['id' => $data->id, 'start' => $data->date_start, 'end' => $data->date_end]) }}">
-                                    <button type="button" class="btn rounded-pill btn-warning" fdprocessedid="c80zr4">
-                                        Edit</button>
+                                    <button type="button" class="btn rounded-pill btn-warning" fdprocessedid="c80zr4">Edit</button>
                                 </a>
                                 {{-- <a href="{{ route('booking.edit', $data->id) }}">
-                                    <button type="button" class="btn rounded-pill btn-warning"
-                                        fdprocessedid="c80zr4">detail</button>
+                                    <button type="button" class="btn rounded-pill btn-warning" fdprocessedid="c80zr4">detail</button>
                                 </a> --}}
                             </td>
                         </tr>
@@ -98,7 +95,11 @@
                 </tbody>
             </table>
         </div>
+        <div class="d-flex justify-content-end p-3">
+            {{ $bookings->links() }}
+        </div>
     </div>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
         @if (session('success'))
