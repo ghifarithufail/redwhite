@@ -19,7 +19,7 @@ class ScheduleController extends Controller
         $type_id = $request->input('type_id');
         $armada_id = $request->input('armada_id');
         $search = $request->input('search');
-        $perPage = $request->query('perpage', 50);
+        $perPage = $request->query('perpage', 150);
 
         $armadas = Armada::with('type_armada')
             ->when($type_id, function ($query) use ($type_id) {
