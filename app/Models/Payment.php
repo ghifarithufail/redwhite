@@ -20,4 +20,8 @@ class Payment extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function type_payments(){
+        return $this->belongsTo(TypePayment::class, 'type_payment_id','id');
+    }
+
 }

@@ -122,6 +122,10 @@
                                     <td width="45%" valign="top">Currency </td>
                                     <td width="45%" valign="top">: IDR</td>
                                 </tr>
+                                <tr>
+                                    <td width="45%" valign="top">Tipe Pembayaran </td>
+                                    <td width="45%" valign="top">: {{$payments->type_payments->name}}</td>
+                                </tr>
                             </table>
                         </div>
                     </td>
