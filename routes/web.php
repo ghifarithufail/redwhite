@@ -76,7 +76,7 @@ Route::middleware(['auth', 'role:super-admin|admin|edp'])->group(function () {
     Route::get('/edit/{id}', [UserController::class, 'edit'])->name('users/edit');
     // Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
 });
-Route::middleware(['auth', 'role:super-admin|admin|Cso|operasi'])->group(function () {
+Route::middleware(['auth', 'role:super-admin|admin|Cso|Operasi'])->group(function () {
     //Ini Bookings
     Route::get('/bookings', [BookingsController::class, 'index'])->name('bookings.index');
     Route::get('/bookings/create', [BookingController::class, 'create'])->name('bookings.create');
@@ -110,7 +110,7 @@ Route::middleware(['auth', 'role:super-admin|admin|Cso|operasi'])->group(functio
 
 });
 
-Route::middleware(['auth', 'role:super-admin|admin|operasi|Cso'])->group(function () {
+Route::middleware(['auth', 'role:super-admin|admin|Operasi|Cso'])->group(function () {
     Route::resource('bookings', BookingsController::class);
     
     Route::get('/detail', [BookingController::class, 'report'])->name('report/detail');
