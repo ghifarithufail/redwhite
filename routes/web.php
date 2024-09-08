@@ -103,6 +103,7 @@ Route::middleware(['auth', 'role:super-admin|admin|Cso|operasi'])->group(functio
     Route::post('booking/updateDateReservation', [BookingController::class, 'updateDateReservation'])->name('booking.updateDateReservation');
     Route::get('booking/getTujuan', [BookingController::class, 'getTujuan'])->name('booking.getTujuan'); // Pastikan ini tidak duplikat
     Route::get('booking/getTotalHargaStd', [BookingController::class, 'getTotalHargaStd'])->name('booking.getTotalHargaStd');
+    Route::get('booking/delete/bus/{id}', [BookingController::class, 'delete_bus'])->name('delete/bus');
 
     Route::post('/get-tujuan', [BookingController::class, 'getTujuan'])->name('getTujuan');
     Route::post('/get-total-harga-std', [BookingController::class, 'getTotalHargaStd'])->name('getTotalHargaStd');

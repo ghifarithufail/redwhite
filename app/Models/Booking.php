@@ -19,6 +19,10 @@ class Booking extends Model
         return $this->belongsTo(Payment::class, 'id', 'booking_id');
     }
 
+    public function users(){
+        return $this->belongsTo(User::class, "id", 'user_id');
+    }
+
     public function details()
     {
         return $this->hasMany(Booking_detail::class, 'booking_id', 'id');

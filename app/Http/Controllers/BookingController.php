@@ -9,7 +9,9 @@ use App\Models\Booking;
 use Illuminate\Http\Request;
 use App\Models\Hrd\Pengemudi;
 use App\Models\Booking_detail;
+use App\Models\Cso\BookingDetail;
 use App\Models\Hrd\Kondektur;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -168,6 +170,7 @@ class BookingController extends Controller
             $array_bln = array(1 => "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII");
 
             $booking->no_booking = "PP/WST/" . date("Y") . "/" . $array_bln[date('n')] . "/" . $next;
+            $booking->user_id = Auth::user()->id;
 
             $booking->save();
 
@@ -231,6 +234,22 @@ class BookingController extends Controller
             'buses' => $buses,
 
         ]);
+    }
+
+    public function delete_bus($id){
+        $bus = BookingDetail::find($id);
+        // $bus->delete();
+
+        $booking = Booking::where('id',$bus->booking_id)->first();
+        $booking->grand_total = $booking->grand_total - $booking->harga_std;
+        $booking->save();
+
+        if($booking->grand_total == $booking->total_payment || $booking->grand_total < $booking->total_payment){
+            $booking->payment_status = 1;
+            $booking->save();
+        }
+
+        return redirect()->back();
     }
 
     public function kondektur($id)
