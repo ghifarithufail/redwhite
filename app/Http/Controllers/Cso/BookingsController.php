@@ -27,7 +27,7 @@ class BookingsController extends Controller
         $perPage = $request->input('per_page', 20);
 
         // Query untuk Booking
-        $query = Booking::with(['bookingDetails', 'armada', 'pengemudi', 'kondektur', 'spjs', 'tujuan'])
+        $query = Booking::with(['bookingDetails', 'armada', 'pengemudi', 'kondektur', 'spjs', 'tujuan','users'])
             ->select([
                 'bookings.*',
                 DB::raw('count(booking_details.id) as total_buses'),

@@ -8,6 +8,7 @@ use App\Models\Admin\Armada;
 use App\Models\Hrd\Kondektur;
 use App\Models\Hrd\Pengemudi;
 use App\Models\Keuangan\Pembayaran;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -23,6 +24,11 @@ class Booking extends Model
     {
         return $this->hasMany(BookingDetail::class, 'booking_id', 'id');
     }
+
+    public function users(){
+        return $this->belongsTo(User::class, "user_id", 'id');
+    }
+
 
     public function armada()
     {

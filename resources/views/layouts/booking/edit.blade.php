@@ -102,6 +102,11 @@
                                                 data-armada-id="{{ $detail->armada_id }}">
                                                 Input
                                             </button>
+                                            <a href="{{ route('delete/bus', $detail->id) }}"
+                                                onclick="return confirm('Apakah Anda yakin ingin menghapus armada ini?');"
+                                                type="button" class="btn btn-danger">
+                                                Delete
+                                            </a>
                                             <input type="hidden" name="bookingId" id="bookingId"
                                                 value="{{ $detail->id }}">
                                         </td>

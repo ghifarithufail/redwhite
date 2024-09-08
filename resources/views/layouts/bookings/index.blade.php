@@ -55,6 +55,7 @@
                         <th style="font-size: 14px">Discount</th>
                         <th style="font-size: 14px">Biaya Jemput</th>
                         <th style="font-size: 14px">Total Bayar</th>
+                        <th style="font-size: 14px">Pembuat</th>
                         <th class="text-center" style="font-size: 14px">Actions</th>
                     </tr>
                 </thead>
@@ -79,6 +80,7 @@
                             <td>{{ number_format($data->diskon, 0, ',', '.') }}</td>
                             <td>{{ number_format($data->biaya_jemput, 0, ',', '.') }}</td>
                             <td class="text-right">{{ number_format($data->grand_total, 0, ',', '.') }}</td>
+                            <td>{{ $data->users ? $data->users->name : '-'}}</td>
                             <td>
                                 <a href="{{ route('input/pengemudi', $data->id) }}">
                                     <button type="button" class="btn rounded-pill btn-primary" fdprocessedid="c80zr4">Input Pengemudi</button>
