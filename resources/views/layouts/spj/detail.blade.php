@@ -9,6 +9,13 @@
     </div>
     <div class="card mt-4">
         <div class="table-responsive text-nowrap">
+            @if ($pengemudi && $kondektur > 0)
+            <div class="d-flex justify-content-end mb-2 p-3" style="zoom: 0.75">
+                <a href="{{ route('input/pengemudi', $detail[0]->bookings->id) }}" type="button" class="btn btn-primary">
+                    Input Pengemudi
+                </a>
+            </div>
+            @endif
             <table class="table table-hover" style="zoom: 0.75">
                 <thead>
                     <tr>
@@ -24,7 +31,7 @@
                         <tr>
                             <td>{{ $data->armadas ? $data->armadas->nobody : '' }}</td>
                             <td>{{ $data->pengemudis ? $data->pengemudis->users->name : '-' }}</td>
-                            <td>{{ $data->kondekturs ? $data->kondekturs->users->name : '-'}}</td>
+                            <td>{{ $data->kondekturs ? $data->kondekturs->users->name : '-' }}</td>
                             <td class="text-center">
                                 @if ($data->is_out == null && $data->supir_id != null && $data->kondektur_id != null)
                                     <form method="POST" action="{{ route('spj/keluar', $data->id) }}"
@@ -33,45 +40,48 @@
                                         <button type="submit" class="btn rounded-pill btn-danger"
                                             fdprocessedid="c80zr4">SPJ KELUAR</button>
                                     </form>
-                                    
                                 @elseif($data->supir_id == null || $data->kondektur_id == null || $data->armada_id == null)
-                                    <button type="button" class="btn rounded-pill btn-warning" fdprocessedid="c80zr4" disabled> Supir, Bus Dan Kondektur Blm ditentukan Silahkan hubungi CSO</button>
-                                
+                                    <button type="button" class="btn rounded-pill btn-warning" fdprocessedid="c80zr4"
+                                        disabled> Supir, Bus Dan Kondektur Blm ditentukan Silahkan hubungi CSO</button>
                                 @elseif($data->is_out != null && $data->spjs->user_keluar == null)
-                                <a href="{{ url('spj/print/out', $data->spjs->id) }}">
-                                    <button type="button" class="btn rounded-pill btn-danger" fdprocessedid="c80zr4">SPJ
-                                        KELUAR DETAIL</button>
-                                </a>
-                                
+                                    <a href="{{ url('spj/print/out', $data->spjs->id) }}">
+                                        <button type="button" class="btn rounded-pill btn-danger"
+                                            fdprocessedid="c80zr4">SPJ
+                                            KELUAR DETAIL</button>
+                                    </a>
                                 @elseif($data->is_in == null)
                                     <a href="{{ route('spj/print_in', $data->spjs->id) }}">
-                                        <button type="button" class="btn rounded-pill btn-success" fdprocessedid="c80zr4">SPJ Masuk</button>
+                                        <button type="button" class="btn rounded-pill btn-success"
+                                            fdprocessedid="c80zr4">SPJ Masuk</button>
                                     </a>
                                 @elseif($data->is_in != null && $data->spjs->user_masuk == null)
                                     <a href="{{ url('spj/print/in', $data->spjs->id) }}">
-                                        <button type="button" class="btn rounded-pill btn-success" fdprocessedid="c80zr4">SPJ
+                                        <button type="button" class="btn rounded-pill btn-success"
+                                            fdprocessedid="c80zr4">SPJ
                                             Masuk DETAIL</button>
                                     </a>
                                 @else
                                     done
                                 @endif
                             </td>
-                            @if($data->supir_id == null || $data->kondektur_id == null || $data->armada_id == null)
-                            <td>
-                                -
-                            </td>
+                            @if ($data->supir_id == null || $data->kondektur_id == null || $data->armada_id == null)
+                                <td>
+                                    -
+                                </td>
                             @elseif ($data->spjs && $data->spjs->user_masuk == null)
-                            <td class="text-center">
-                                <a href="{{ route('spj/data', $data->spjs->id) }}">
-                                    <button type="button" class="btn rounded-pill btn-warning" fdprocessedid="c80zr4">Biaya
-                                        Lain</button>
-                                </a>
-                            </td>
+                                <td class="text-center">
+                                    <a href="{{ route('spj/data', $data->spjs->id) }}">
+                                        <button type="button" class="btn rounded-pill btn-warning"
+                                            fdprocessedid="c80zr4">Biaya
+                                            Lain</button>
+                                    </a>
+                                </td>
                             @else
-                            <td class="text-center">
-                                    <button type="button" class="btn rounded-pill btn-warning" fdprocessedid="c80zr4" disabled>Biaya
+                                <td class="text-center">
+                                    <button type="button" class="btn rounded-pill btn-warning" fdprocessedid="c80zr4"
+                                        disabled>Biaya
                                         Lain</button>
-                            </td>
+                                </td>
                             @endif
 
                         </tr>

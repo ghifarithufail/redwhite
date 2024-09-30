@@ -245,7 +245,7 @@ class BookingController extends Controller
 
     public function delete_bus($id){
         $bus = BookingDetail::find($id);
-        // $bus->delete();
+        $bus->delete();
 
         $booking = Booking::where('id',$bus->booking_id)->first();
         $booking->grand_total = $booking->grand_total - $booking->harga_std;
