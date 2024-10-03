@@ -52,7 +52,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/book-seats', [SeatBookingController::class, 'bookSeats'])->name('bookseats');
 });
 
-Route::middleware(['auth', 'role:super-admin|admin|edp'])->group(function () {
+Route::middleware(['auth', 'role:super-admin|admin|edp|Operasi'])->group(function () {
     
     Route::resource('/roles', RoleController::class);
     Route::resource('/users', UserController::class);
@@ -131,7 +131,7 @@ Route::middleware(['auth', 'role:super-admin|admin|Operasi|Cso'])->group(functio
     Route::post('/update-date', [BookingController::class, 'updateDateReservation'])->name('booking/update/date');
     Route::get('/excel', [BookingController::class, 'excel'])->name('booking/excel');
 });
-Route::group(['middleware' => ['auth', 'role:super admin|admin|owner|keuangan|accounting']], function() {
+Route::group(['middleware' => ['auth', 'role:super admin|admin|owner|Keuangan|accounting']], function() {
     Route::get('/payment', [PaymentController::class, 'index'])->name('payment');
     Route::get('/create/{id}', [PaymentController::class, 'create'])->name('payment/create');
     Route::post('/store', [PaymentController::class, 'store'])->name('payment/store');
