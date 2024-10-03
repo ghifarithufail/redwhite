@@ -189,7 +189,7 @@ class BookingController extends Controller
             DB::commit();
             // return redirect('booking/detail/' . $booking->id);
             // return redirect()->back();
-            return redirect('/bookings')->with('success', 'Data berhasil disimpan');
+            return redirect('/booking/print_detail/'. $booking->id)->with('success', 'Data berhasil disimpan');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::info($e);
@@ -198,6 +198,19 @@ class BookingController extends Controller
         }
     }
 
+    public function print_detail($id){
+        $booking = Booking::with('details')->findOrFail($id);
+
+        return view('layouts.booking.print_detail', compact('booking'));
+
+    }
+
+    public function print($id){
+        $booking = Booking::with('details')->findOrFail($id);
+
+        return view('layouts.booking.print', compact('booking'));
+
+    }
 
     /**
      * Display the specified resource.
