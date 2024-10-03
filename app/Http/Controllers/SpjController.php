@@ -51,10 +51,20 @@ class SpjController extends Controller
 
     public function detail($id)
     {
-        $detail = Booking_detail::with('armadas')->where('booking_id', $id)->orderBy('created_at', 'desc')->get();
+        $detail = Booking_detail::with(['armadas','bookings'])->where('booking_id', $id)->orderBy('created_at', 'desc')->get();
+
+            $pengemudi = Booking_detail::where('booking_id', $id)
+            ->where('supir_id', null)
+            ->count();
+
+            $kondektur = Booking_detail::where('booking_id', $id)
+            ->Where('kondektur_id',null)
+            ->count();
 
         return view('layouts.spj.detail', [
-            'detail' => $detail
+            'detail' => $detail,
+            'pengemudi' => $pengemudi,
+            'kondektur' => $kondektur,
         ]);
     }
 

@@ -114,6 +114,12 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        <div class="text-center">
+                            <a href="{{ route('spj/detail', $booking->id) }}"
+                                type="button" class="btn btn-warning">
+                                kembali
+                            </a>
+                        </div>
                         <div class="mt-3">
                             <!-- Modal -->
                             <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
