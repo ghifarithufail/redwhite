@@ -16,7 +16,15 @@
                         <input type="text" class="form-control" placeholder="No Booking" name="no_booking"
                             id="no_booking">
                     </div>
-                    <div class="col-sm-3 mt-2">
+                    <div class="col-sm-2 mt-3">
+                        <input type="date" class="form-control" placeholder="No Booking" name="start_date"
+                            id="no_booking">
+                    </div>
+                    <div class="col-sm-2 mt-3">
+                        <input type="date" class="form-control" placeholder="No Booking" name="end_date"
+                            id="no_booking">
+                    </div>
+                    <div class="col-sm-2 mt-2">
                         <button type="submit" class="btn btn-primary rounded text-white mt-2 mr-2" style="height: 40px"
                             id="search_btn">Search</button>
                     </div>

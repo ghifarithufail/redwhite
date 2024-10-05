@@ -43,7 +43,7 @@
                             <td>{{ $data->phone }}</td>
                             <td> @foreach($data->roles as $role)
                                     {{ $role->name }}
-                                 @endforeach
+                                @endforeach
                             </td>
                             <td>
                                 @if ($data->status == 'Active')
