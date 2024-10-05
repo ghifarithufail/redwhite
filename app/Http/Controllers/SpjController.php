@@ -22,6 +22,8 @@ class SpjController extends Controller
     {
         $customer = $request->input('customer');
         $no_booking = $request->input('no_booking');
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
 
         $bookings = Booking::whereHas('details', function ($details) {
             $details->where('is_in', null);
@@ -37,6 +39,15 @@ class SpjController extends Controller
             $bookings->where('no_booking', $request['no_booking']);
         };
 
+        if ($request['start_date']) {
+            $bookings->whereDate('date_start', '>=', $request['start_date']);
+        }
+
+        if ($request['end_date']) {
+            $bookings->whereDate('date_start', '<=', $request['end_date']);
+        }
+
+
         $booking = $bookings->get();
 
 
@@ -45,6 +56,8 @@ class SpjController extends Controller
             'request' => [
                 'customer' => $customer,
                 'no_booking' => $no_booking,
+                'start_date' => $start_date,
+                'end_date' => $end_date,
             ],
         ]);
     }
