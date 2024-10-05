@@ -96,6 +96,9 @@ Route::middleware(['auth', 'role:super-admin|admin|Cso|Operasi'])->group(functio
     Route::get('booking/detail/{id}', [BookingController::class, 'showDetail'])->name('booking.showDetail');
 
     Route::get('/booking', [BookingController::class, 'laporan'])->name('report/booking');
+    Route::get('booking/print_detail/{id}', [BookingController::class, 'print_detail'])->name('booking/print_detail');
+    Route::get('booking/print/{id}', [BookingController::class, 'print'])->name('booking/print');
+
 
     Route::post('booking/update_pengemudi', [BookingController::class, 'update_pengemudi'])->name('booking.update_pengemudi');
     Route::get('booking/pengemudi/{id}', [BookingController::class, 'pengemudi'])->name('input/pengemudi');
