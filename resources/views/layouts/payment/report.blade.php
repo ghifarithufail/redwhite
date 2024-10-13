@@ -73,12 +73,16 @@
                         <td class="text-right">{{number_format($data->grand_total)}}</td>
                         <td>
                             @if ($data->payment_status == '2')
-                                Belum Lunas
+                                <span class="badge bg-label-danger me-1">Belum Lunas</span>
                             @else
-                                Lunas
+                                <span class="badge bg-label-success me-1">Lunas</span>
                             @endif
                         </td>
-
+                        <td>
+                            <a href="{{ route('payment/detail_report', $data->id) }}">
+                                <button type="button" class="btn rounded-pill btn-primary" fdprocessedid="c80zr4">Detail</button>
+                            </a>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

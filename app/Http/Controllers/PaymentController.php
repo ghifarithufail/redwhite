@@ -193,8 +193,12 @@ class PaymentController extends Controller
         ]);
     }
 
-    public function detail_report(){
-        
+    public function detail_report($id){
+        $booking = Booking::find($id);
+
+        return view('layouts.payment.detail_report', [
+            'booking' => $booking,
+        ]);
     }
 
     public function sumary_report(Request $request)

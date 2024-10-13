@@ -140,6 +140,7 @@ Route::group(['middleware' => ['auth', 'role:super admin|admin|owner|Keuangan|ac
     Route::post('/store', [PaymentController::class, 'store'])->name('payment/store');
     Route::get('payment/sumary_report', [PaymentController::class, 'sumary_report'])->name('payment/sumary_report');
     Route::get('payment/report', [PaymentController::class, 'report'])->name('payment/report');
+    Route::get('payment/detail_report/{id}', [PaymentController::class, 'detail_report'])->name('payment/detail_report');
     Route::get('payment/invoice/{id}', [PaymentController::class, 'invoice'])->name('payment/invoice');
 
 
