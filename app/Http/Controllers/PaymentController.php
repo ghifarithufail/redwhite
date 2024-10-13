@@ -16,45 +16,45 @@ class PaymentController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-{
-    // $date_start = $request->input('date_start', now()->format('Y-m-d'));
-    // $date_end = $request->input('date_end', now()->format('Y-m-d'));
-    $date_start = $request->input('date_start');
-    $date_end = $request->input('date_end');
-    $customer = $request->input('customer');
-    $no_booking = $request->input('no_booking');
+    {
+        // $date_start = $request->input('date_start', now()->format('Y-m-d'));
+        // $date_end = $request->input('date_end', now()->format('Y-m-d'));
+        $date_start = $request->input('date_start');
+        $date_end = $request->input('date_end');
+        $customer = $request->input('customer');
+        $no_booking = $request->input('no_booking');
 
-    $bookings = Booking::with('payments')->where('payment_status', '2')
-    
-        ->orderBy('created_at', 'desc');
+        $bookings = Booking::with('payments')->where('payment_status', '2')
 
-    if ($request['date_start']) {
-        $bookings->where('created_at', '>=', $request['date_start']);
+            ->orderBy('created_at', 'desc');
+
+        if ($request['date_start']) {
+            $bookings->where('created_at', '>=', $request['date_start']);
+        }
+
+        if ($request['date_end']) {
+            $bookings->where('created_at', '<=', $request['date_end']);
+        }
+
+        if ($request['customer']) {
+            $bookings->where('customer', 'like', '%' . $request['customer'] . '%');
+        }
+        if ($request['no_booking']) {
+            $bookings->where('no_booking', $request['no_booking']);
+        }
+
+        $booking = $bookings->paginate(10);
+
+        return view('layouts.payment.index', [
+            'booking' => $booking,
+            'request' => [
+                'date_start' => $date_start,
+                'date_end' => $date_end,
+                'customer' => $customer,
+                'no_booking' => $no_booking,
+            ],
+        ]);
     }
-
-    if ($request['date_end']) {
-        $bookings->where('created_at', '<=', $request['date_end']);
-    }
-
-    if ($request['customer']) {
-        $bookings->where('customer', 'like', '%' . $request['customer'] . '%');
-    }
-    if ($request['no_booking']) {
-        $bookings->where('no_booking', $request['no_booking']);
-    }
-
-    $booking = $bookings->paginate(10);
-
-    return view('layouts.payment.index', [
-        'booking' => $booking,
-        'request' => [
-            'date_start' => $date_start,
-            'date_end' => $date_end,
-            'customer' => $customer,
-            'no_booking' => $no_booking,
-        ],
-    ]);
-}
 
     /**
      * Show the form for creating a new resource.
@@ -155,48 +155,89 @@ class PaymentController extends Controller
         ]);
     }
 
-    public function report(Request $request)
-{
-    $date_start = $request->input('date_start', now()->format('Y-m-d'));
-    $date_end = $request->input('date_end', now()->format('Y-m-d'));
+    public function report(Request $request){
+        $start_date = $request->input('date_start', now()->format('Y-m-01'));
+        $end_date = $request->input('date_end', now()->format('Y-m-d'));
+        $nama = $request->input('nama');
+        $no_booking = $request->input('no_booking');
 
-    $payment = Payment::select([
-        'payments.created_at',
-        'b.customer',
-        'no_payment',
-        'b.date_start',
-        'b.date_end',
-        DB::raw('DATEDIFF(b.date_end, b.date_start) + 1 AS total_days'),
-        'b.total_bus',
-        't.nama_tujuan',
-        'jmlh_bayar as pembayaran_ke',
-        'price'
-    ])
-        ->leftJoin('bookings as b', 'payments.booking_id', '=', 'b.id')
-        ->leftJoin('tujuans as t', 'b.tujuan_id', '=', 't.id')
-        ->where('b.payment_status', 1)
-        ->whereDate("payments.created_at", ">=", $date_start)
-        ->whereDate("payments.created_at", "<=", $date_end)
-        ->orderBy('payments.created_at');
+        $bookings = Booking::latest();
 
-    $payments = $payment->get()->groupBy(function ($date) {
-        return \Carbon\Carbon::parse($date->created_at)->format('Y-m-d');
-    });
+        if ($request['start_date']) {
+            $bookings->whereDate('date_start', '>=', $request['start_date']);
+        }
 
-    $totalPrices = [];
+        if ($request['end_date']) {
+            $bookings->whereDate('date_end', '<=', $request['end_date']);
+        }
 
-    foreach ($payments as $date => $group) {
-        $totalPrices[$date] = $group->sum('price');
+        if ($request['nama']) {
+            $bookings->where('customer', 'like', '%'.$request['nama'].'%');
+        }
+
+        if ($request['no_booking']) {
+            $bookings->where('no_booking', $request['no_booking']);
+        }
+
+
+        $booking = $bookings->paginate(15);
+
+        return view('layouts.payment.report', [
+            'booking' => $booking,
+            'request' => [
+                'start_date' => $start_date,
+                'end_date' => $end_date,
+                'nama' => $nama,
+                'no_booking' => $no_booking,
+            ],
+        ]);
     }
 
-    return view('layouts.payment.report', [
-        'payments' => $payments,
-        'totalPrices' => $totalPrices,
-        'request' => [
-            'date_start' => $date_start,
-            'date_end' => $date_end,
-        ],
-    ]);
-}
+    public function detail_report(){
+        
+    }
 
+    public function sumary_report(Request $request)
+    {
+        $date_start = $request->input('date_start', now()->format('Y-m-d'));
+        $date_end = $request->input('date_end', now()->format('Y-m-d'));
+
+        $payment = Payment::select([
+            'payments.created_at',
+            'b.customer',
+            'no_payment',
+            'b.date_start',
+            'b.date_end',
+            DB::raw('DATEDIFF(b.date_end, b.date_start) + 1 AS total_days'),
+            'b.total_bus',
+            't.nama_tujuan',
+            'jmlh_bayar as pembayaran_ke',
+            'price'
+        ])
+            ->leftJoin('bookings as b', 'payments.booking_id', '=', 'b.id')
+            ->leftJoin('tujuans as t', 'b.tujuan_id', '=', 't.id')
+            ->where('b.payment_status', 1)
+            ->whereDate("payments.created_at", ">=", $date_start)
+            ->whereDate("payments.created_at", "<=", $date_end)
+            ->orderBy('payments.created_at');
+
+        $payments = $payment->get()->groupBy(function ($date) {
+            return \Carbon\Carbon::parse($date->created_at)->format('Y-m-d');
+        });
+
+        $totalPrices = [];
+
+        foreach ($payments as $date => $group) {
+            $totalPrices[$date] = $group->sum('price');
+        }
+
+        return view('layouts.payment.summary_report', [
+            'payments' => $payments,
+            'totalPrices' => $totalPrices,
+            'request' => [
+                'date_start' => $date_start,
+                'date_end' => $date_end,
+            ],
+        ]);
+    }
 }

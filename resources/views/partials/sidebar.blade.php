@@ -377,6 +377,11 @@
                     </a>
                 </li>
                 <li class="menu-item">
+                    <a href="{{ route('payment/sumary_report') }}" class="menu-link">
+                        <div data-i18n="Payment Summary Report">Payment Summary Report</div>
+                    </a>
+                </li>
+                <li class="menu-item">
                     <a href="{{ route('payment/report') }}" class="menu-link">
                         <div data-i18n="Payment Report">Payment Report</div>
                     </a>

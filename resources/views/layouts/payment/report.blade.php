@@ -7,14 +7,27 @@
             <div class="card-body">
                 <form>
                     <div class="row">
-                        <div class="col-md-6 col-12 mb-4">
-                            <label for="start" class="form-label">Tanggal Pemakaian</label>
+                        <div class="col-md-3 col-4 mb-4">
+                            <label for="start" class="form-label">Nama</label>
                             <div class="input-group input-daterange">
-                                <input type="date" id="date_start" name="date_start" value="{{ $request['date_start'] }}" class="form-control" >
-                                <span class="input-group-text">s/d</span>
-                                <input type="date" id="date_end" value="{{ $request['date_end'] }}" name="date_end" class="form-control" >
+                                <input type="text" id="nama" name="nama" value="{{ $request['nama'] }}" class="form-control" >
                             </div>
                         </div>
+                        <div class="col-md-3 col-4 mb-4">
+                            <label for="start" class="form-label">No Booking</label>
+                            <div class="input-group input-daterange">
+                                <input type="text" id="no_booking" name="no_booking" value="{{ $request['no_booking'] }}" class="form-control" >
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-4 mb-4">
+                            <label for="start" class="form-label">Tanggal Pemakaian</label>
+                            <div class="input-group input-daterange">
+                                <input type="date" id="start_date" name="start_date" value="{{ $request['start_date'] }}" class="form-control" >
+                                <span class="input-group-text">s/d</span>
+                                <input type="date" id="end_date" value="{{ $request['end_date'] }}" name="end_date" class="form-control" >
+                            </div>
+                        </div>
+                        
                         <div class="col-md-2 col-6 mb-4 d-flex align-items-end">
                             <button type="submit" class="btn btn-primary w-100">Search</button>
                         </div>
@@ -37,15 +50,13 @@
             <table class="table table-hover" style="zoom: 0.85">
                 <thead>
                     <tr>
-                        <th style="font-size: 14px">Tanggal</th>
+                        <th style="font-size: 14px">Nomor booking</th>
                         <th style="font-size: 14px">Nama Customer</th>
-                        <th style="font-size: 14px">Kwitansi</th>
                         <th style="font-size: 14px">Tanggal Wisata</th>
-                        <th style="font-size: 14px">Hari</th>
-                        <th style="font-size: 14px">JML UNIT</th>
-                        <th style="font-size: 14px">Tujuan Wisata</th>
-                        <th style="font-size: 14px">Jenis Pembayaran</th>
-                        <th style="font-size: 14px">Jumlah</th>
+                        <th style="font-size: 14px">Diskon</th>
+                        <th style="font-size: 14px">Total Biaya</th>
+                        <th style="font-size: 14px">Status</th>
+                        <th style="font-size: 14px">action</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
@@ -53,50 +64,28 @@
                         $grandTotal = 0;
                     @endphp
 
-                    @foreach ($payments as $date => $group)
-                        <tr>
-                            <td colspan="9" style="background-color: #dff0d8;"><strong>JUMLAH TANGGAL
-                                    {{ \Carbon\Carbon::parse($date)->format('d M Y') }}</strong></td>
-                        </tr>
-                        @foreach ($group as $data)
-                            <tr>
-                                <td>{{ \Carbon\Carbon::parse($data->created_at)->format('d M Y') }}</td>
-                                <td>{{ $data->customer }}</td>
-                                <td>{{ $data->no_payment }}</td>
-                                <td>{{ \Carbon\Carbon::parse($data->date_start)->format('d M Y') }}</td>
-                                <td>{{ $data->total_days }} Hari</td>
-                                <td>{{ $data->total_bus }}</td>
-                                <td>{{ $data->nama_tujuan }}</td>
-                                <td>
-                                    @if ($data->pembayaran_ke == 1)
-                                        <b>Pembayaran pertama</b>
-                                    @elseif($data->pembayaran_ke == 2)
-                                        <b>Pembayaran kedua</b>
-                                    @elseif($data->pembayaran_ke == 3)
-                                        <b>Pembayaran Ketiga</b>
-                                    @elseif($data->pembayaran_ke == 4)
-                                        <b>Pelunasan</b>
-                                    @endif
-                                </td>
-                                <td>{{ number_format($data->price) }}</td>
-                            </tr>
-                        @endforeach
-                        <tr style="background-color: #dff0d8;">
-                            <td colspan="8" class="text-right"><strong>Total
-                                    {{ \Carbon\Carbon::parse($date)->format('d M Y') }}:</strong></td>
-                            <td><strong>{{ number_format($totalPrices[$date]) }}</strong></td>
-                        </tr>
-                        @php
-                            $grandTotal += $totalPrices[$date];
-                        @endphp
-                    @endforeach
+                    @foreach ($booking as $data)
+                    <tr>
+                        <td>{{$data->no_booking}}</td>
+                        <td>{{$data->customer}}</td>
+                        <td>{{ \Carbon\Carbon::parse($data->date_start)->format('j F Y') }} - {{ \Carbon\Carbon::parse($data->date_end)->format('j F Y') }}</td>
+                        <td class="text-right">{{number_format($data->diskon)}}</td>
+                        <td class="text-right">{{number_format($data->grand_total)}}</td>
+                        <td>
+                            @if ($data->payment_status == '2')
+                                Belum Lunas
+                            @else
+                                Lunas
+                            @endif
+                        </td>
 
-                    <tr style="background-color: #dff0d8;">
-                        <td colspan="8" class="text-right"><strong>Total Pendapatan:</strong></td>
-                        <td><strong>{{ number_format($grandTotal) }}</strong></td>
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
+            <div class="p-3">
+                {{$booking->links()}}
+            </div>
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
