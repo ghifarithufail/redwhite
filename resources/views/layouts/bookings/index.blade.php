@@ -83,13 +83,10 @@
                             <td>{{ $data->users ? $data->users->name : '-'}}</td>
                             <td>
                                 <a href="{{ route('input/pengemudi', $data->id) }}">
-                                    <button type="button" class="btn rounded-pill btn-primary" fdprocessedid="c80zr4">Input Pengemudi</button>
+                                    <button type="button" class="btn rounded-pill btn-primary" fdprocessedid="c80zr4">Edit</button>
                                 </a>
-                                <a href="{{ route('booking/edit', ['id' => $data->id, 'start' => $data->date_start, 'end' => $data->date_end]) }}">
+                                {{-- <a href="{{ route('booking/edit', ['id' => $data->id, 'start' => $data->date_start, 'end' => $data->date_end]) }}">
                                     <button type="button" class="btn rounded-pill btn-warning" fdprocessedid="c80zr4">Edit</button>
-                                </a>
-                                {{-- <a href="{{ route('booking.edit', $data->id) }}">
-                                    <button type="button" class="btn rounded-pill btn-warning" fdprocessedid="c80zr4">detail</button>
                                 </a> --}}
                             </td>
                         </tr>

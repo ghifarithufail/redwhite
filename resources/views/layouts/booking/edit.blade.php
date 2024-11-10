@@ -73,6 +73,11 @@
                         <h4>
                             Detail Bus
                         </h4>
+                        <div class="text-end mb-2">
+                            <a href="{{ route('booking/edit', ['id' => $booking->id, 'start' => $booking->date_start, 'end' => $booking->date_end]) }}">
+                                <button type="button" class="btn rounded-pill btn-warning">Tambah Bus / Ganti Tujuan</button>
+                            </a>
+                        </div>
                         <hr>
                         <table class="table table-hover">
                             <thead>

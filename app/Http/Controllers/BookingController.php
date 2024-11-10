@@ -189,7 +189,7 @@ class BookingController extends Controller
             DB::commit();
             // return redirect('booking/detail/' . $booking->id);
             // return redirect()->back();
-            return redirect('/booking/print_detail/'. $booking->id)->with('success', 'Data berhasil disimpan');
+            return redirect('/booking/print_detail/' . $booking->id)->with('success', 'Data berhasil disimpan');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::info($e);
@@ -198,18 +198,23 @@ class BookingController extends Controller
         }
     }
 
-    public function print_detail($id){
+    public function print_detail($id)
+    {
         $booking = Booking::with('details')->findOrFail($id);
+
 
         return view('layouts.booking.print_detail', compact('booking'));
-
     }
 
-    public function print($id){
+    public function print($id)
+    {
         $booking = Booking::with('details')->findOrFail($id);
 
-        return view('layouts.booking.print', compact('booking'));
+        $type_bus = $booking->bookingDetails->map(function ($detail) {
+            return $detail->armadas->type_armada->name;
+        })->unique();
 
+        return view('layouts.booking.print', compact('booking','type_bus'));
     }
 
     /**
@@ -231,11 +236,11 @@ class BookingController extends Controller
                 ->whereDate('date_end', '>=', $booking->date_start)
                 ->where('booking_status', 1);
         })
-        // ->whereHas('users', function ($users) {
-        //     $users->orderBy('name', 'asc');
-        // })
-        ->get();
-        
+            // ->whereHas('users', function ($users) {
+            //     $users->orderBy('name', 'asc');
+            // })
+            ->get();
+
         $kondektur = Kondektur::whereHas('users', function ($users) {
             $users->orderBy('name', 'asc');
         })->get();
@@ -256,15 +261,16 @@ class BookingController extends Controller
         ]);
     }
 
-    public function delete_bus($id){
+    public function delete_bus($id)
+    {
         $bus = BookingDetail::find($id);
         $bus->delete();
 
-        $booking = Booking::where('id',$bus->booking_id)->first();
+        $booking = Booking::where('id', $bus->booking_id)->first();
         $booking->grand_total = $booking->grand_total - $booking->harga_std;
         $booking->save();
 
-        if($booking->grand_total == $booking->total_payment || $booking->grand_total < $booking->total_payment){
+        if ($booking->grand_total == $booking->total_payment || $booking->grand_total < $booking->total_payment) {
             $booking->payment_status = 1;
             $booking->save();
         }
@@ -355,7 +361,7 @@ class BookingController extends Controller
 
             $detail->supir_id = $request->input('supir_id');
             $detail->Kondektur_id = $request->input('kondektur_id');
-            if($request->input('armada_id') != null){
+            if ($request->input('armada_id') != null) {
                 $detail->armada_id = $request->input('armada_id');
             }
             // \Log::info($detail->armada_id);
@@ -493,29 +499,28 @@ class BookingController extends Controller
                 \Log::info('booking payment : ' . $booking->payment_status);
             }
 
-            // Simpan atau perbarui Booking_detail untuk setiap bus_id yang dipilih
             foreach ($request->input('bus_id') as $value) {
-                // Cari Booking_detail berdasarkan booking_id dan armada_id
                 $detail = Booking_detail::where('booking_id', $booking->id)
                     ->where('armada_id', $value)
                     ->first();
 
-                // Jika Booking_detail tidak ditemukan, buat baru
+
                 if (!$detail) {
                     $detail = new Booking_detail();
                     $detail->booking_id = $booking->id;
                     $detail->armada_id = $value;
                 }
 
-                // Update atau setel nilai-nilai yang diperlukan
                 $detail->harga_std = $request->input('harga_std');
-                $detail->diskon = null; // Atur sesuai kebutuhan
-                $detail->total_harga = null; // Atur sesuai kebutuhan
+                $detail->diskon = null;
+                $detail->total_harga = null;
 
                 // Simpan Booking_detail
                 $detail->save();
+                \Log::info($detail);
             }
 
+            return 123;
             DB::commit();
 
             \Log::info('Booking updated: ' . $booking);
