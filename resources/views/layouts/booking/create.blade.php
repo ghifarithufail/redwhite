@@ -167,6 +167,11 @@
                                             <input type="text" id="keterangan" name="keterangan"
                                                 class="form-control">
                                         </div>
+                                        <div class="col-sm-6 fv-plugins-icon-container">
+                                            <label class="form-label" for="dp_customer">DP Customer</label>
+                                            <input type="text" id="dp_customer" name="dp_customer"
+                                                class="form-control" required>
+                                        </div>
                                         <div class="pt-5 d-flex justify-content-end" id="button_container">
                                             <button type="button" class="btn btn-warning me-sm-3 me-1"
                                                 id="calculate_btn">Hitung</button>

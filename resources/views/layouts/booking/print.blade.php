@@ -167,7 +167,7 @@
                                 <td>
                                     <div>Total Bus :</div>
                                     <div class="font-16">
-                                        <center><b>{{ $booking->total_bus }}</b></center>
+                                        <center><b>{{ $booking->total_bus }} Bus</b></center>
                                     </div>
                                     <hr class="devider2">
                                 </td>
@@ -201,7 +201,7 @@
                                 <td>
                                     <div>DP Customer :</div>
                                     <div class="font-16">
-                                        <center><b>Rp.{{ number_format($booking->total_bus) }}</b></center>
+                                        <center><b>Rp.{{ number_format($booking->dp_customer) }}</b></center>
                                     </div>
                                     <hr class="devider2">
                                 </td>

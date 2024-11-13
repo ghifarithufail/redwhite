@@ -156,6 +156,7 @@ class BookingController extends Controller
                 'keterangan' => 'nullable',
                 'biaya_jemput' => 'nullable',
                 'lokasi_jemput' => 'required',
+                'dp_customer' => 'required',
                 'diskon' => 'nullable',
                 'tujuan_id' => 'nullable',
             ]);

@@ -87,7 +87,8 @@ class PaymentController extends Controller
                 'type_payment_id' => 'required',
                 'jmlh_bayar' => 'required',
                 'price' => 'required',
-                'image' => 'nullable|image', // Menambahkan validasi bahwa image bisa nullable
+                'tgl_bayar' => 'required',
+                'image' => 'nullable|image',
             ]);
 
             // Buat instance Payment dengan data validasi

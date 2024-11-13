@@ -130,8 +130,8 @@
         <div id="section">
             <div class="row">
                 <img src="{{ asset('img/redwhite 71x11.png') }}" alt="Logo" class="logo">
-                <h4 class="bold-italic"> PT. PRIMAJASA PERDANARAYA<br>Jl. Moh. Toha No.1 (Ciputat-Parung)
-                    Wates,<br>Pondok Cabe Telp. (021) 74703339</h4>
+                <h4 class="bold-italic"> PT. PRIMAJASA PERDANARAYA<br>
+                    Jl. Moh. Toha No.68, JL Pondok Cabe Udik, Wates<br> Pamulang, Tangsel Telp. (021) 74703339</h4>
             </div>
             <center>
                 <h2>SURAT PERINTAH JALAN</h2>
@@ -149,8 +149,8 @@
                         <td width="170">Pengemudi/Nomor Induk</td>
                         <td width="1%">:</td>
                         <td>
-                            {{ $spj->booking_details ? $spj->booking_details->pengemudis->users->name :'-'}} /
-                            {{ $spj->booking_details ? $spj->booking_details->pengemudis->nopengemudi :'-'}}
+                            {{ $spj->booking_details ? $spj->booking_details->pengemudis->users->name : '-' }} /
+                            {{ $spj->booking_details ? $spj->booking_details->pengemudis->nopengemudi : '-' }}
                             {{-- @if ($spj->bookingDetails && $spj->bookingDetails->isNotEmpty())
                                 @foreach ($spj->bookingDetails as $detail)
                                     @if ($detail->pengemudi)
@@ -192,7 +192,7 @@
                     <tr>
                         <td width="170">Biaya Jemput</td>
                         <td width="1%">:</td>
-                        <td>{{ $spj->biaya_jemput }}</td>
+                        <td>{{ number_format($spj->booking_details->bookings->biaya_jemput) }}</td>
                     </tr>
                     <tr>
                         <td width="170">Uang Jalan</td>
@@ -274,12 +274,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <td width="170">Berangkat Dari Pool</td>
+                        <td width="170">SPJ Keluar</td>
                         <td width="1%">:</td>
                         <td>{{ \Carbon\Carbon::parse($spj->date_keluar)->format('d F Y H:i') }} WIB</td>
                     </tr>
                     <tr>
-                        <td width="170">Selesai Pemakaian & Bis Tiba di Pool</td>
+                        <td width="170">SPJ Masuk</td>
                         <td width="1%">:</td>
                         <td>
                             @if ($spj->date_masuk)
@@ -365,14 +365,14 @@
             <table width="100%">
                 <tr>
                     <td width="30%">
-                        <div style="height: 80px; padding-top: 10px;">Manager Operasi</div>
-                        ( ........................ )
-                    </td>
-                    <td width="30%">
-                        <div style="height: 80px; padding-top: 10px;">Customer Service</div>
+                        <div style="height: 80px; padding-top: 10px;">Ka. Operasi</div>
                         ( ........................ )
                     </td>
                     @if ($spj->km_masuk == null)
+                        <td width="30%">
+                            <div style="height: 80px; padding-top: 10px;">Pemesan</div>
+                            {{ $spj->booking_details->bookings->customer }}
+                        </td>
                         <td>
                             @php
                                 \Carbon\Carbon::setLocale('id');
@@ -382,8 +382,7 @@
                             <div style="height: 80px;">Bagian Operasional</div>
                             ( {{ $spj->user_out->name }} )
                         </td>
-
-                        @else
+                    @else
                         <td>
                             @php
                                 \Carbon\Carbon::setLocale('id');
@@ -391,7 +390,7 @@
                             @endphp
                             {{ $currentDate }}
                             <div style="height: 80px;">Bagian Operasional</div>
-                            ( {{ $spj->user_in->name }} )
+                            {{ $spj->user_in->name }}
                         </td>
                     @endif
                 </tr>
