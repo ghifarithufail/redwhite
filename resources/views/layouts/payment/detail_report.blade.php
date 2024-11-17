@@ -156,6 +156,7 @@
                                     <th>Tipe Pembayaran</th>
                                     <th>Biaya Yang dibayarkan</th>
                                     <th>Foto</th>
+                                    <th>Print Invoice</th>
                                 </tr>
                             </thead>
                             <tbody class="table-border-bottom-0">
@@ -169,7 +170,11 @@
                                                 <img src="{{ asset('uploads/' . $detail->image) }}" alt="Payment Image" style="width: 100px; height: auto;">
                                             </a>
                                         </td>
-                                        
+                                        <td>
+                                            <a href="{{ route('payment/invoice', $detail->id) }}" target="_blank">
+                                                <button type="button" class="btn rounded-pill btn-warning" fdprocessedid="c80zr4">Invoice</button>
+                                            </a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

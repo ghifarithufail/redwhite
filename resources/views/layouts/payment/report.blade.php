@@ -1,6 +1,6 @@
 @extends('main')
 @section('content')
-    <h3>Laporan Booking</h3>
+    <h3>Payment Report</h3>
 
     <div class="col-12">
         <div class="card mb-4">
@@ -14,17 +14,17 @@
                             </div>
                         </div>
                         <div class="col-md-3 col-4 mb-4">
-                            <label for="start" class="form-label">No Booking</label>
+                            <label for="start" class="form-label">No Booking / No Payment</label>
                             <div class="input-group input-daterange">
                                 <input type="text" id="no_booking" name="no_booking" value="{{ $request['no_booking'] }}" class="form-control" >
                             </div>
                         </div>
                         <div class="col-md-4 col-4 mb-4">
-                            <label for="start" class="form-label">Tanggal Pemakaian</label>
+                            <label for="start" class="form-label">Tanggal Wisata</label>
                             <div class="input-group input-daterange">
-                                <input type="date" id="start_date" name="start_date" value="{{ $request['start_date'] }}" class="form-control" >
+                                <input type="date" id="start_date" name="start_date" class="form-control" >
                                 <span class="input-group-text">s/d</span>
-                                <input type="date" id="end_date" value="{{ $request['end_date'] }}" name="end_date" class="form-control" >
+                                <input type="date" id="end_date"  name="end_date" class="form-control" >
                             </div>
                         </div>
                         

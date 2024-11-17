@@ -142,6 +142,7 @@ Route::group(['middleware' => ['auth', 'role:super admin|admin|owner|Keuangan|ac
     Route::get('payment/report', [PaymentController::class, 'report'])->name('payment/report');
     Route::get('payment/detail_report/{id}', [PaymentController::class, 'detail_report'])->name('payment/detail_report');
     Route::get('payment/invoice/{id}', [PaymentController::class, 'invoice'])->name('payment/invoice');
+    Route::get('payment/summary_excel', [PaymentController::class, 'excel_summary_report'])->name('payment/summary_excel');
 
 
     Route::get('pembayaran', [PembayaranController::class, 'index'])->name('pembayaran');

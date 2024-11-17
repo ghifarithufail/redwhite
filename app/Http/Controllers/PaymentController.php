@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\SummaryPaymentExport;
 use Illuminate\Support\Facades\Log;
 use App\Models\Booking;
 use App\Models\Payment;
@@ -9,6 +10,7 @@ use App\Models\TypePayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PaymentController extends Controller
 {
@@ -43,7 +45,7 @@ class PaymentController extends Controller
             $bookings->where('no_booking', $request['no_booking']);
         }
 
-        $booking = $bookings->paginate(10);
+        $booking = $bookings->paginate(10)->appends($request->all());
 
         return view('layouts.payment.index', [
             'booking' => $booking,
@@ -156,7 +158,8 @@ class PaymentController extends Controller
         ]);
     }
 
-    public function report(Request $request){
+    public function report(Request $request)
+    {
         $start_date = $request->input('date_start', now()->format('Y-m-01'));
         $end_date = $request->input('date_end', now()->format('Y-m-d'));
         $nama = $request->input('nama');
@@ -173,15 +176,20 @@ class PaymentController extends Controller
         }
 
         if ($request['nama']) {
-            $bookings->where('customer', 'like', '%'.$request['nama'].'%');
+            $bookings->where('customer', 'like', '%' . $request['nama'] . '%');
         }
 
         if ($request['no_booking']) {
-            $bookings->where('no_booking', $request['no_booking']);
+            $bookings->where('no_booking', $request['no_booking'])
+                ->orWhere(function ($query) use ($request) {
+                    $query->whereHas('payments', function ($payments) use ($request) {
+                        $payments->where('no_payment', $request['no_booking']);
+                    });
+                });
         }
 
 
-        $booking = $bookings->paginate(15);
+        $booking = $bookings->paginate(15)->appends($request->all());
 
         return view('layouts.payment.report', [
             'booking' => $booking,
@@ -194,7 +202,8 @@ class PaymentController extends Controller
         ]);
     }
 
-    public function detail_report($id){
+    public function detail_report($id)
+    {
         $booking = Booking::find($id);
 
         return view('layouts.payment.detail_report', [
@@ -244,5 +253,10 @@ class PaymentController extends Controller
                 'date_end' => $date_end,
             ],
         ]);
+    }
+
+    public function excel_summary_report(Request $request){
+        return Excel::download(new SummaryPaymentExport($request), 'summary_payment.xlsx');
+
     }
 }

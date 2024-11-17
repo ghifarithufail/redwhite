@@ -1,6 +1,6 @@
 @extends('main')
 @section('content')
-    <h3>Laporan Booking</h3>
+    <h3>Summary Payment Report</h3>
 
     <div class="col-12">
         <div class="card mb-4">
@@ -10,13 +10,24 @@
                         <div class="col-md-6 col-12 mb-4">
                             <label for="start" class="form-label">Tanggal Pemakaian</label>
                             <div class="input-group input-daterange">
-                                <input type="date" id="date_start" name="date_start" value="{{ $request['date_start'] }}" class="form-control" >
+                                <input type="date" id="date_start" name="date_start" value="{{ $request['date_start'] }}"
+                                    class="form-control">
                                 <span class="input-group-text">s/d</span>
-                                <input type="date" id="date_end" value="{{ $request['date_end'] }}" name="date_end" class="form-control" >
+                                <input type="date" id="date_end" value="{{ $request['date_end'] }}" name="date_end"
+                                    class="form-control">
                             </div>
                         </div>
                         <div class="col-md-2 col-6 mb-4 d-flex align-items-end">
                             <button type="submit" class="btn btn-primary w-100">Search</button>
+                        </div>
+                        <div class="col-md-2 col-6 mb-4 d-flex align-items-end">
+                            <a
+                                href="{{ route('payment/summary_excel', [
+                                    'date_start' => $request['date_start'],
+                                    'date_end' => $request['date_end'], // Perbaiki di sini
+                                ]) }}">
+                                <button type="button" class="btn btn-success w-100">Excel</button>
+                            </a>
                         </div>
                         {{-- <div class="col-md-2 col-6 mb-4 d-flex align-items-end">
                             <a href="{{ route('cso.bookingtglPDF', ['date_start' => $date_start, 'date_end' => $date_end]) }}"
