@@ -520,8 +520,6 @@ class BookingController extends Controller
                 $detail->save();
                 \Log::info($detail);
             }
-
-            return 123;
             DB::commit();
 
             \Log::info('Booking updated: ' . $booking);
