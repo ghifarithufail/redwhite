@@ -1,8 +1,9 @@
 <table class="table table-hover" style="zoom: 0.85">
     <thead>
         <tr>
-            <th style="font-size: 14px">Tanggal</th>
             <th style="font-size: 14px">Nama Customer</th>
+            <th style="font-size: 14px">Tipe Pembayaran</th>
+            <th style="font-size: 14px">Tanggal</th>
             <th style="font-size: 14px">Kwitansi</th>
             <th style="font-size: 14px">Tanggal Wisata</th>
             <th style="font-size: 14px">Hari</th>
@@ -24,8 +25,9 @@
             </tr>
             @foreach ($group as $data)
                 <tr>
-                    <td>{{ \Carbon\Carbon::parse($data->created_at)->format('d M Y') }}</td>
                     <td>{{ $data->customer }}</td>
+                    <td>{{ $data->tipe_pembayaran }}</td>
+                    <td>{{ \Carbon\Carbon::parse($data->created_at)->format('d M Y') }}</td>
                     <td>{{ $data->no_payment }}</td>
                     <td>{{ \Carbon\Carbon::parse($data->date_start)->format('d M Y') }}</td>
                     <td>{{ $data->total_days }} Hari</td>

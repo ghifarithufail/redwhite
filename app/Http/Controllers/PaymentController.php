@@ -216,6 +216,9 @@ class PaymentController extends Controller
     {
         $date_start = $request->input('date_start', now()->format('Y-m-d'));
         $date_end = $request->input('date_end', now()->format('Y-m-d'));
+        $type_payment = TypePayment::orderBy('name', 'asc')->get();
+
+        $tipe_pembayaran = $request->input('tipe_pembayaran');
 
         $payment = Payment::select([
             'payments.created_at',
@@ -227,14 +230,20 @@ class PaymentController extends Controller
             'b.total_bus',
             't.nama_tujuan',
             'jmlh_bayar as pembayaran_ke',
-            'price'
+            'price',
+            'tp.name as tipe_pembayaran'
         ])
             ->leftJoin('bookings as b', 'payments.booking_id', '=', 'b.id')
             ->leftJoin('tujuans as t', 'b.tujuan_id', '=', 't.id')
+            ->leftJoin('type_payments as tp', 'tp.id', '=', 'payments.type_payment_id')
             ->where('b.payment_status', 1)
             ->whereDate("payments.created_at", ">=", $date_start)
             ->whereDate("payments.created_at", "<=", $date_end)
             ->orderBy('payments.created_at');
+
+        if($request['tipe_pembayaran']){
+            $payment = $payment->where('type_payment_id', $request['tipe_pembayaran']);
+        }
 
         $payments = $payment->get()->groupBy(function ($date) {
             return \Carbon\Carbon::parse($date->created_at)->format('Y-m-d');
@@ -249,9 +258,11 @@ class PaymentController extends Controller
         return view('layouts.payment.summary_report', [
             'payments' => $payments,
             'totalPrices' => $totalPrices,
+            'type_payment' => $type_payment,
             'request' => [
                 'date_start' => $date_start,
                 'date_end' => $date_end,
+                'tipe_pembayaran' => $tipe_pembayaran,
             ],
         ]);
     }

@@ -17,6 +17,17 @@
                                     class="form-control">
                             </div>
                         </div>
+                        <div class="col-md-2 col-6 mb-4">
+                            <label for="start" class="form-label">Tipe Pembayaran</label>
+                            <div class="input-group input-daterange">
+                                <select class="form-control input-goldbrand" name="tipe_pembayaran" id="tipe_pembayaran" value="{{ $request['tipe_pembayaran'] }}">
+                                    <option value="">-Tipe pembayaran-</option>
+                                    @foreach ($type_payment as $data)
+                                        <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-md-2 col-6 mb-4 d-flex align-items-end">
                             <button type="submit" class="btn btn-primary w-100">Search</button>
                         </div>
@@ -24,7 +35,8 @@
                             <a
                                 href="{{ route('payment/summary_excel', [
                                     'date_start' => $request['date_start'],
-                                    'date_end' => $request['date_end'], // Perbaiki di sini
+                                    'date_end' => $request['date_end'],
+                                    'tipe_pembayaran' => $request['tipe_pembayaran'],
                                 ]) }}">
                                 <button type="button" class="btn btn-success w-100">Excel</button>
                             </a>
@@ -49,6 +61,7 @@
                 <thead>
                     <tr>
                         <th style="font-size: 14px">Customer</th>
+                        <th style="font-size: 14px">Tipe Pembayaran</th>
                         <th style="font-size: 14px">Tanggal Bayar</th>
                         <th style="font-size: 14px">Kwitansi</th>
                         {{-- <th style="font-size: 14px">Tanggal Wisata</th>
@@ -72,6 +85,7 @@
                         @foreach ($group as $data)
                             <tr>
                                 <td>{{ $data->customer }}</td>
+                                <td>{{ $data->tipe_pembayaran }}</td>
                                 <td>{{ \Carbon\Carbon::parse($data->created_at)->format('d M Y') }}</td>
                                 <td>{{ $data->no_payment }}</td>
                                 <td>{{ \Carbon\Carbon::parse($data->date_start)->format('d M Y') }}</td>

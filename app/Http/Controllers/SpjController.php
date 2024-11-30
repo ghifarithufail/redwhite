@@ -6,6 +6,7 @@ use App\Models\Spj;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use App\Models\Booking_detail;
+use App\Models\Cso\BookingDetail;
 use App\Models\Hrd\Kondektur;
 use App\Models\Hrd\Pengemudi;
 use Carbon\Carbon;
@@ -275,9 +276,17 @@ class SpjController extends Controller
         $spj->date_masuk = Carbon::now();
         $spj->save();
 
-        $booking = Booking::where('id', $spj->booking_details->booking_id)->first();
-        $booking->booking_status = 0;
-        $booking->save();
+        $spj_count_null = Booking_detail::where('booking_id', $spj->booking_details->booking_id)
+                        ->where('is_in', null)->count();
+
+        // $spj_count_null = $booking_detail->
+        \Log::info($spj_count_null);
+
+        if($spj_count_null == 0){
+            $booking = Booking::where('id', $spj->booking_details->booking_id)->first();
+            $booking->booking_status = 0;
+            $booking->save();
+        }
 
         return redirect('/spj/print_out/' .$spj->id);
     }
