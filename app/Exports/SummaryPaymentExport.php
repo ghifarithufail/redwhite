@@ -24,7 +24,7 @@ class SummaryPaymentExport implements FromView, ShouldAutoSize
     {
         $request = $this->request;
 
-        $date_start = $request->input('date_start', now()->format('Y-m-d'));
+        $date_start = $request->input('date_start', now()->format('Y-m-01'));
         $date_end = $request->input('date_end', now()->format('Y-m-d'));
 
         $payment = Payment::select([

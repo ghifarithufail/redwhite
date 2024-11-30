@@ -8,7 +8,7 @@
                 <form>
                     <div class="row">
                         <div class="col-md-6 col-12 mb-4">
-                            <label for="start" class="form-label">Tanggal Pemakaian</label>
+                            <label for="start" class="form-label">Tanggal Pembayaran</label>
                             <div class="input-group input-daterange">
                                 <input type="date" id="date_start" name="date_start" value="{{ $request['date_start'] }}"
                                     class="form-control">
@@ -48,11 +48,11 @@
             <table class="table table-hover" style="zoom: 0.85">
                 <thead>
                     <tr>
-                        <th style="font-size: 14px">Tanggal</th>
-                        <th style="font-size: 14px">Nama Customer</th>
+                        <th style="font-size: 14px">Customer</th>
+                        <th style="font-size: 14px">Tanggal Bayar</th>
                         <th style="font-size: 14px">Kwitansi</th>
-                        <th style="font-size: 14px">Tanggal Wisata</th>
-                        <th style="font-size: 14px">Hari</th>
+                        {{-- <th style="font-size: 14px">Tanggal Wisata</th>
+                        <th style="font-size: 14px">Hari</th> --}}
                         <th style="font-size: 14px">JML UNIT</th>
                         <th style="font-size: 14px">Tujuan Wisata</th>
                         <th style="font-size: 14px">Jenis Pembayaran</th>
@@ -71,12 +71,12 @@
                         </tr>
                         @foreach ($group as $data)
                             <tr>
-                                <td>{{ \Carbon\Carbon::parse($data->created_at)->format('d M Y') }}</td>
                                 <td>{{ $data->customer }}</td>
+                                <td>{{ \Carbon\Carbon::parse($data->created_at)->format('d M Y') }}</td>
                                 <td>{{ $data->no_payment }}</td>
                                 <td>{{ \Carbon\Carbon::parse($data->date_start)->format('d M Y') }}</td>
-                                <td>{{ $data->total_days }} Hari</td>
-                                <td>{{ $data->total_bus }}</td>
+                                {{-- <td>{{ $data->total_days }} Hari</td>
+                                <td>{{ $data->total_bus }}</td> --}}
                                 <td>{{ $data->nama_tujuan }}</td>
                                 <td>
                                     @if ($data->pembayaran_ke == 1)
@@ -93,7 +93,7 @@
                             </tr>
                         @endforeach
                         <tr style="background-color: #dff0d8;">
-                            <td colspan="8" class="text-right"><strong>Total
+                            <td colspan="6" class="text-right"><strong>Total
                                     {{ \Carbon\Carbon::parse($date)->format('d M Y') }}:</strong></td>
                             <td><strong>{{ number_format($totalPrices[$date]) }}</strong></td>
                         </tr>
@@ -103,7 +103,7 @@
                     @endforeach
 
                     <tr style="background-color: #dff0d8;">
-                        <td colspan="8" class="text-right"><strong>Total Pendapatan:</strong></td>
+                        <td colspan="6" class="text-right"><strong>Total Pendapatan:</strong></td>
                         <td><strong>{{ number_format($grandTotal) }}</strong></td>
                     </tr>
                 </tbody>

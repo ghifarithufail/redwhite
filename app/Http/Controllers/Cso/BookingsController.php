@@ -38,19 +38,6 @@ class BookingsController extends Controller
             ->groupBy('bookings.id')
             ->orderBy('created_at','desc');
 
-        // Query untuk Armada yang belum terbooking
-        $unavailableBusIds = BookingDetail::join('bookings', 'booking_details.booking_id', '=', 'bookings.id')
-            ->whereBetween('bookings.date_start', [$date_start, $date_end])
-            ->orWhereBetween('bookings.date_end', [$date_start, $date_end])
-            ->pluck('booking_details.armada_id');
-
-        // Query Armada yang tersedia
-        $availableBuses = Armada::whereNotIn('id', $unavailableBusIds)
-            ->when($type_id, function ($query) use ($type_id) {
-                return $query->where('type_id', $type_id);
-            })
-            ->get();
-
         // Melakukan pencarian berdasarkan kriteria pencarian
         if ($search) {
             $query->where(function ($q) use ($search) {
@@ -90,7 +77,7 @@ class BookingsController extends Controller
             $booking->duration_days = $duration_days;
         }
 
-        return view('layouts.bookings.index', compact('bookings', 'availableBuses'));
+        return view('layouts.bookings.index', compact('bookings'));
     }
 
     public function create(Request $request)
