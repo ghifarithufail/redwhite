@@ -27,6 +27,7 @@ class PaymentController extends Controller
         $no_booking = $request->input('no_booking');
 
         $bookings = Booking::with('payments')->where('payment_status', '2')
+            ->where('booking_status','1')
 
             ->orderBy('created_at', 'desc');
 

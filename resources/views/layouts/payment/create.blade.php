@@ -101,7 +101,7 @@
                         <label class="control-label col-sm-3">Awal Pemakaian :</label>
                         <div class="col-sm-9">
                             <input type="date"
-                                value="{{ Carbon\Carbon::parse($booking->start_date)->format('Y-m-d') }}" disabled
+                                value="{{ Carbon\Carbon::parse($booking->date_start)->format('Y-m-d') }}" disabled
                                 class="form-control" />
                         </div>
                     </div>
@@ -121,7 +121,7 @@
                         <label class="control-label col-sm-3">Akahir Pemakaian</label>
                         <div class="col-sm-9">
                             <input type="date"
-                                value="{{ Carbon\Carbon::parse($booking->end_date)->format('Y-m-d') }}" disabled
+                                value="{{ Carbon\Carbon::parse($booking->date_end)->format('Y-m-d') }}" disabled
                                 class="form-control" />
                         </div>
                     </div>
