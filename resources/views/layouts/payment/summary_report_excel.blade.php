@@ -48,7 +48,7 @@
                 </tr>
             @endforeach
             <tr style="background-color: #dff0d8;">
-                <td colspan="8" class="text-right"><strong>Total
+                <td colspan="9" class="text-right"><strong>Total
                         {{ \Carbon\Carbon::parse($date)->format('d M Y') }}:</strong></td>
                 <td><strong>{{ number_format($totalPrices[$date]) }}</strong></td>
             </tr>
@@ -58,7 +58,7 @@
         @endforeach
 
         <tr style="background-color: #dff0d8;">
-            <td colspan="8" class="text-right"><strong>Total Pendapatan:</strong></td>
+            <td colspan="9" class="text-right"><strong>Total Pendapatan:</strong></td>
             <td><strong>{{ number_format($grandTotal) }}</strong></td>
         </tr>
     </tbody>
