@@ -9,13 +9,13 @@
     </div>
     <div class="card mt-4">
         <div class="table-responsive text-nowrap">
-            @if ($pengemudi && $kondektur > 0)
+            {{-- @if ($pengemudi && $kondektur > 0) --}}
             <div class="d-flex justify-content-end mb-2 p-3" style="zoom: 0.75">
                 <a href="{{ route('input/pengemudi', $detail[0]->bookings->id) }}" type="button" class="btn btn-primary">
                     Input Pengemudi
                 </a>
             </div>
-            @endif
+            {{-- @endif --}}
             <table class="table table-hover" style="zoom: 0.75">
                 <thead>
                     <tr>
