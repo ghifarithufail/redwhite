@@ -35,6 +35,7 @@ class BookingsController extends Controller
                 DB::raw('DATEDIFF(bookings.date_end, bookings.date_start) as duration_days')
             ])
             ->leftJoin('booking_details', 'bookings.id', '=', 'booking_details.booking_id')
+            ->where('booking_status','1')
             ->groupBy('bookings.id')
             ->orderBy('created_at','desc');
 
