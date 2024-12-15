@@ -69,6 +69,9 @@
 
                 </tbody>
             </table>
+            <div class="d-flex justify-content-end p-3">
+                {{ $booking->links() }}
+            </div>
         </div>
     </div>
 @endsection

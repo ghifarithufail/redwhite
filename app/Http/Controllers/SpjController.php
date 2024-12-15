@@ -49,7 +49,8 @@ class SpjController extends Controller
         }
 
 
-        $booking = $bookings->get();
+        // $booking = $bookings->get();
+        $booking = $bookings->paginate(10)->appends($request->all());
 
 
         return view('layouts.spj.index', [
