@@ -242,14 +242,16 @@ class BookingController extends Controller
         //     // })
         //     ->get();
             
-            $pengemudi = Kondektur::whereHas('users', function ($users) {
-                $users->orderBy('name', 'asc');
-            })->get();
+        $pengemudi = Pengemudi::join('users', 'users.id', '=', 'pengemudis.user_id') // Sesuaikan relasi
+        ->orderBy('users.name', 'asc')
+        ->select('pengemudis.*') // Hanya pilih kolom dari tabel `pengemudi`
+        ->get();
     
 
-        $kondektur = Kondektur::whereHas('users', function ($users) {
-            $users->orderBy('name', 'asc');
-        })->get();
+        $kondektur = Kondektur::join('users', 'users.id', '=', 'kondekturs.user_id') // Sesuaikan relasi
+            ->orderBy('users.name', 'asc') // Urutkan berdasarkan nama user
+            ->select('kondekturs.*') // Pilih hanya kolom dari tabel `kondektur`
+            ->get();
 
         $buses = Armada::whereDoesntHave('booking_details.bookings', function ($query) use ($booking) {
             $query->whereDate('date_start', '<=', $booking->date_end)
