@@ -134,6 +134,10 @@
                                             <input type="number" id="diskon" name="diskon"
                                                 value="{{ $booking->diskon }}" class="form-control">
                                         </div>
+                                        <div class="col-sm-6">
+                                            <label class="form-label" for="diskon">Biaya jemput</label>
+                                            <input type="number" id="biaya_jemput" name="biaya_jemput" value="{{ $booking->biaya_jemput }}" class="form-control">
+                                        </div>
                                         <div class="col-sm-6 fv-plugins-icon-container">
                                             <label class="form-label" for="harga_std">Harga Booking</label>
                                             <input type="text" id="total_harga_std" value="{{ $booking->harga_std }}"
@@ -154,6 +158,11 @@
                                         <div class="col-sm-6 fv-plugins-icon-container">
                                             <label class="form-label" for="keterangan">Keterangan</label>
                                             <input type="text" id="keterangan" value="{{ $booking->keterangan }}"
+                                                name="keterangan" class="form-control">
+                                        </div>
+                                        <div class="col-sm-6 fv-plugins-icon-container">
+                                            <label class="form-label" for="keterangan">DP Customer</label>
+                                            <input type="text" id="keterangan" value="{{ $booking->dp_customer }}"
                                                 name="keterangan" class="form-control">
                                         </div>
                                         <div class="pt-5 d-flex justify-content-end" id="button_container">
@@ -226,31 +235,7 @@
                 updateGrandTotal(); // Panggil fungsi untuk memperbarui grand total
             });
 
-            function updateGrandTotal() {
-                var checkedCheckboxes = document.querySelectorAll('input[name="bus_id[]"]:checked');
-                totalBusInput.value = checkedCheckboxes.length;
-
-                var hargaStd = parseFloat(hargaStdInput.value.replace(/,/g, ''));
-                var totalBus = parseInt(totalBusInput.value);
-                var totalDiskon = parseFloat(diskon.value.replace(/,/g, ''));
-
-                // Ensure values are valid numbers
-                if (isNaN(hargaStd)) {
-                    hargaStd = 0;
-                }
-                if (isNaN(totalBus)) {
-                    totalBus = 0;
-                }
-                if (isNaN(totalDiskon)) {
-                    totalDiskon = 0;
-                }
-
-                // Ensure the discount is not more than the total price
-                var grandTotal = (hargaStd * totalBus) - totalDiskon;
-
-                // Update the grand total input value
-                grandTotalInput.value = numberWithCommas(grandTotal.toFixed(0));
-            }
+            
 
             function numberWithCommas(x) {
                 return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -374,6 +359,8 @@
                 var hargaStdInput = document.getElementById('total_harga_std');
                 var diskon = document.getElementById('diskon');
                 var grandTotalInput = document.getElementById('grand_total');
+                var biayaJemputInput = document.getElementById('biaya_jemput');
+
 
                 // Calculate grand total
                 var checkedCheckboxes = document.querySelectorAll('input[name="bus_id[]"]:checked');
@@ -382,6 +369,8 @@
                 var hargaStd = parseFloat(hargaStdInput.value.replace(/,/g, ''));
                 var totalBus = parseInt(totalBusInput.value);
                 var totalDiskon = parseFloat(diskon.value.replace(/,/g, ''));
+                var biayaJemput = parseFloat(biayaJemputInput.value.replace(/,/g, ''));
+
 
                 // Ensure values are valid numbers
                 if (isNaN(hargaStd)) {
@@ -395,7 +384,7 @@
                 }
 
                 // Ensure the discount is not more than the total price
-                var grandTotal = (hargaStd * totalBus) - totalDiskon;
+                var grandTotal = (hargaStd * totalBus) + biayaJemput - totalDiskon;
 
                 // Update the grand total input value
                 grandTotalInput.value = numberWithCommas(grandTotal.toFixed(0));
