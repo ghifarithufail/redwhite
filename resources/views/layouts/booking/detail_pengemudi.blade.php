@@ -33,11 +33,19 @@
                                 <label class="form-label" for="supir_id">Pengemudi</label>
                                 <div class="input-group input-group-merge">
                                     <select class="form-control select2" name="supir_id" id="supir_id">
+                                        @if ($detail->pengemudis)
                                         <option value="{{ $detail->supir_id }}"> == {{ $detail->pengemudis->users->name }}
                                             == </option>
                                         @foreach ($pengemudi as $data)
                                             <option value="{{ $data->id }}">{{ $data->users->name }}</option>
                                         @endforeach
+                                        @else
+                                            <option value=""> == Silahkan Pilih Pengemudi == </option>
+                                            @foreach ($pengemudi as $data)
+                                                <option value="{{ $data->id }}">{{ $data->users->name }}</option>
+                                            @endforeach
+                                        @endif
+                                        
                                     </select>
                                 </div>
                             </div>
@@ -47,11 +55,20 @@
                                 <label class="form-label" for="kondektur_id">Kondektur</label>
                                 <div class="input-group input-group-merge">
                                     <select class="form-control select2" name="kondektur_id" id="kondektur_id">
-                                        <option value="{{ $detail->kondektur_id }}"> == {{ $detail->kondekturs->users->name }}
+                                        @if ($detail->kondekturs)
+                                        <option value="{{ $detail->supir_id }}"> == {{ $detail->kondekturs->users->name }}
                                             == </option>
-                                        @foreach ($kondektur as $kondekturs)
-                                            <option value="{{ $kondekturs->id }}">{{ $kondekturs->users->name }}</option>
+                                        @foreach ($kondektur as $data)
+                                            <option value="{{ $data->id }}">{{ $data->users->name }}</option>
                                         @endforeach
+                                    @else
+                                        <option value=""> == Silahkan Pilih Kondektur ==</option>
+                                        @foreach ($kondektur as $data)
+                                            <option value="{{ $data->id }}">{{ $data->users->name }}</option>
+                                        @endforeach
+                                        
+                                    @endif
+                                    
                                     </select>
                                 </div>
                             </div>
