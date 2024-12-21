@@ -215,7 +215,7 @@ class BookingController extends Controller
             return $detail->armadas->type_armada->name;
         })->unique();
 
-        return view('layouts.booking.print', compact('booking','type_bus'));
+        return view('layouts.booking.print', compact('booking', 'type_bus'));
     }
 
     /**
@@ -241,12 +241,12 @@ class BookingController extends Controller
         //     //     $users->orderBy('name', 'asc');
         //     // })
         //     ->get();
-            
+
         $pengemudi = Pengemudi::join('users', 'users.id', '=', 'pengemudis.user_id') // Sesuaikan relasi
-        ->orderBy('users.name', 'asc')
-        ->select('pengemudis.*') // Hanya pilih kolom dari tabel `pengemudi`
-        ->get();
-    
+            ->orderBy('users.name', 'asc')
+            ->select('pengemudis.*') // Hanya pilih kolom dari tabel `pengemudi`
+            ->get();
+
 
         $kondektur = Kondektur::join('users', 'users.id', '=', 'kondekturs.user_id') // Sesuaikan relasi
             ->orderBy('users.name', 'asc') // Urutkan berdasarkan nama user
@@ -355,37 +355,49 @@ class BookingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update_pengemudi(Request $request)
+
+    public function detail_pengemudi($id)
     {
-        try {
-            DB::beginTransaction();
+        $detail = Booking_detail::find($id);
 
-            $bookingId = $request->input('booking_id');
-            $detail = Booking_detail::where('id', $bookingId)->first();
+        $armada = Armada::orderBy('nobody', 'asc')->get();
 
-            if (!$detail) {
-                return response()->json(['error' => 'Booking detail not found'], 404);
-            }
+        $pengemudi = Pengemudi::join('users', 'users.id', '=', 'pengemudis.user_id') // Sesuaikan relasi
+            ->orderBy('users.name', 'asc')
+            ->select('pengemudis.*')
+            ->where('pengemudis.status', 'Active')
+            ->get();
 
-            $detail->supir_id = $request->input('supir_id');
-            $detail->Kondektur_id = $request->input('kondektur_id');
-            if ($request->input('armada_id') != null) {
-                $detail->armada_id = $request->input('armada_id');
-            }
-            // \Log::info($detail->armada_id);
-            // return 123;
 
-            $detail->save();
+        $kondektur = Kondektur::join('users', 'users.id', '=', 'kondekturs.user_id') // Sesuaikan relasi
+            ->orderBy('users.name', 'asc') // Urutkan berdasarkan nama user
+            ->select('kondekturs.*')
+            ->where('kondekturs.status', 'Active')
+            ->get();
 
-            DB::commit();
-
-            return response()->json(['success' => 'Data updated successfully'], 200);
-        } catch (\Exception $e) {
-            DB::rollback();
-            \Log::info($e);
-            return response()->json(['error' => $e->getMessage()], 422);
-        }
+        return view('layouts.booking.detail_pengemudi', [
+            'detail' => $detail,
+            'armada' => $armada,
+            'pengemudi' => $pengemudi,
+            'kondektur' => $kondektur
+        ]);
     }
+
+    #ROMBAK CODE UPDATE#
+    public function update_pengemudi(Request $request, $id)
+    {
+        $data = Booking_detail::find($id);
+
+        $data->supir_id = $request->input('supir_id');
+        $data->kondektur_id = $request->input('kondektur_id');
+        $data->armada_id = $request->input('armada_id');
+
+        $data->save();
+
+        \Log::info($data);
+        return redirect('booking/pengemudi/'. $data->bookings->id);
+    }
+
 
 
     public function jadwal()

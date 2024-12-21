@@ -84,8 +84,8 @@
                                                                 <span class="custom-option-body">
                                                                     <i class="bx bx-bus"></i>
                                                                     <span
-                                                                        class="custom-option-title">{{ $data->nobody }}</span>
-                                                                    <small>{{ $data->nopolisi }}</small>
+                                                                        class="custom-option-title">{{ $data->nobody }} </span>
+                                                                    <small>{{ $data->nopolisi }} - {{$data->type_armada->name}}</small>
                                                                 </span>
                                                                 <input name="bus_id[]" class="form-check-input"
                                                                     type="checkbox" value="{{ $data->id }}"

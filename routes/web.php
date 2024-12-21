@@ -124,7 +124,8 @@ Route::middleware(['auth', 'role:super-admin|admin|Operasi|Cso'])->group(functio
     Route::get('/detail/{id}', [BookingController::class, 'detail'])->name('booking/detail');
     Route::post('/store-detail', [BookingController::class, 'store_detail'])->name('booking/store_detail');
     Route::get('/pengemudi/{id}', [BookingController::class, 'pengemudi'])->name('booking/pengemudi');
-    Route::post('/update-data', [BookingController::class, 'update_pengemudi'])->name('booking/update');
+    Route::post('/update-data/{id}', [BookingController::class, 'update_pengemudi'])->name('pengemudi/update');
+    Route::get('/detail_pengemudi/{id}', [BookingController::class, 'detail_pengemudi'])->name('booking/detail_pengemudi');
     Route::get('/jadwal', [BookingController::class, 'jadwal'])->name('jadwal');
     Route::post('/getTujuan', [BookingController::class, 'getTujuan'])->name('getTujuan');
     Route::post('/getTotalHargaStd', [BookingController::class, 'getTotalHargaStd'])->name('getTotalHargaStd');
