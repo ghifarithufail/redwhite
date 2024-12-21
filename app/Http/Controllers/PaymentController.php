@@ -154,8 +154,13 @@ class PaymentController extends Controller
     {
         $payments = Payment::find($id);
 
+        $type_bus = $payments->bookings->bookingDetails->map(function ($detail) {
+            return $detail->armadas->type_armada->name;
+        })->unique();
+
         return view('layouts.payment.invoice', [
             'payments' => $payments,
+            'type_bus' => $type_bus
         ]);
     }
 

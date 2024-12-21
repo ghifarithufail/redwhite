@@ -98,6 +98,19 @@
                         <div style="border: 1px solid #ccc; padding: 5px; text-align: left !important;">
                             <div style="padding:5px;"><b>Jumlah Belum Dibayarkan : Rp.{{ number_format($payments->bookings->grand_total -  $payments->bookings->total_payment ?? 0)}}</b></div>
                         </div>
+                        <div style="border: 1px solid #ccc; padding: 5px; text-align: left !important;">
+                            <div style="padding:5px;"><b>Type Bus : @foreach ($type_bus as $type)
+                                {{ $type }},
+                            @endforeach</b></div>
+                        </div>
+                        {{-- <tr>
+                            <td width="25%" valign="top">Type Bus</td>
+                            <td width="75%" class="bold" valign="top">:
+                                @foreach ($type_bus as $type)
+                                    {{ $type }},
+                                @endforeach
+                            </td>
+                        </tr> --}}
                     </td>
                     <td width="30%"></td>
                     <td width="35%">
