@@ -14,9 +14,9 @@
                         <div class="col-md-4 col-6 mb-4">
                             <label for="start" class="form-label">Booking Dibuat</label>
                             <div class="input-group input-daterange">
-                                <input type="date" id="date_start" name="date_start" value="{{ $request['date_start'] }}" class="form-control" >
+                                <input type="date" id="start" name="start" value="{{ $request['start'] }}" class="form-control" >
                                 <span class="input-group-text">s/d</span>
-                                <input type="date" id="date_end" value="{{ $request['date_end'] }}" name="date_end" class="form-control" >
+                                <input type="date" id="end" value="{{ $request['end'] }}" name="end" class="form-control" >
                             </div>
                         </div>
                         <div class="col-md-3 col-2 mb-4">

@@ -316,8 +316,8 @@
                                         <th style="text-align: right">Harga</th>
                                     </tr>
                                     <tr>
-                                        <td>Uang Jalan</td>
-                                        <td style="text-align: right">{{ number_format($spj->uang_jalan) }}</td>
+                                        <td><b>Uang Jalan</b></td>
+                                        <td style="text-align: right"><b>{{ number_format($spj->uang_jalan) }}</b></td>
                                     </tr>
                                     <tr>
                                         <td>BBM</td>
@@ -342,6 +342,12 @@
                                     <tr>
                                         <td>Biaya Lain</td>
                                         <td style="text-align: right">{{ number_format($spj->biaya_lain) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align: right">Total Biaya Operasional: </th>
+                                        <th style="text-align: right">
+                                            {{ number_format($spj->bbm + $spj->uang_makan + $spj->parkir + $spj->tol + $spj->biaya_lain) }}
+                                        </th>
                                     </tr>
                                     <tr>
                                         <th style="text-align: right">Total Biaya yang harus dikembalikan: </th>

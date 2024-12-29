@@ -19,24 +19,24 @@ class PaymentController extends Controller
      */
     public function index(Request $request)
     {
+        
         // $date_start = $request->input('date_start', now()->format('Y-m-d'));
         // $date_end = $request->input('date_end', now()->format('Y-m-d'));
-        $date_start = $request->input('date_start');
-        $date_end = $request->input('date_end');
+        $start = $request->input('start');
+        $end = $request->input('end');
         $customer = $request->input('customer');
         $no_booking = $request->input('no_booking');
 
         $bookings = Booking::with('payments')->where('payment_status', '2')
             ->where('booking_status','1')
-
             ->orderBy('created_at', 'desc');
 
-        if ($request['date_start']) {
-            $bookings->where('created_at', '>=', $request['date_start']);
+        if ($request['start']) {
+            $bookings->where('date_start', '>=', $request['start']);
         }
 
-        if ($request['date_end']) {
-            $bookings->where('created_at', '<=', $request['date_end']);
+        if ($request['end']) {
+            $bookings->where('date_end', '<=', $request['end']);
         }
 
         if ($request['customer']) {
@@ -47,12 +47,13 @@ class PaymentController extends Controller
         }
 
         $booking = $bookings->paginate(10)->appends($request->all());
+        // $booking = $bookings->get();
 
         return view('layouts.payment.index', [
             'booking' => $booking,
             'request' => [
-                'date_start' => $date_start,
-                'date_end' => $date_end,
+                'start' => $start,
+                'end' => $end,
                 'customer' => $customer,
                 'no_booking' => $no_booking,
             ],
@@ -166,19 +167,19 @@ class PaymentController extends Controller
 
     public function report(Request $request)
     {
-        $start_date = $request->input('date_start', now()->format('Y-m-01'));
-        $end_date = $request->input('date_end', now()->format('Y-m-d'));
+        $start = $request->input('start', now()->format('Y-m-01'));
+        $end = $request->input('end', now()->format('Y-m-d'));
         $nama = $request->input('nama');
         $no_booking = $request->input('no_booking');
 
-        $bookings = Booking::latest();
+        $bookings = Booking::orderBy('created_at', 'desc');
 
-        if ($request['start_date']) {
-            $bookings->whereDate('date_start', '>=', $request['start_date']);
+        if ($request['start']) {
+            $bookings->whereDate('date_start', '>=', $request['start']);
         }
-
-        if ($request['end_date']) {
-            $bookings->whereDate('date_end', '<=', $request['end_date']);
+        
+        if ($request['end']) {
+            $bookings->whereDate('date_end', '<=', $request['end']);
         }
 
         if ($request['nama']) {
@@ -200,8 +201,8 @@ class PaymentController extends Controller
         return view('layouts.payment.report', [
             'booking' => $booking,
             'request' => [
-                'start_date' => $start_date,
-                'end_date' => $end_date,
+                'start' => $start,
+                'end' => $end,
                 'nama' => $nama,
                 'no_booking' => $no_booking,
             ],

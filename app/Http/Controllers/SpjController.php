@@ -146,8 +146,19 @@ class SpjController extends Controller
         $pengemudi = Pengemudi::orderBy('nopengemudi', 'desc')->get();
         $kondektur = Kondektur::orderBy('nokondektur', 'desc')->get();
 
+        
+        $bus = $spj->booking_details->armada_id;
+        $armada = Booking_detail::where('armada_id', $bus)
+        ->orderBy('created_at', 'desc')
+        ->skip(1) // Melewati data pertama
+        ->first(); // Mengambil data kedua
+    
+
+        $km_akhir = $armada->spjs->km_masuk;
+
         return view('layouts.spj.create_out', [
             'spj' => $spj,
+            'km_akhir' => $km_akhir,
             'pengemudi' => $pengemudi,
             'kondektur' => $kondektur
         ]);

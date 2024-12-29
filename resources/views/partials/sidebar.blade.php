@@ -387,20 +387,6 @@
                     </a>
                 </li>
             </ul>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    {{-- <a href="{{ route('report/detail') }}" class="menu-link">
-                        <div data-i18n="detail">detail</div>
-                    </a> --}}
-                </li>
-            </ul>
-            <ul class="menu-sub">
-                {{-- <li class="menu-item">
-                    <a href="{{ route('report.spj') }}" class="menu-link">
-                        <div data-i18n="SPJ">SPJ</div>
-                    </a>
-                </li> --}}
-            </ul>
         </li>
 
 </aside>

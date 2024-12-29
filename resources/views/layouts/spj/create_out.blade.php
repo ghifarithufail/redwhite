@@ -91,7 +91,11 @@
                                 </div>
                             </div>
                             <div class="form-group mt-3">
-                                <label class="control-label col-sm-3">Km Keluar :</label>
+                                <label class="control-label col-sm-3">Km Keluar : 
+                                    @if ($km_akhir)
+                                        <span> <b>KM SEBELUMNYA {{number_format($km_akhir)}}</b></span>
+                                    @endif
+                                </label>
                                 <div class="col-sm-12 mt-2">
                                     <input type="number" class="form-control input-quantity" name="km_keluar" required>
                                 </div>

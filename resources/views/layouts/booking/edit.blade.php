@@ -44,9 +44,9 @@
 
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
-                            <label class="control-label col-sm-3">Total Penumpang :</label>
+                            <label class="control-label col-sm-3">Booking Dibuat :</label>
                             <div class="col-sm-9">
-                                <input type="text" value="{{ $booking->total_passanger }}" disabled
+                                <input type="text" value="{{ $booking->created_at }}" disabled
                                     class="form-control" />
                             </div>
                         </div>

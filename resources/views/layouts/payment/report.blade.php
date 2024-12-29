@@ -22,9 +22,9 @@
                         <div class="col-md-4 col-4 mb-4">
                             <label for="start" class="form-label">Tanggal Wisata</label>
                             <div class="input-group input-daterange">
-                                <input type="date" id="start_date" name="start_date" class="form-control" >
+                                <input type="date" id="start" name="start" class="form-control" >
                                 <span class="input-group-text">s/d</span>
-                                <input type="date" id="end_date"  name="end_date" class="form-control" >
+                                <input type="date" id="end"  name="end" class="form-control" >
                             </div>
                         </div>
                         

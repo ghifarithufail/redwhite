@@ -66,7 +66,7 @@
                         <th style="font-size: 14px">Kwitansi</th>
                         {{-- <th style="font-size: 14px">Tanggal Wisata</th>
                         <th style="font-size: 14px">Hari</th> --}}
-                        <th style="font-size: 14px">JML UNIT</th>
+                        {{-- <th style="font-size: 14px">JML UNIT</th> --}}
                         <th style="font-size: 14px">Tujuan Wisata</th>
                         <th style="font-size: 14px">Jenis Pembayaran</th>
                         <th style="font-size: 14px">Jumlah</th>
@@ -86,9 +86,9 @@
                             <tr>
                                 <td>{{ $data->customer }}</td>
                                 <td>{{ $data->tipe_pembayaran }}</td>
-                                <td>{{ \Carbon\Carbon::parse($data->created_at)->format('d M Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($data->tgl_bayar)->format('d M Y') }}</td>
                                 <td>{{ $data->no_payment }}</td>
-                                <td>{{ \Carbon\Carbon::parse($data->date_start)->format('d M Y') }}</td>
+                                {{-- <td>{{ \Carbon\Carbon::parse($data->date_start)->format('d M Y') }}</td> --}}
                                 {{-- <td>{{ $data->total_days }} Hari</td>
                                 <td>{{ $data->total_bus }}</td> --}}
                                 <td>{{ $data->nama_tujuan }}</td>
@@ -107,7 +107,7 @@
                             </tr>
                         @endforeach
                         <tr style="background-color: #dff0d8;">
-                            <td colspan="7" class="text-right"><strong>Total
+                            <td colspan="6" class="text-right"><strong>Total
                                     {{ \Carbon\Carbon::parse($date)->format('d M Y') }}:</strong></td>
                             <td><strong>{{ number_format($totalPrices[$date]) }}</strong></td>
                         </tr>
@@ -117,7 +117,7 @@
                     @endforeach
 
                     <tr style="background-color: #dff0d8;">
-                        <td colspan="7" class="text-right"><strong>Total Pendapatan:</strong></td>
+                        <td colspan="6" class="text-right"><strong>Total Pendapatan:</strong></td>
                         <td><strong>{{ number_format($grandTotal) }}</strong></td>
                     </tr>
                 </tbody>
