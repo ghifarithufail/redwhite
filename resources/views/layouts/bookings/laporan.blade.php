@@ -79,10 +79,13 @@
                                     <button type="button" class="btn rounded-pill btn-primary" fdprocessedid="c80zr4">
                                         Edit</button>
                                 </a>
-                                <a href="{{ route('booking/pengemudi', $data->id) }}">
+                                <a href="{{ route('input/pengemudi', $data->id) }}">
                                     <button type="button" class="btn rounded-pill btn-primary" fdprocessedid="c80zr4">Input
                                         Pengemudi</button>
                                 </a>
+                                {{-- <a href="{{ route('input/pengemudi', $data->id) }}" type="button" class="btn btn-primary">
+                                    Input Pengemudi
+                                </a> --}}
                                 <a href="{{ route('booking.edit', $data->id) }}">
                                     <button type="button" class="btn rounded-pill btn-warning"
                                         fdprocessedid="c80zr4">detail</button>
