@@ -395,7 +395,7 @@ class SpjController extends Controller
             $spjs->whereDate('date_end', '<=', $request['end_date']);
         }
 
-        $spj = $spjs->paginate(10);
+        $spj = $spjs->paginate(20);
 
         return view('layouts.spj.report', [
             'spj' => $spj,
