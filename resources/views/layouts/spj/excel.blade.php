@@ -28,7 +28,7 @@
                         <td>{{ $data->booking_details->armadas->nopolisi }}</td>
                         <td>{{ $data->booking_details->bookings->no_booking }}</td>
                         <td>{{ $data->booking_details->bookings->customer }}</td>
-                        <td>{{ $data->booking_details->bookings->tujuan->nama_tujuan }}</td>
+                        <td>{{ $data->booking_details->bookings->tujuan ? $data->booking_details->bookings->tujuan->nama_tujuan : '-' }}</td>
                         <td>{{ $data->date_keluar }}</td>
                         <td>{{ $data->booking_details->bookings->date_start }}</td>
                         <td>{{ $data->booking_details->bookings->date_end }}</td>
