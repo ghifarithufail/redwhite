@@ -35,7 +35,7 @@
                         <td>{{ $data->booking_details->pengemudis ? $data->booking_details->pengemudis->nopengemudi : '-' }}</td>
                         <td>{{ $data->booking_details->pengemudis ? $data->booking_details->pengemudis->users->name : '-' }}</td>
                         <td>{{ $data->booking_details->kondekturs ? $data->booking_details->kondekturs->nokondektur : '-' }}</td>
-                        <td>{{ $data->booking_details->pengemudis ? $data->booking_details->kondekturs->users->name : '-' }}</td>
+                        <td>{{ $data->booking_details->kondekturs ? $data->booking_details->kondekturs->users->name : '-' }}</td>
                         <td>{{ $data->uang_jalan }}</td>
                         <td>{{ $data->booking_details->bookings->users ? $data->booking_details->bookings->users->name : '-' }}</td>
                     </tr>
