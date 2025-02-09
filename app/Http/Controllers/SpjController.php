@@ -154,7 +154,7 @@ class SpjController extends Controller
         ->first(); // Mengambil data kedua
     
 
-        $km_akhir = $armada->spjs->km_masuk;
+         $km_akhir = $armada && $armada->spjs ? $armada->spjs->km_masuk : null;
 
         return view('layouts.spj.create_out', [
             'spj' => $spj,
