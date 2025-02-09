@@ -151,25 +151,15 @@
                         <td>
                             {{ $spj->booking_details ? $spj->booking_details->pengemudis->users->name : '-' }} /
                             {{ $spj->booking_details ? $spj->booking_details->pengemudis->nopengemudi : '-' }}
-                            {{-- @if ($spj->bookingDetails && $spj->bookingDetails->isNotEmpty())
-                                @foreach ($spj->bookingDetails as $detail)
-                                    @if ($detail->pengemudi)
-                                        {{ $detail->pengemudi->user ? $detail->pengemudi->user->name : 'User Not Found' }} / {{ $detail->pengemudi->nopengemudi }}
-                                    @else
-                                        Pengemudi Not Found
-                                    @endif
-                                @endforeach
-                            @else
-                                Booking Details Not Found
-                            @endif --}}
                         </td>
-                        {{-- <td>
-                            @if ($spj->booking_details && $spj->booking_details->pengemudis && $spj->booking_details->pengemudis->users)
-                                {{ $spj->booking_details->pengemudis->users->name }} / {{ $spj->booking_details->pengemudis->nopengemudi }}
-                            @else
-                                Data tidak tersedia
-                            @endif
-                        </td> --}}
+                    </tr>
+                    <tr>
+                        <td width="170">Kondektur/Nomor Induk</td>
+                        <td width="1%">:</td>
+                        <td>
+                            {{ $spj->booking_details ? $spj->booking_details->kondekturs->users->name : '-' }} /
+                            {{ $spj->booking_details ? $spj->booking_details->kondekturs->nokondektur : '-' }}
+                        </td>
                     </tr>
                     <tr>
                         <td width="170">No.Body / No.Polisi</td>

@@ -1,4 +1,3 @@
-
 @extends('main')
 @section('content')
     <div class="card text-center">
@@ -14,23 +13,35 @@
                     </div> --}}
                     <div class="col-sm-3 mt-2">
                         {{-- <label for="date1">Kecamatan:</label> --}}
-                        <input type="date" style="height: 40px" class="form-control"
-                            placeholder="kelurahan atau kecamatan" value="{{ $request['date_start'] }}" name="date_start" id="date_start">
+                        <input type="date" style="height: 40px" class="form-control" placeholder="kelurahan atau kecamatan"
+                            value="{{ $request['start_date'] }}" name="start_date" id="start_date">
                     </div>
                     <div class="col-sm-3 mt-2">
                         {{-- <label for="date1">Kecamatan:</label> --}}
                         <input type="date" style="height: 40px" class="form-control"
-                            placeholder="kelurahan atau kecamatan" value="{{ $request['date_end'] }}" name="date_end" id="date_end">
+                            placeholder="kelurahan atau kecamatan" value="{{ $request['end_date'] }}" name="end_date"
+                            id="end_date">
                     </div>
                     <div class="col-sm-3 mt-2">
-                        <input type="text" class="form-control" placeholder="No SPJ" name="no_spj" id="no_spj">
+                        <input type="text" class="form-control" placeholder="customer" name="customer" id="customer">
                     </div>
                     <div class="col-sm-3 mt-2">
-                        <input type="text" class="form-control" placeholder="No Booking" name="no_booking" id="no_booking">
+                        <input type="text" class="form-control" placeholder="No Booking" name="no_booking"
+                            id="no_booking">
                     </div>
-                    <div class="col-sm-2">
-                        <button type="submit" class="btn btn-primary rounded text-white mt-2 mr-2" style="height: 40px"
-                            id="search_btn">Search</button>
+                    <div class="col-sm-2 mt-3">
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary rounded text-white mt-2" style="height: 40px;"
+                                id="search_btn">Search</button>
+                            <a href="{{ route('spj/excel', [
+                                'start_date' => $request['start_date'],
+                                'end_date' => $request['end_date'],
+                                'customer' => $request['customer'],
+                                'no_booking' => $request['no_booking'],
+                            ]) }}"
+                                class="btn btn-success rounded text-white mt-2" style="height: 40px;"
+                                id="search_btn">excel</a>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -41,33 +52,28 @@
             <table class="table table-hover" style="zoom: 0.75">
                 <thead>
                     <tr>
-                        <th>No SPJ</th>
                         <th>No Booking</th>
-                        <th>Bus</th>
-                        <th>Jam Jemput</th>
-                        <th>BBM</th>
-                        <th>Uang Makan</th>
-                        <th>Parkir</th>
-                        <th>Tol</th>
-                        <th>Biaya Lain</th>
+                        <th>Customer</th>
+                        <th>Waktu</th>
+                        <th>Uang Berangkat</th>
+                        <th>BOP</th>
+                        <th>Sisa Biaya Keluar</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
                     @foreach ($spj as $data)
                         <tr>
-                            <td>{{ $data->no_spj }}</td>
-                            <td>{{ $data->booking_details->bookings->no_booking }}</td>
-                            <td>{{ $data->booking_details->armadas->nobody }}</td>
-                            <td>{{ $data->jam_jemput }}</td>
-                            <td>{{ $data->bbm }}</td>
-                            <td>{{ $data->uang_makan }}</td>
-                            <td>{{ $data->parkir }}</td>
-                            <td>{{ $data->tol }}</td>
-                            <td>{{ $data->biaya_lain ? $data->biaya_lain : '-' }}</td>
+                            <td>{{ $data->no_booking }}</td>
+                            <td>{{ $data->customer }}</td>
+                            <td>{{ \Carbon\Carbon::parse($data->date_start)->translatedFormat('l, d F Y') }} S/D
+                                {{ \Carbon\Carbon::parse($data->date_end)->translatedFormat('l, d F Y') }}
+                            </td>
 
+                            <td>{{ number_format($data->total_uang_berangkat) }}</td>
+                            <td>{{ number_format($data->bop) }}</td>
+                            <td>{{ number_format($data->sisa_biaya_keluar) }}</td>
                         </tr>
                     @endforeach
-
                 </tbody>
             </table>
         </div>

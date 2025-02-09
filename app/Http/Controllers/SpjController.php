@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\SpjExport;
 use App\Models\Spj;
 use App\Models\Booking;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Excel;
 
 class SpjController extends Controller
 {
@@ -339,47 +341,75 @@ class SpjController extends Controller
     public function report(Request $request)
     {
 
-        $no_spj = $request->input('no_spj');
+        $customer = $request->input('customer');
         $no_booking = $request->input('no_booking');
-        $tanggal = $request->input('tanggal');
-        $date_start = $request->input('date_start', now()->startOfMonth()->format('Y-m-d'));
-        $date_end = $request->input('date_end', now()->endOfMonth()->format('Y-m-d'));
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
 
-        $booking = Booking::orderBy('created_at', 'desc')->get();
-        $spjs = Spj::with('booking_details')
-            ->where('type', 2)
-            ->orderBy('created_at', 'desc');
+        $spjs = DB::table('bookings as b')
+            ->join('booking_details as bd', 'b.id', '=', 'bd.booking_id')
+            ->join('spjs as s', 'bd.id', '=', 's.booking_detail_id')
+            ->select(
+                'b.no_booking',
+                'b.customer',
+                'b.date_start',
+                'b.date_end',
+                DB::raw('SUM(s.uang_jalan) AS total_uang_berangkat'),
+                DB::raw('
+            SUM(
+                COALESCE(s.bbm, 0) + 
+                COALESCE(s.uang_makan, 0) + 
+                COALESCE(s.parkir, 0) + 
+                COALESCE(s.tol, 0) + 
+                COALESCE(s.biaya_lain, 0)
+            ) AS bop
+        '),
+                DB::raw('
+            SUM(
+                s.uang_jalan - (
+                    COALESCE(s.bbm, 0) + 
+                    COALESCE(s.uang_makan, 0) + 
+                    COALESCE(s.parkir, 0) + 
+                    COALESCE(s.tol, 0) + 
+                    COALESCE(s.biaya_lain, 0)
+                )
+            ) AS sisa_biaya_keluar
+        ')
+            )
+            ->groupBy('b.no_booking');
 
-        if ($request['date_start']) {
-            $spjs->whereDate('created_at', '>=', $request['date_start']);
-        }
 
-        if ($request['date_end']) {
-            $spjs->whereDate('created_at', '<=', $request['date_end']);
-        }
-
-        if ($request['no_spj']) {
-            $spjs->where('no_spj', $request['no_spj']);
+        if ($request['customer']) {
+            $spjs->where('b.customer','like', '%'.$request['customer'].'%');
         };
 
         if ($request['no_booking']) {
-            $spjs->whereHas('booking_details.bookings', function ($bookings) use ($request) {
-                $bookings->where('no_booking', $request['no_booking']);
-            });
+            $spjs->where('b.no_booking', $request['no_booking']);
         };
 
-        $spj = $spjs->get();
+        if ($request['start_date']) {
+            $spjs->whereDate('date_start', '>=', $request['start_date']);
+        }
+
+        if ($request['end_date']) {
+            $spjs->whereDate('date_end', '<=', $request['end_date']);
+        }
+
+        $spj = $spjs->paginate(10);
 
         return view('layouts.spj.report', [
-            'booking' => $booking,
             'spj' => $spj,
             'request' => [
-                'no_spj' => $no_spj,
-                'tanggal' => $tanggal,
-                'no_booking' => $no_booking,
-                'date_start' => $date_start,
-                'date_end' => $date_end,
+                'customer' => $customer,
+                'start_date' => $start_date,
+                'end_date' => $end_date,
+                'no_booking' => $no_booking
             ],
         ]);
+    } 	
+
+    public function excel(Request $request){
+        return Excel::download(new SpjExport($request), 'Spj_report.xlsx');
+
     }
 }

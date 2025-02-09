@@ -207,6 +207,9 @@ Route::prefix('spj')->group(function () {
     Route::post('/print/out/store', [SpjController::class, 'store_print_out'])->name('spj/print_out/store');
     Route::post('/print/in/store', [SpjController::class, 'store_print_in'])->name('spj/print_in/store');
     Route::post('/biaya_lain/store', [SpjController::class, 'biaya_lain'])->name('spj/biaya_lain');
+    Route::get('/report', [SpjController::class, 'report'])->name('spj/report');
+    Route::get('excel/', [SpjController::class, 'excel'])->name('spj/excel');
+
 });
 
 
