@@ -386,6 +386,11 @@
                         <div data-i18n="Payment Report">Payment Report</div>
                     </a>
                 </li>
+                <li class="menu-item">
+                    <a href="{{ route('spj/report') }}" class="menu-link">
+                        <div data-i18n="Spj Report">Spj Report</div>
+                    </a>
+                </li>
             </ul>
         </li>
 
