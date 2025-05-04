@@ -49,8 +49,9 @@
                             <div class="col-sm-3 mt-2">
                                 <select class="form-control input-goldbrand" name="type">
                                     <option value="">- Choose Single / Double -</option>
-                                    <option value="SINGEL GLASS">SINGEL GLASS</option>
-                                    <option value="DOUBLE GLASS">DOUBLE GLASS</option>
+                                    <option value="3">RWS</option>
+                                    <option value="4">AVANTE</option>
+                                    <option value="5">PP DOUBLE GLASS</option>
                                 </select>
                             </div>
                             <div class="col-sm-3">
