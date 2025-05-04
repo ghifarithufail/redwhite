@@ -139,7 +139,11 @@
             </center>
             <hr>
             <center>
-                <h3 style="text-decoration: underline;">NOMOR SPJ : {{ $spj->no_spj }}</h3>
+                {{-- @if ($spj->km_masuk != null)
+                    <h3 style="text-decoration: underline;">NOMOR SBP : {{ $spj->no_spj }}</h3>
+                @else --}}
+                    <h3 style="text-decoration: underline;">NOMOR SPJ : {{ $spj->no_spj }}</h3>
+                {{-- @endif --}}
             </center>
             <hr>
             {{-- <div>Surat ini adalah surat perintah jalan dengan detail sebagai berikut :</div> --}}
