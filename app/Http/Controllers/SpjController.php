@@ -68,14 +68,14 @@ class SpjController extends Controller
 
     public function detail($id)
     {
-        $detail = Booking_detail::with(['armadas','bookings'])->where('booking_id', $id)->orderBy('created_at', 'desc')->get();
+        $detail = Booking_detail::with(['armadas', 'bookings'])->where('booking_id', $id)->orderBy('created_at', 'desc')->get();
 
-            $pengemudi = Booking_detail::where('booking_id', $id)
+        $pengemudi = Booking_detail::where('booking_id', $id)
             ->where('supir_id', null)
             ->count();
 
-            $kondektur = Booking_detail::where('booking_id', $id)
-            ->Where('kondektur_id',null)
+        $kondektur = Booking_detail::where('booking_id', $id)
+            ->Where('kondektur_id', null)
             ->count();
 
         return view('layouts.spj.detail', [
@@ -148,19 +148,15 @@ class SpjController extends Controller
         $pengemudi = Pengemudi::orderBy('nopengemudi', 'desc')->get();
         $kondektur = Kondektur::orderBy('nokondektur', 'desc')->get();
 
-        
+
         $bus = $spj->booking_details->armada_id;
         $armada = Booking_detail::where('armada_id', $bus)
-        ->orderBy('created_at', 'desc')
-        ->skip(1) // Melewati data pertama
-        ->first(); // Mengambil data kedua
-    
-<<<<<<< HEAD
+            ->orderBy('created_at', 'desc')
+            ->skip(1) // Melewati data pertama
+            ->first(); // Mengambil data kedua
 
-         $km_akhir = $armada && $armada->spjs ? $armada->spjs->km_masuk : null;
-=======
-        $km_akhir = $armada?->spjs?->km_masuk ?? 0;
->>>>>>> 947e894cf2762b18b4106cfe496f9b89eeb12ceb
+
+        $km_akhir = $armada && $armada->spjs ? $armada->spjs->km_masuk : null;
 
         return view('layouts.spj.create_out', [
             'spj' => $spj,
@@ -169,7 +165,7 @@ class SpjController extends Controller
             'kondektur' => $kondektur
         ]);
     }
-    
+
     public function save_detail_out(Request $request, $id)
     {
         $spj = Spj::find($id);
@@ -177,7 +173,7 @@ class SpjController extends Controller
         $spj->date_keluar = Carbon::now();
         $spj->save();
 
-        return redirect('/spj/print_out/' .$spj->id);
+        return redirect('/spj/print_out/' . $spj->id);
     }
 
     public function print($id)
@@ -286,7 +282,7 @@ class SpjController extends Controller
             return redirect('spj/print/in/' . $spj->id)->with('error', 'Gagal menyimpan Pembayaran ' . $e->getMessage());
         }
     }
-    
+
     public function save_detail_in($id)
     {
         $spj = Spj::find($id);
@@ -295,18 +291,18 @@ class SpjController extends Controller
         $spj->save();
 
         $spj_count_null = Booking_detail::where('booking_id', $spj->booking_details->booking_id)
-                        ->where('is_in', null)->count();
+            ->where('is_in', null)->count();
 
         // $spj_count_null = $booking_detail->
         \Log::info($spj_count_null);
 
-        if($spj_count_null == 0){
+        if ($spj_count_null == 0) {
             $booking = Booking::where('id', $spj->booking_details->booking_id)->first();
             $booking->booking_status = 0;
             $booking->save();
         }
 
-        return redirect('/spj/print_out/' .$spj->id);
+        return redirect('/spj/print_out/' . $spj->id);
     }
 
     public function masuk(Request $request, $id)
@@ -384,7 +380,7 @@ class SpjController extends Controller
 
 
         if ($request['customer']) {
-            $spjs->where('b.customer','like', '%'.$request['customer'].'%');
+            $spjs->where('b.customer', 'like', '%' . $request['customer'] . '%');
         };
 
         if ($request['no_booking']) {
@@ -410,10 +406,10 @@ class SpjController extends Controller
                 'no_booking' => $no_booking
             ],
         ]);
-    } 	
+    }
 
-    public function excel(Request $request){
+    public function excel(Request $request)
+    {
         return Excel::download(new SpjExport($request), 'Spj_report.xlsx');
-
     }
 }
