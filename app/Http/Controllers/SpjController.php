@@ -155,8 +155,12 @@ class SpjController extends Controller
         ->skip(1) // Melewati data pertama
         ->first(); // Mengambil data kedua
     
+<<<<<<< HEAD
 
          $km_akhir = $armada && $armada->spjs ? $armada->spjs->km_masuk : null;
+=======
+        $km_akhir = $armada?->spjs?->km_masuk ?? 0;
+>>>>>>> 947e894cf2762b18b4106cfe496f9b89eeb12ceb
 
         return view('layouts.spj.create_out', [
             'spj' => $spj,

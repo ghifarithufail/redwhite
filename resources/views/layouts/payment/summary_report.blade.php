@@ -17,7 +17,13 @@
                                     class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-2 col-6 mb-4">
+                        <div class="col-md-3 col-6 mb-4">
+                            <label for="start" class="form-label">No Booking</label>
+                            <div class="input-group input-daterange">
+                                <input type="text" id="no_booking" name="no_booking" value="{{ $request['no_booking'] }}" placeholder="masukan no booking" class="form-control" >
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-4">
                             <label for="start" class="form-label">Tipe Pembayaran</label>
                             <div class="input-group input-daterange">
                                 <select class="form-control input-goldbrand" name="tipe_pembayaran" id="tipe_pembayaran" value="{{ $request['tipe_pembayaran'] }}">
@@ -61,6 +67,7 @@
                 <thead>
                     <tr>
                         <th style="font-size: 14px">Customer</th>
+                        <th style="font-size: 14px">No Booking</th>
                         <th style="font-size: 14px">Tipe Pembayaran</th>
                         <th style="font-size: 14px">Tanggal Bayar</th>
                         <th style="font-size: 14px">Kwitansi</th>
@@ -85,6 +92,7 @@
                         @foreach ($group as $data)
                             <tr>
                                 <td>{{ $data->customer }}</td>
+                                <td>{{ $data->no_booking }}</td>
                                 <td>{{ $data->tipe_pembayaran }}</td>
                                 <td>{{ \Carbon\Carbon::parse($data->tgl_bayar)->format('d M Y') }}</td>
                                 <td>{{ $data->no_payment }}</td>
@@ -107,7 +115,7 @@
                             </tr>
                         @endforeach
                         <tr style="background-color: #dff0d8;">
-                            <td colspan="6" class="text-right"><strong>Total
+                            <td colspan="7" class="text-right"><strong>Total
                                     {{ \Carbon\Carbon::parse($date)->format('d M Y') }}:</strong></td>
                             <td><strong>{{ number_format($totalPrices[$date]) }}</strong></td>
                         </tr>
@@ -117,7 +125,7 @@
                     @endforeach
 
                     <tr style="background-color: #dff0d8;">
-                        <td colspan="6" class="text-right"><strong>Total Pendapatan:</strong></td>
+                        <td colspan="7" class="text-right"><strong>Total Pendapatan:</strong></td>
                         <td><strong>{{ number_format($grandTotal) }}</strong></td>
                     </tr>
                 </tbody>

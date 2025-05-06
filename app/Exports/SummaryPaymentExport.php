@@ -42,12 +42,13 @@ class SummaryPaymentExport implements FromView, ShouldAutoSize
             't.nama_tujuan',
             'jmlh_bayar as pembayaran_ke',
             'price',
-            'tp.name as tipe_pembayaran'
+            'tp.name as tipe_pembayaran',
+            'b.no_booking'
         ])
             ->leftJoin('bookings as b', 'payments.booking_id', '=', 'b.id')
             ->leftJoin('tujuans as t', 'b.tujuan_id', '=', 't.id')
             ->leftJoin('type_payments as tp', 'tp.id', '=', 'payments.type_payment_id')
-            ->where('b.payment_status', 1)
+            // ->where('b.payment_status', 1)
             ->whereDate("payments.created_at", ">=", $date_start)
             ->whereDate("payments.created_at", "<=", $date_end)
             ->orderBy('payments.created_at');

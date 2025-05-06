@@ -27,7 +27,7 @@ class Armada extends Model
 
     public function booking_details()
     {
-        return $this->belongsTo(Booking_detail::class, 'id', 'armada_id');
+        return $this->hasMany(Booking_detail::class, 'armada_id', 'id');
     }
 
     public function type_armada()

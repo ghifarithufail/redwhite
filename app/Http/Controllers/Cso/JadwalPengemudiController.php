@@ -20,7 +20,7 @@ class JadwalPengemudiController extends Controller
         $search = $request->input('search');
         $perPage = $request->query('perpage', 10);
 
-        $pengemudis = Pengemudi::all();
+        $pengemudis = Pengemudi::where('status','Active')->get();
         $typearmadas = TypeArmada::all();
 
         $query = DB::table('pengemudis')
@@ -39,6 +39,7 @@ class JadwalPengemudiController extends Controller
             ->leftJoin('bookings', 'booking_details.booking_id', '=', 'bookings.id')
             ->leftJoin('tujuans', 'bookings.tujuan_id', '=', 'tujuans.id')
             ->leftJoin('armadas', 'booking_details.armada_id', '=', 'armadas.id')
+            ->where('pengemudis.status', 'Active')
             ->whereBetween('bookings.date_start', [$date_start, $date_end]);
 
         if ($search) {

@@ -225,6 +225,7 @@ class PaymentController extends Controller
         $type_payment = TypePayment::orderBy('name', 'asc')->get();
 
         $tipe_pembayaran = $request->input('tipe_pembayaran');
+        $no_booking = $request->input('no_booking');
 
         $payment = Payment::select([
             'payments.tgl_bayar',
@@ -237,7 +238,8 @@ class PaymentController extends Controller
             't.nama_tujuan',
             'jmlh_bayar as pembayaran_ke',
             'price',
-            'tp.name as tipe_pembayaran'
+            'tp.name as tipe_pembayaran',
+            'b.no_booking'
         ])
             ->leftJoin('bookings as b', 'payments.booking_id', '=', 'b.id')
             ->leftJoin('tujuans as t', 'b.tujuan_id', '=', 't.id')
@@ -249,6 +251,10 @@ class PaymentController extends Controller
 
         if($request['tipe_pembayaran']){
             $payment = $payment->where('type_payment_id', $request['tipe_pembayaran']);
+        }
+
+        if($request['no_booking']){
+            $payment = $payment->where('no_booking', $request['no_booking']);
         }
 
         $payments = $payment->get()->groupBy(function ($date) {
@@ -269,6 +275,7 @@ class PaymentController extends Controller
                 'date_start' => $date_start,
                 'date_end' => $date_end,
                 'tipe_pembayaran' => $tipe_pembayaran,
+                'no_booking' => $no_booking
             ],
         ]);
     }

@@ -50,7 +50,7 @@ class BookingController extends Controller
             ->orderBy('id', 'asc');
 
         if ($request['type']) {
-            $buses = $buses->where('keterangan', $request['type']);
+            $buses = $buses->where('type_id', $request['type']);
         }
 
         $bus = $buses->get();
@@ -232,15 +232,6 @@ class BookingController extends Controller
     public function pengemudi($id)
     {
         $booking = Booking::find($id);
-        // $pengemudi = Pengemudi::whereDoesntHave('booking_details.bookings', function ($query) use ($booking) {
-        //     $query->whereDate('date_start', '<=', $booking->date_end)
-        //         ->whereDate('date_end', '>=', $booking->date_start)
-        //         ->where('booking_status', 1);
-        // })
-        //     // ->whereHas('users', function ($users) {
-        //     //     $users->orderBy('name', 'asc');
-        //     // })
-        //     ->get();
 
         $pengemudi = Pengemudi::join('users', 'users.id', '=', 'pengemudis.user_id') // Sesuaikan relasi
             ->orderBy('users.name', 'asc')
@@ -468,8 +459,16 @@ class BookingController extends Controller
         })
             ->orderBy('id', 'asc');
 
+            // $buses = Armada::whereDoesntHave('booking_details.bookings', function ($query) use ($start, $end) {
+            //     $query->whereDate('date_start', '<=', $end)
+            //         ->whereDate('date_end', '>=', $start)
+            //         ->where('booking_status', 1);
+            // })
+            // ->orWhereIn('id', $selectedBuses)
+            // ->orderBy('id', 'asc');
+
         if ($request->has('type')) {
-            $buses = $buses->where('keterangan', $request->input('type'));
+            $buses = $buses->where('type_id', $request->input('type'));
         }
 
         $bus = $buses->get();
