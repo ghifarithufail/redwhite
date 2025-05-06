@@ -502,6 +502,7 @@ class BookingController extends Controller
             $booking = Booking::find($id);
             $booking->customer = $request->input('customer');
             $booking->telephone = $request->input('telephone');
+            $booking->lokasi_jemput = $request->input('lokasi_jemput');
             $booking->date_start = $request->input('date_start');
             $booking->date_end = $request->input('date_end');
             $booking->total_bus = $request->input('total_bus');

@@ -5,7 +5,7 @@
         © <script>
         document.write(new Date().getFullYear())
 
-        </script>,transystem ❤️ by <a href="https://pixinvent.com" target="_blank" class="fw-semibold">ARH-Team</a>
+        </script> <a href="https://pixinvent.com" target="_blank" class="fw-semibold">Primajasa Pariwisata</a>
         </div>
         {{-- <div class="d-none d-lg-inline-block">
             <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>

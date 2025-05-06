@@ -129,6 +129,11 @@
                                                 aria-label="Default select example" name="tujuan_id">
                                             </select>
                                         </div>
+                                        <div class="col-sm-6 ">
+                                            <label class="form-label" for="lokasi_jemput">Lokasi Jemput</label>
+                                            <input type="text" id="lokasi_jemput" name="lokasi_jemput"
+                                                value="{{ $booking->lokasi_jemput }}" class="form-control">
+                                        </div>
                                         <div class="col-sm-6">
                                             <label class="form-label" for="diskon">Diskon (%)</label>
                                             <input type="number" id="diskon" name="diskon"

@@ -86,9 +86,13 @@
                                 {{-- <a href="{{ route('input/pengemudi', $data->id) }}" type="button" class="btn btn-primary">
                                     Input Pengemudi
                                 </a> --}}
-                                <a href="{{ route('booking.edit', $data->id) }}">
+                                <!--<a href="{{ route('booking.edit', $data->id) }}">-->
+                                <!--    <button type="button" class="btn rounded-pill btn-warning"-->
+                                <!--        fdprocessedid="c80zr4">detail</button>-->
+                                <!--</a>-->
+                                <a href="{{ route('booking/print', $data->id) }}">
                                     <button type="button" class="btn rounded-pill btn-warning"
-                                        fdprocessedid="c80zr4">detail</button>
+                                        fdprocessedid="c80zr4">Print</button>
                                 </a>
                             </td>
                         </tr>

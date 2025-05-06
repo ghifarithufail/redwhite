@@ -42,7 +42,7 @@
                                         @else
                                             <option value=""> == Silahkan Pilih Pengemudi == </option>
                                             @foreach ($pengemudi as $data)
-                                                <option value="{{ $data->id }}">{{ $data->users->name }}</option>
+                                                <option value="{{ $data->id }}">{{ $data->nopengemudi }} - {{ $data->users->name }}</option>
                                             @endforeach
                                         @endif
                                         
@@ -64,7 +64,7 @@
                                     @else
                                         <option value=""> == Silahkan Pilih Kondektur ==</option>
                                         @foreach ($kondektur as $data)
-                                            <option value="{{ $data->id }}">{{ $data->users->name }}</option>
+                                            <option value="{{ $data->id }}">{{ $data->nokondektur }} - {{ $data->users->name }}</option>
                                         @endforeach
                                         
                                     @endif

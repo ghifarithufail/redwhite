@@ -91,26 +91,20 @@
                 </tr>
                 <tr>
                     <td width="35%" style="padding-bottom:60px;">
-                        <div style="border: 1px solid #ccc; padding: 10px; text-align: left !important;"><b>Customer : {{ $payments->bookings->customer }}</b></div>
-                        <div style="border: 1px solid #ccc; padding: 5px; text-align: left !important;">
+                        <div style="border: 1px solid #ccc; padding: 10px; text-align: left !important;"><b>Nomor Booking : {{ $payments->bookings->no_booking }}</b></div>
+                            <div style="border: 1px solid #ccc; padding: 3px; text-align: left !important;">
+                            <div style="padding:3px;"><b>Customer : {{ $payments->bookings->customer }}</b></div>
                             <div style="padding:5px;"><b>Phone : {{ $payments->bookings->telephone }}</b></div>
-                        </div>
-                        <div style="border: 1px solid #ccc; padding: 5px; text-align: left !important;">
-                            <div style="padding:5px;"><b>Jumlah Belum Dibayarkan : Rp.{{ number_format($payments->bookings->grand_total -  $payments->bookings->total_payment ?? 0)}}</b></div>
-                        </div>
-                        <div style="border: 1px solid #ccc; padding: 5px; text-align: left !important;">
-                            <div style="padding:5px;"><b>Type Bus : @foreach ($type_bus as $type)
-                                {{ $type }},
-                            @endforeach</b></div>
-                        </div>
-                        {{-- <tr>
-                            <td width="25%" valign="top">Type Bus</td>
-                            <td width="75%" class="bold" valign="top">:
-                                @foreach ($type_bus as $type)
-                                    {{ $type }},
-                                @endforeach
-                            </td>
-                        </tr> --}}
+                            <div style="padding:5px;"><b>Total Bus : {{ $payments->bookings->total_bus }} Unit</b></div>
+                            <div style="padding:3px;"><b>Jumlah Belum Dibayarkan : Rp.{{ number_format($payments->bookings->grand_total -  $payments->bookings->total_payment ?? 0)}}</b></div>
+                            <div style="padding:3px;"><b>Type Bus : @foreach ($type_bus as $type){{ $type }} @endforeach</b></div>
+                            <div style="padding:3px;">
+                                <b>
+                                  Pemakaian : {{ \Carbon\Carbon::parse($payments->bookings->date_start)->format('d/m/Y') }}
+                                  s/d
+                                  {{ \Carbon\Carbon::parse($payments->bookings->date_end)->format('d/m/Y') }}
+                                </b>
+                              </div>
                     </td>
                     <td width="30%"></td>
                     <td width="35%">

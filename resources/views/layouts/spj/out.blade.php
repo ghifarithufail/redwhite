@@ -164,8 +164,8 @@
                     <tr>
                         <td width="170">No.Body / No.Polisi</td>
                         <td width="1%">:</td>
-                        <td>{{ $spj->booking_details->armadas->nobody }} /
-                            {{ $spj->booking_details->armadas->nopolisi }}
+                        <td>{{ $spj->booking_details->armadas ? $spj->booking_details->armadas->nobody : "-" }} /
+                            {{ $spj->booking_details->armadas ? $spj->booking_details->armadas->nopolisi : "-" }}
                         </td>
                     </tr>
                     <tr>
@@ -179,11 +179,11 @@
                             @endif
                         </td>
                     </tr>
-                    <tr>
-                        <td width="170">Biaya Jemput</td>
-                        <td width="1%">:</td>
-                        <td>{{ number_format($spj->booking_details->bookings->biaya_jemput) }}</td>
-                    </tr>
+                    <!--<tr>-->
+                    <!--    <td width="170">Biaya Jemput</td>-->
+                    <!--    <td width="1%">:</td>-->
+                    <!--    <td>{{ number_format($spj->booking_details->bookings->biaya_jemput) }}</td>-->
+                    <!--</tr>-->
                     <tr>
                         <td width="170">Uang Jalan</td>
                         <td width="1%">:</td>

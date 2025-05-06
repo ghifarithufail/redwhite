@@ -53,6 +53,7 @@
                         <th style="font-size: 14px">Nomor booking</th>
                         <th style="font-size: 14px">Nama Customer</th>
                         <th style="font-size: 14px">Tanggal Wisata</th>
+                        <th style="font-size: 14px">Total Bus</th>
                         <th style="font-size: 14px">Diskon</th>
                         <th style="font-size: 14px">Total Biaya</th>
                         <th style="font-size: 14px">Status</th>
@@ -69,6 +70,7 @@
                         <td>{{$data->no_booking}}</td>
                         <td>{{$data->customer}}</td>
                         <td>{{ \Carbon\Carbon::parse($data->date_start)->format('j F Y') }} - {{ \Carbon\Carbon::parse($data->date_end)->format('j F Y') }}</td>
+                        <td>{{$data->total_bus}}</td>
                         <td class="text-right">{{number_format($data->diskon)}}</td>
                         <td class="text-right">{{number_format($data->grand_total)}}</td>
                         <td>
