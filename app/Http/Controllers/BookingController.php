@@ -449,23 +449,13 @@ class BookingController extends Controller
         $selectedBuses = $booking->details->pluck('armada_id')->toArray();
 
         // Ambil bus yang sudah dipilih dalam booking atau tidak memiliki booking_status 1
-        $buses = Armada::where(function ($query) use ($start, $end, $selectedBuses) {
-            $query->whereDoesntHave('booking_details.bookings', function ($query) use ($start, $end) {
+            $buses = Armada::whereDoesntHave('booking_details.bookings', function ($query) use ($start, $end) {
                 $query->whereDate('date_start', '<=', $end)
                     ->whereDate('date_end', '>=', $start)
                     ->where('booking_status', 1);
             })
-                ->orWhereIn('id', $selectedBuses);
-        })
+            ->orWhereIn('id', $selectedBuses)
             ->orderBy('id', 'asc');
-
-            // $buses = Armada::whereDoesntHave('booking_details.bookings', function ($query) use ($start, $end) {
-            //     $query->whereDate('date_start', '<=', $end)
-            //         ->whereDate('date_end', '>=', $start)
-            //         ->where('booking_status', 1);
-            // })
-            // ->orWhereIn('id', $selectedBuses)
-            // ->orderBy('id', 'asc');
 
         if ($request->has('type')) {
             $buses = $buses->where('type_id', $request->input('type'));
