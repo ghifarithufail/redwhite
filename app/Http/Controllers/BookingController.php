@@ -386,7 +386,7 @@ class BookingController extends Controller
         $data->save();
 
         \Log::info($data);
-        return redirect('booking/pengemudi/'. $data->bookings->id);
+        return redirect('booking/pengemudi/' . $data->bookings->id);
     }
 
 
@@ -446,43 +446,58 @@ class BookingController extends Controller
         $start = $request->input('start') ?? $booking->date_start->format('Y-m-d');
         $end = $request->input('end') ?? $booking->date_end->format('Y-m-d');
 
+        // Validasi jika tanggal tidak valid
+        if (Carbon::parse($start)->gt(Carbon::parse($end))) {
+            return back()->withErrors(['Tanggal mulai tidak boleh lebih besar dari tanggal selesai']);
+        }
+
+        // Ambil semua armada yang sudah dipilih sebelumnya
         $selectedBuses = $booking->details->pluck('armada_id')->toArray();
 
-        // Ambil bus yang sudah dipilih dalam booking atau tidak memiliki booking_status 1
-        $buses = Armada::where(function ($query) use ($start, $end, $selectedBuses) {
-            $query->whereDoesntHave('booking_details.bookings', function ($query) use ($start, $end) {
-                $query->whereDate('date_start', '<=', $end)
-                    ->whereDate('date_end', '>=', $start)
-                    ->where('booking_status', 1);
-            })
-                ->orWhereIn('id', $selectedBuses);
+        // Cek apakah ada armada yang bentrok dengan tanggal baru (selain booking ini sendiri)
+        $conflictingBuses = DB::table('booking_details')
+            ->join('bookings', 'booking_details.booking_id', '=', 'bookings.id')
+            ->whereIn('booking_details.armada_id', $selectedBuses)
+            ->where('bookings.id', '!=', $booking->id) // Abaikan booking yang sedang diedit
+            ->where('booking_status', 1)
+            ->whereDate('date_start', '<=', $end)
+            ->whereDate('date_end', '>=', $start)
+            ->pluck('booking_details.armada_id')
+            ->toArray();
+
+        // Ambil armada yang dipilih sebelumnya tetapi tidak bentrok
+        $nonConflictingSelected = array_diff($selectedBuses, $conflictingBuses);
+
+        // Bangun query armada
+        $armadaQuery = Armada::whereDoesntHave('booking_details.bookings', function ($query) use ($start, $end) {
+            $query->whereDate('date_start', '<=', $end)
+                ->whereDate('date_end', '>=', $start)
+                ->where('booking_status', 1);
         })
-            ->orderBy('id', 'asc');
+            ->orWhereIn('id', $nonConflictingSelected);
 
-            // $buses = Armada::whereDoesntHave('booking_details.bookings', function ($query) use ($start, $end) {
-            //     $query->whereDate('date_start', '<=', $end)
-            //         ->whereDate('date_end', '>=', $start)
-            //         ->where('booking_status', 1);
-            // })
-            // ->orWhereIn('id', $selectedBuses)
-            // ->orderBy('id', 'asc');
-
+        // Filter berdasarkan type jika ada
         if ($request->has('type')) {
-            $buses = $buses->where('type_id', $request->input('type'));
+            $armadaQuery->where('type_id', $request->input('type'));
         }
 
-        $bus = $buses->get();
+        // Ambil data armada
+        $buses = $armadaQuery->orderBy('id', 'asc')->get();
 
-        foreach ($bus as $item) {
-            $item->selected = in_array($item->id, $selectedBuses);
+        // Tandai armada yang sudah dipilih
+        foreach ($buses as $bus) {
+            $bus->selected = in_array($bus->id, $selectedBuses);
         }
 
-        $allBusesFull = $bus->isEmpty();
+        // Cek jika semua armada tidak tersedia
+        $allBusesFull = $buses->isEmpty();
+
+
 
         return view('layouts.booking.editReservation', [
             'booking' => $booking,
             'pengemudi' => $pengemudi,
-            'bus' => $bus,
+            'bus' => $buses,
             'allBusesFull' => $allBusesFull,
             'request' => [
                 'start' => $start,

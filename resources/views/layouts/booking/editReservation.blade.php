@@ -44,14 +44,14 @@
                             <div class="col-sm-3 mt-2">
                                 <input type="date" class="form-control" name="end" value="{{ old('end', $request['end']) }}" id="end">
                             </div>
-                            <div class="col-sm-3 mt-2">
+                            {{-- <div class="col-sm-3 mt-2">
                                 <select class="form-control input-goldbrand" name="type">
                                     <option value="">- Choose Single / Double -</option>
                                     <option value="3">RWS</option>
                                     <option value="4">AVANTE</option>
                                     <option value="5">PP DOUBLE GLASS</option>
                                 </select>
-                            </div>
+                            </div> --}}
                             <div class="col-sm-3">
                                 <button type="submit" class="btn btn-primary rounded text-white mt-2 mr-2" style="height: 40px" id="search_btn">Search</button>
                             </div>
