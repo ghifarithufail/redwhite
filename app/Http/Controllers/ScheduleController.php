@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Armada;
+use App\Models\Booking;
 use App\Models\TypeArmada;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -49,8 +50,8 @@ class ScheduleController extends Controller
         if ($search) {
             $query->where(function ($subquery) use ($search) {
                 $subquery->where('armadas.nobody', 'like', '%' . $search . '%')
-                         ->orWhere('tujuans.nama_tujuan', 'like', '%' . $search . '%')
-                         ->orWhere('type_armadas.name', 'like', '%' . $search . '%');
+                    ->orWhere('tujuans.nama_tujuan', 'like', '%' . $search . '%')
+                    ->orWhere('type_armadas.name', 'like', '%' . $search . '%');
             });
         }
 
@@ -116,6 +117,61 @@ class ScheduleController extends Controller
         }
 
         return view('layouts.Operasi.jadwalbus.index', $data);
+    }
+
+    public function jadwalBus()
+    {
+        return view('layouts.Operasi.jadwalbus.jadwal');
+    }
+
+    public function getJadwal()
+    {
+        $bookings = Booking::all();
+
+        $events = $bookings->map(function ($booking) {
+            return [
+                'title' => $booking->bus_name,
+                'start' => $booking->start_time,
+                'end'   => $booking->end_time,
+            ];
+        });
+
+        return response()->json($events);
+    }
+
+    public function getJadwalBusData(Request $request)
+    {
+        $startOfMonth = Carbon::now()->startOfMonth()->toDateString(); // contoh: 2025-06-01
+        $endOfMonth = Carbon::now()->endOfMonth()->toDateString();     // contoh: 2025-06-30
+
+        $query = Booking::with('details.armadas');
+        if ($request->filled('date_start') && $request->filled('date_end')) {
+            $query->where(function ($q) use ($request) {
+                $q->whereBetween('date_start', [$request->date_start, $request->date_end])
+                    ->orWhereBetween('date_end', [$request->date_start, $request->date_end])
+                    ->orWhere(function ($q) use ($request) {
+                        $q->where('date_start', '<', $request->date_start)
+                            ->where('date_end', '>', $request->date_end);
+                    });
+            });
+        }
+
+        $bookings = $query->get();
+
+        $events = $bookings->map(function ($booking) {
+            $busNames = $booking->details->map(function ($detail) {
+                return $detail->armadas->nobody ?? '-'; // pastikan relasi armadas ada
+            })->unique()->implode(', ');
+            return [
+                'title' => $busNames,
+                'start' => $booking->date_start,
+                'end' => Carbon::parse($booking->date_end)->addDay()->toDateString(), // Tambahkan end jika booking punya rentang tanggal
+                'color' => '#e3342f', // Merah = digunakan
+                'url' => route('schedule.jadwalBus', $booking->id),
+            ];
+        });
+
+        return response()->json($events);
     }
 
     public function jadwalbusToPdf(Request $request)

@@ -27,7 +27,7 @@
                 <tr>
                     <td>{{ $data->customer }}</td>
                     <td>{{ $data->tipe_pembayaran }}</td>
-                    <td>{{ \Carbon\Carbon::parse($data->created_at)->format('d M Y') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($data->tgl_bayar)->format('d M Y') }}</td>
                     <td>{{ $data->no_payment }}</td>
                     <td>{{ \Carbon\Carbon::parse($data->date_start)->format('d M Y') }}</td>
                     <td>{{ $data->total_days }} Hari</td>
@@ -44,13 +44,13 @@
                             <b>Pelunasan</b>
                         @endif
                     </td>
-                    <td>{{ number_format($data->price) }}</td>
+                    <td>{{ $data->price }}</td>
                 </tr>
             @endforeach
             <tr style="background-color: #dff0d8;">
                 <td colspan="9" class="text-right"><strong>Total
                         {{ \Carbon\Carbon::parse($date)->format('d M Y') }}:</strong></td>
-                <td><strong>{{ number_format($totalPrices[$date]) }}</strong></td>
+                <td><strong>{{ $totalPrices[$date] }}</strong></td>
             </tr>
             @php
                 $grandTotal += $totalPrices[$date];
@@ -59,7 +59,7 @@
 
         <tr style="background-color: #dff0d8;">
             <td colspan="9" class="text-right"><strong>Total Pendapatan:</strong></td>
-            <td><strong>{{ number_format($grandTotal) }}</strong></td>
+            <td><strong>{{ $grandTotal }}</strong></td>
         </tr>
     </tbody>
 </table>

@@ -76,7 +76,7 @@ Route::middleware(['auth', 'role:super-admin|admin|edp|Operasi'])->group(functio
     Route::get('/edit/{id}', [UserController::class, 'edit'])->name('users/edit');
     // Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
 });
-Route::middleware(['auth', 'role:super-admin|admin|Cso|Operasi'])->group(function () {
+Route::middleware(['auth', 'role:super-admin|admin|Cso|Operasi|Keuangan'])->group(function () {
     //Ini Bookings
     Route::get('/bookings', [BookingsController::class, 'index'])->name('bookings.index');
     Route::get('/bookings/create', [BookingController::class, 'create'])->name('bookings.create');
@@ -217,6 +217,9 @@ Route::prefix('schedule')->group(function () {
     Route::get('/', [ScheduleController::class, 'index'])->name('schedule');
     //Bus
     Route::get('/bus-schedule', [ScheduleController::class, 'showBusSchedule'])->name('schedule.show');
+    Route::get('/jadwalbus', [ScheduleController::class, 'jadwalBus'])->name('schedule.jadwalBus');
+    Route::get('/jadwalbus/data', [ScheduleController::class, 'getJadwalBusData']);
+
     Route::get('/jadwalbus-pdf', [ScheduleController::class, 'jadwalbusToPdf'])->name('jadwalbus.pdf');
     //Pengemudi
     Route::get('/pengemudi-schedule', [JadwalPengemudiController::class, 'showJadwalPengemudi'])->name('pengemudi.show');

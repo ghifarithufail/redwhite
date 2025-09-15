@@ -17,11 +17,17 @@
                     <th>No Induk</th>
                     <th>Kondektur</th>
                     <th>Uang Kas / Uang Jalan</th>
+                    <th>Bop</th>
+                    <th>Sisa Uang Jalan</th>
                     <th>Ops</th>
                 </tr>
             </thead>
             <tbody class="table-border-bottom-0">
                 @foreach ($spj as $data)
+                @php
+                    $bop = $data->bbm + $data->uang_makan + $data->parkir + $data->tol + $data->biaya_lain;
+                    $sisa_uang_jalan = $data->uang_jalan - $bop
+                @endphp
                     <tr>
                         <td>{{ $data->no_spj }}</td>
                         <td>{{ $data->booking_details->armadas->nobody }}</td>
@@ -37,6 +43,8 @@
                         <td>{{ $data->booking_details->kondekturs ? $data->booking_details->kondekturs->nokondektur : '-' }}</td>
                         <td>{{ $data->booking_details->kondekturs ? $data->booking_details->kondekturs->users->name : '-' }}</td>
                         <td>{{ $data->uang_jalan }}</td>
+                        <td>{{ $bop }}</td>
+                        <td>{{ $sisa_uang_jalan }}</td>
                         <td>{{ $data->booking_details->bookings->users ? $data->booking_details->bookings->users->name : '-' }}</td>
                     </tr>
                 @endforeach

@@ -134,7 +134,11 @@
                     Jl. Moh. Toha No.68, JL Pondok Cabe Udik, Wates<br> Pamulang, Tangsel Telp. (021) 74703339</h4>
             </div>
             <center>
-                <h2>SURAT PERINTAH JALAN</h2>
+                @if ($spj->date_masuk != null)
+                    <h2>SURAT BUKTI PERJALANAN</h2>
+                @else
+                    <h2>SURAT PERINTAH JALAN</h2>
+                @endif
 
             </center>
             <hr>

@@ -71,6 +71,7 @@
     <script src="/js/config.js"></script>
 
 
+
     <style>
         .light-style .bootstrap-select .filter-option-inner-inner {
             color: #697a8d !important;

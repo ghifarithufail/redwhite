@@ -205,6 +205,11 @@
                             <div data-i18n="Jadwal Bus">Jadwal Bus</div>
                         </a>
                     </li>
+                    {{-- <li class="menu-item">
+                        <a href="{{ route('schedule.jadwalBus') }}" class="menu-link">
+                            <div data-i18n="Jadwal Bus">Jadwal Bus 2</div>
+                        </a>
+                    </li> --}}
                     <li class="menu-item">
                         <a href="{{ route('pengemudi.show') }}" class="menu-link">
                             <div data-i18n="Jadwal Pengemudi">Jadwal Pengemudi</div>
@@ -252,6 +257,11 @@
                             <div data-i18n="Jadwal Bus">Jadwal Bus</div>
                         </a>
                     </li>
+                    {{-- <li class="menu-item">
+                        <a href="{{ route('schedule.jadwalBus') }}" class="menu-link">
+                            <div data-i18n="Jadwal Bus 2">Jadwal Bus 2</div>
+                        </a>
+                    </li> --}}
                     <li class="menu-item">
                         <a href="{{ route('pengemudi.show') }}" class="menu-link">
                             <div data-i18n="Jadwal Pengemudi">Jadwal Pengemudi</div>

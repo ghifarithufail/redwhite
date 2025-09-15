@@ -465,6 +465,14 @@ class BookingController extends Controller
             ->pluck('booking_details.armada_id')
             ->toArray();
 
+        // auto delete apabila bentrok bus di tanggal yang dipilih
+        // if (!empty($conflictingBuses)) {
+        //     DB::table('booking_details')
+        //         ->where('booking_id', $booking->id)
+        //         ->whereIn('armada_id', $conflictingBuses)
+        //         ->delete();
+        // }
+        
         // Ambil armada yang dipilih sebelumnya tetapi tidak bentrok
         $nonConflictingSelected = array_diff($selectedBuses, $conflictingBuses);
 
