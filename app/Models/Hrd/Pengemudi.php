@@ -66,6 +66,11 @@ class Pengemudi extends Model
         return $this->belongsTo(Booking_detail::class, 'id', 'supir_id');
     }
 
+    public function booking_pendapatan()
+    {
+        return $this->hasMany(Booking_detail::class, 'supir_id', 'id');
+    }
+
     public function rutes()
     {
         return $this->belongsTo(Rute::class, 'rute_id', 'id');

@@ -355,20 +355,6 @@
 
                 </ul>
             </li>
-            {{-- <li class="menu-item" style="">
-                <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <i class="menu-icon tf-icons bx bx-layout"></i>
-                    <div data-i18n="Jadwal">Jadwal</div>
-                </a>
-
-                <ul class="menu-sub">
-                    <li class="menu-item">
-                        <a href="{{ route('jadwal') }}" class="menu-link">
-                            <div data-i18n="Jadwal">Jadwal</div>
-                        </a>
-                    </li>
-                </ul>
-            </li> --}}
         @endif
 
         <li class="menu-header small text-uppercase">
@@ -399,6 +385,16 @@
                 <li class="menu-item">
                     <a href="{{ route('spj/report') }}" class="menu-link">
                         <div data-i18n="Spj Report">Spj Report</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ route('report.driver') }}" class="menu-link">
+                        <div data-i18n="Driver Report">Driver Report</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ route('report.bus.keluar') }}" class="menu-link">
+                        <div data-i18n="Report Bus Dalam Perjalanan">Report Bus Dalam Perjalanan</div>
                     </a>
                 </li>
             </ul>

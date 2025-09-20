@@ -47,7 +47,7 @@
                         <th>Jam Jemput</th>
                         <th>BBM</th>
                         <th>Uang Makan</th>
-                        <th>Parkir</th>
+                        <th>uang kebersihan</th>
                         <th>Tol</th>
                         <th>Biaya Lain</th>
                     </tr>

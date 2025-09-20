@@ -282,6 +282,5 @@ class PaymentController extends Controller
 
     public function excel_summary_report(Request $request){
         return Excel::download(new SummaryPaymentExport($request), 'summary_payment.xlsx');
-
     }
 }

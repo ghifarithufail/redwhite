@@ -27,6 +27,7 @@ use App\Http\Controllers\Cso\SeatBookingController;
 use App\Http\Controllers\Cso\JadwalKondekturController;
 use App\Http\Controllers\Cso\JadwalPengemudiController;
 use App\Http\Controllers\Keuangan\PembayaranController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,13 +54,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:super-admin|admin|edp|Operasi'])->group(function () {
-    
+
     Route::resource('/roles', RoleController::class);
     Route::resource('/users', UserController::class);
     Route::resource('/provinsi', ProvinsiController::class);
     Route::resource('/kota', KotaController::class);
     Route::resource('/pool', PoolController::class);
-        // Route::put('/pool/{id}', [PoolController::class, 'update'])->name('pool.update');
+    // Route::put('/pool/{id}', [PoolController::class, 'update'])->name('pool.update');
     Route::resource('/jabatan', JabatanController::class);
     Route::resource('/rute', RuteController::class);
     Route::resource('/armada', ArmadaController::class);
@@ -67,7 +68,7 @@ Route::middleware(['auth', 'role:super-admin|admin|edp|Operasi'])->group(functio
     Route::resource('/karyawan', KaryawanController::class);
     // Route::get('/biodata/{nik}', [BiodataController::class, 'show'])->name('biodata.show');
     Route::resource('/pengemudi', PengemudiController::class);
-        // Route::get('/get-pool-name/{id}', [PengemudiController::class, 'getPoolName']);
+    // Route::get('/get-pool-name/{id}', [PengemudiController::class, 'getPoolName']);
     Route::resource('/kondektur', KondekturController::class);
 
     Route::get('/users', [UserController::class, 'index'])->name('users');
@@ -110,12 +111,11 @@ Route::middleware(['auth', 'role:super-admin|admin|Cso|Operasi|Keuangan'])->grou
 
     Route::post('/get-tujuan', [BookingController::class, 'getTujuan'])->name('getTujuan');
     Route::post('/get-total-harga-std', [BookingController::class, 'getTotalHargaStd'])->name('getTotalHargaStd');
-
 });
 
 Route::middleware(['auth', 'role:super-admin|admin|Operasi|Cso'])->group(function () {
     Route::resource('bookings', BookingsController::class);
-    
+
     Route::get('/detail', [BookingController::class, 'report'])->name('report/detail');
     Route::get('/report', [BookingController::class, 'report'])->name('booking/report');
     Route::get('/laporan', [BookingController::class, 'laporan'])->name('booking/laporan');
@@ -135,7 +135,7 @@ Route::middleware(['auth', 'role:super-admin|admin|Operasi|Cso'])->group(functio
     Route::post('/update-date', [BookingController::class, 'updateDateReservation'])->name('booking/update/date');
     Route::get('/excel', [BookingController::class, 'excel'])->name('booking/excel');
 });
-Route::group(['middleware' => ['auth', 'role:super admin|admin|owner|Keuangan|accounting|Cso']], function() {
+Route::group(['middleware' => ['auth', 'role:super admin|admin|owner|Keuangan|accounting|Cso']], function () {
     Route::get('/payment', [PaymentController::class, 'index'])->name('payment');
     Route::get('/create/{id}', [PaymentController::class, 'create'])->name('payment/create');
     Route::post('/store', [PaymentController::class, 'store'])->name('payment/store');
@@ -151,6 +151,10 @@ Route::group(['middleware' => ['auth', 'role:super admin|admin|owner|Keuangan|ac
     Route::post('/pembayaran', [PembayaranController::class, 'store'])->name('pembayaran.store');
     Route::get('/bookings/{id}', [BookingsController::class, 'show'])->name('bookings.show');
 
+    Route::get('/report/driver', [ReportController::class, 'report_driver'])->name('report.driver');
+    Route::get('/driver/excel', [ReportController::class, 'driver_excel'])->name('driver/excel');
+    Route::get('/report/bus_keluar', [ReportController::class, 'report_bus_keluar'])->name('report.bus.keluar');
+
 
 });
 
@@ -160,36 +164,6 @@ Route::get('/unauthorized', function () {
 
 Route::get('booking/detail/{id}/{date}', 'BookingController@showDetail')->name('booking.showDetail');
 
-// Route::prefix('booking')->group(function () {
-//     Route::get('/', [BookingController::class, 'index'])->name('booking');
-//     Route::get('/report', [BookingController::class, 'report'])->name('booking/report');
-//     Route::get('/laporan', [BookingController::class, 'laporan'])->name('booking/laporan');
-//     Route::get('/create', [BookingController::class, 'create'])->name('booking/create');
-//     Route::post('/store', [BookingController::class, 'store'])->name('booking/store');
-//     Route::get('/pengemudi/{id}', [BookingController::class, 'pengemudi'])->name('booking/pengemudi');
-//     Route::post('/update-data', [BookingController::class, 'update_pengemudi'])->name('booking/update');
-//     Route::get('/detail/{id}', [BookingController::class, 'detail'])->name('booking/detail');
-//     Route::post('/store-detail', [BookingController::class, 'store_detail'])->name('booking/store_detail');
-//     Route::get('/jadwal', [BookingController::class, 'jadwal'])->name('jadwal');
-//     Route::post('/getTujuan', [BookingController::class, 'getTujuan'])->name('getTujuan');
-//     Route::post('/getTotalHargaStd', [BookingController::class, 'getTotalHargaStd'])->name('getTotalHargaStd');
-//     Route::get('/edit/{id}', [BookingController::class, 'edit'])->name('booking/edit');
-//     Route::post('/update-reservation', [BookingController::class, 'updateBusReservation'])->name('booking/update');
-//     Route::post('/update-date', [BookingController::class, 'updateDateReservation'])->name('booking/update/date');
-// });
-
-// Route::prefix('report')->group(function () {
-//     Route::get('/booking', [BookingController::class, 'laporan'])->name('report/booking');
-//     Route::get('/detail', [BookingController::class, 'report'])->name('report/detail');
-//     Route::get('/spj', [SpjController::class, 'report'])->name('report/spj');
-// });
-
-// Route::prefix('payment')->group(function () {
-
-//     Route::get('/payment', [PaymentController::class, 'index'])->name('payment');
-//     Route::get('/create/{id}', [PaymentController::class, 'create'])->name('payment/create');
-//     Route::post('/store', [PaymentController::class, 'store'])->name('payment/store');
-// });
 
 Route::prefix('spj')->group(function () {
 
@@ -209,7 +183,6 @@ Route::prefix('spj')->group(function () {
     Route::post('/biaya_lain/store', [SpjController::class, 'biaya_lain'])->name('spj/biaya_lain');
     Route::get('/report', [SpjController::class, 'report'])->name('spj/report');
     Route::get('excel/', [SpjController::class, 'excel'])->name('spj/excel');
-
 });
 
 

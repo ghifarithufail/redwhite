@@ -96,7 +96,7 @@
                                 </div>
                             </div>
                             <div class="form-group mt-3">
-                                <label class="control-label col-sm-3">Parkir :</label>
+                                <label class="control-label col-sm-3">uang kebersihan :</label>
                                 <div class="col-sm-12 mt-2">
                                     <input type="text" class="form-control input-quantity" name="parkir" id="parkir"
                                         required>
@@ -148,7 +148,7 @@
 
                         <div class="col-xs-12 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label col-sm-4">Parkir :</label>
+                                <label class="control-label col-sm-4">uang kebersihan :</label>
                                 <div class="col-sm-9">
                                     <input type="text" value="Rp. {{ number_format($spj->parkir) }} " disabled
                                         class="form-control" />

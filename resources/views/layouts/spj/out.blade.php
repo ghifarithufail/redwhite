@@ -328,7 +328,7 @@
 
                                     </tr>
                                     <tr>
-                                        <td>Parkir</td>
+                                        <td>uang kebersihan</td>
                                         <td style="text-align: right">{{ number_format($spj->parkir) }}</td>
 
                                     </tr>
