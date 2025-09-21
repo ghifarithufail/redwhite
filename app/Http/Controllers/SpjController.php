@@ -377,7 +377,8 @@ class SpjController extends Controller
             ) AS sisa_biaya_keluar
         ')
             )
-            ->groupBy('b.no_booking');
+            ->groupBy('b.no_booking')
+            ->orderBy('b.id','desc');
 
 
         if ($request['customer']) {
