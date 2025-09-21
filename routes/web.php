@@ -135,7 +135,7 @@ Route::middleware(['auth', 'role:super-admin|admin|Operasi|Cso'])->group(functio
     Route::post('/update-date', [BookingController::class, 'updateDateReservation'])->name('booking/update/date');
     Route::get('/excel', [BookingController::class, 'excel'])->name('booking/excel');
 });
-Route::group(['middleware' => ['auth', 'role:super admin|admin|owner|Keuangan|accounting|Cso']], function () {
+Route::group(['middleware' => ['auth', 'role:super admin|admin|owner|Keuangan|accounting|Cso|Operasi']], function () {
     Route::get('/payment', [PaymentController::class, 'index'])->name('payment');
     Route::get('/create/{id}', [PaymentController::class, 'create'])->name('payment/create');
     Route::post('/store', [PaymentController::class, 'store'])->name('payment/store');
