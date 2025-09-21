@@ -50,7 +50,7 @@ class DriverExport implements FromView, ShouldAutoSize
             });
         }
 
-        $driver = $driver->take(20)->get();
+        $driver = $driver->get();
 
         return view('layouts.report.excel_driver',
             [

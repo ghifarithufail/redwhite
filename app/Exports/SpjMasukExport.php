@@ -46,7 +46,7 @@ class SpjMasukExport implements FromView, ShouldAutoSize
             });
         }
 
-        $spj = $spj->paginate(20)->appends($request->all());
+        $spj = $spj->get();
 
         return view('layouts.report.spj_masuk_excel',
             [
