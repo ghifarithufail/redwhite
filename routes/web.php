@@ -154,7 +154,8 @@ Route::group(['middleware' => ['auth', 'role:super admin|admin|owner|Keuangan|ac
     Route::get('/report/driver', [ReportController::class, 'report_driver'])->name('report.driver');
     Route::get('/driver/excel', [ReportController::class, 'driver_excel'])->name('driver/excel');
     Route::get('/report/bus_keluar', [ReportController::class, 'report_bus_keluar'])->name('report.bus.keluar');
-
+    Route::get('/report/spj_masuk', [ReportController::class, 'report_spj_masuk'])->name('report.spj.masuk');
+    Route::get('/report/spj_masuk_excel', [ReportController::class, 'spj_masuk_excel'])->name('report.spj.masuk.excel');
 
 });
 
@@ -182,6 +183,7 @@ Route::prefix('spj')->group(function () {
     Route::post('/print/in/store', [SpjController::class, 'store_print_in'])->name('spj/print_in/store');
     Route::post('/biaya_lain/store', [SpjController::class, 'biaya_lain'])->name('spj/biaya_lain');
     Route::get('/report', [SpjController::class, 'report'])->name('spj/report');
+    Route::get('/report/detail/{id}', [SpjController::class, 'report_detail_spj'])->name('spj/report/detail');
     Route::get('excel/', [SpjController::class, 'excel'])->name('spj/excel');
 });
 

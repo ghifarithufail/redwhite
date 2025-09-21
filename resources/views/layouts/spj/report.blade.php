@@ -8,16 +8,11 @@
         <div class="card-header" style="zoom: 0.8">
             <form>
                 <div class="form-group row">
-                    {{-- <div class="col-sm-3 mt-2">
-                        <input type="date" class="form-control" placeholder="NIK" name="tanggal" id="tanggal">
-                    </div> --}}
                     <div class="col-sm-3 mt-2">
-                        {{-- <label for="date1">Kecamatan:</label> --}}
                         <input type="date" style="height: 40px" class="form-control" placeholder="kelurahan atau kecamatan"
                             value="{{ $request['start_date'] }}" name="start_date" id="start_date">
                     </div>
                     <div class="col-sm-3 mt-2">
-                        {{-- <label for="date1">Kecamatan:</label> --}}
                         <input type="date" style="height: 40px" class="form-control"
                             placeholder="kelurahan atau kecamatan" value="{{ $request['end_date'] }}" name="end_date"
                             id="end_date">
@@ -58,6 +53,7 @@
                         <th>Uang Berangkat</th>
                         <th>BOP</th>
                         <th>Sisa Biaya Keluar</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
@@ -72,6 +68,11 @@
                             <td>{{ number_format($data->total_uang_berangkat) }}</td>
                             <td>{{ number_format($data->bop) }}</td>
                             <td>{{ number_format($data->sisa_biaya_keluar) }}</td>
+                            <td>
+                                <a href="{{ route('spj/report/detail', $data->booking_detail_id) }}">
+                                    <button type="button" class="btn rounded-pill btn-primary" fdprocessedid="c80zr4">Detail</button>
+                                </a>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

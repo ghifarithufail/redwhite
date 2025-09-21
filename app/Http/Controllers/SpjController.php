@@ -354,6 +354,7 @@ class SpjController extends Controller
                 'b.customer',
                 'b.date_start',
                 'b.date_end',
+                'bd.id as booking_detail_id',
                 DB::raw('SUM(s.uang_jalan) AS total_uang_berangkat'),
                 DB::raw('
             SUM(
@@ -405,6 +406,21 @@ class SpjController extends Controller
                 'end_date' => $end_date,
                 'no_booking' => $no_booking
             ],
+        ]);
+    }
+
+    public function report_detail_spj($id)
+    {
+        $spj = Spj::where('booking_detail_id', $id)->get();
+
+        return view('layouts.spj.detail_report', [
+            'spj' => $spj,
+            // 'request' => [
+            //     'customer' => $customer,
+            //     'start_date' => $start_date,
+            //     'end_date' => $end_date,
+            //     'no_booking' => $no_booking
+            // ],
         ]);
     }
 

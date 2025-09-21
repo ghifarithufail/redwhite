@@ -62,9 +62,16 @@
                     </form>
                 </div>
 
+                
+
                 @if (!request()->filled('start') && !request()->filled('end'))
                     <div class="text-center">
                         <p>Silahkan Pilih Tanggal Terlebih Dahulu</p>
+                    </div>
+
+                @elseif (request()->filled('start') && request()->filled('end') && request('end') < request('start'))
+                    <div class="alert alert-danger text-center">
+                        <p>Tanggal akhir tidak boleh lebih kecil dari tanggal mulai</p>
                     </div>
                 @elseif ($bus->isNotEmpty())
                     <div id="wizard-property-listing" class="bs-stepper vertical mt-2 linear">

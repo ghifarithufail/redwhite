@@ -247,11 +247,11 @@
                 </a>
 
                 <ul class="menu-sub">
-                    <li class="menu-item">
+                    {{-- <li class="menu-item">
                         <a href="{{ route('schedule') }}" class="menu-link">
                             <div data-i18n="Schedule">Schedule</div>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="menu-item">
                         <a href="{{ route('schedule.show') }}" class="menu-link">
                             <div data-i18n="Jadwal Bus">Jadwal Bus</div>
@@ -385,6 +385,11 @@
                 <li class="menu-item">
                     <a href="{{ route('spj/report') }}" class="menu-link">
                         <div data-i18n="Spj Report">Spj Report</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ route('report.spj.masuk') }}" class="menu-link">
+                        <div data-i18n="Spj Masuk">Spj Masuk</div>
                     </a>
                 </li>
                 <li class="menu-item">

@@ -39,6 +39,7 @@ class BookingController extends Controller
 
         $tanggal_mulai = date('Y-m-d', strtotime($request->input('start')));
         $tanggal_akhir = date('Y-m-d', strtotime($request->input('end')));
+        
 
         $bus = collect();
 
