@@ -155,6 +155,7 @@
                                     <th>No pembayaran</th>
                                     <th>Tipe Pembayaran</th>
                                     <th>Biaya Yang dibayarkan</th>
+                                    <th>Lokasi Pembayaran</th>
                                     <th>Foto</th>
                                     <th>Print Invoice</th>
                                 </tr>
@@ -165,6 +166,7 @@
                                         <td>{{ $detail->no_payment }}</td>
                                         <td>{{ $detail->type_payments->name}}</td>
                                         <td>{{ number_format($detail->price)}}</td>
+                                        <td>{{ $detail->lokasi ? $detail->lokasi : '-'}}</td>
                                         <td>
                                             <a href="{{ asset('uploads/' . $detail->image) }}" target="_blank">
                                                 <img src="{{ asset('uploads/' . $detail->image) }}" alt="Payment Image" style="width: 100px; height: auto;">

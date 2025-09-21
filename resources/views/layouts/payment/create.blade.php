@@ -185,6 +185,16 @@
                             </div>
                         </div>
                         <div class="form-group mt-3">
+                            <label class="control-label col-sm-3">Tempat Pembayaran</label>
+                            <div class="col-sm-12 mt-2">
+                                <select class="form-control input-goldbrand" name="lokasi" required>
+                                    <option value="">- Pilih Tempat pembayaran -</option>
+                                        <option value="cinangka">Cinangka</option>
+                                        <option value="cililitan">cililitan</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group mt-3">
                             <label class="control-label col-sm-3">Bukti Bayar :</label>
                             <div class="col-sm-12 mt-2">
                                 <input type="file" class="form-control input-quantity" name="image" id="image">

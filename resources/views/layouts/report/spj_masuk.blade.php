@@ -60,6 +60,7 @@
                             <th>No SPJ</th>
                             <th>No Booking</th>
                             <th>Bus</th>
+                            <th>Tanggal Masuk</th>
                             <th>Pengemudi</th>
                             <th>Kondektur</th>
                             <th>Uang Berangkat</th>
@@ -73,6 +74,7 @@
                                 <td>{{ $item->no_spj }}</td>
                                 <td>{{ $item->booking_details->bookings->no_booking }}</td>
                                 <td>{{ $item->booking_details->armadas->nobody }}</td>
+                                <td>{{ $item->date_masuk }}</td>
                                 <td>{{ $item->booking_details->pengemudis->users->name }}</td>
                                 <td>{{ $item->booking_details->kondekturs ? $item->booking_details->kondekturs->users->name : '-' }}
                                 </td>

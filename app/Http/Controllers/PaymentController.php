@@ -19,9 +19,6 @@ class PaymentController extends Controller
      */
     public function index(Request $request)
     {
-        
-        // $date_start = $request->input('date_start', now()->format('Y-m-d'));
-        // $date_end = $request->input('date_end', now()->format('Y-m-d'));
         $start = $request->input('start');
         $end = $request->input('end');
         $customer = $request->input('customer');
@@ -47,7 +44,6 @@ class PaymentController extends Controller
         }
 
         $booking = $bookings->paginate(10)->appends($request->all());
-        // $booking = $bookings->get();
 
         return view('layouts.payment.index', [
             'booking' => $booking,
@@ -91,6 +87,7 @@ class PaymentController extends Controller
                 'type_payment_id' => 'required',
                 'jmlh_bayar' => 'required',
                 'price' => 'required',
+                'lokasi' => 'required',
                 'tgl_bayar' => 'required',
                 'image' => 'nullable|image',
             ]);
@@ -121,18 +118,17 @@ class PaymentController extends Controller
                 return redirect()->back()->with('error', 'Total pembayaran melebihi Harga booking.');
             }
 
-            // Jika ada file image dalam request, simpan file tersebut
             if ($request->hasFile('image')) {
                 $payment->image = $request->file('image')->store('payments');
             }
 
-            // Simpan payment
+            $total_sudah_bayar = Payment::where('booking_id', $payment->booking_id)->sum('price');
+
+            $payment->sisa_pembayaran = $booking->grand_total - ($payment->price + $total_sudah_bayar) ;
             $payment->save();
 
             $totalPayment = Payment::where('booking_id', $payment->booking_id)->sum('price');
-            // Hitung total pembayaran untuk booking terkait
-
-            // Update total payment dalam booking
+            
             $booking->total_payment = $totalPayment;
             $booking->save();
 
