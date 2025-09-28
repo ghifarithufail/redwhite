@@ -267,7 +267,7 @@ class SpjController extends Controller
     public function store_print_in(Request $request)
     {
         DB::beginTransaction();
-
+        
         try {
             $validatedData = $request->validate([
                 'bbm' => 'required',

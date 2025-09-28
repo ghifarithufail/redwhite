@@ -173,6 +173,7 @@ class ReportController extends Controller
                 'parkir'           => $parkir,
                 'tol'              => $tol,
                 'pendapatan'       => $pendapatan,
+                'tanggal'          => $dateEnd,
             ];
         });
 

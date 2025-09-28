@@ -74,6 +74,8 @@ class ReportPendapatanExport implements FromView, ShouldAutoSize
                 'parkir'           => $parkir,
                 'tol'              => $tol,
                 'pendapatan'       => $pendapatan,
+                'tanggal'          => $dateEnd,
+
             ];
         });
 

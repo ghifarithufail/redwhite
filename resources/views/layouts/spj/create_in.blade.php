@@ -236,7 +236,8 @@
                     // sesuai rumusmu
                     let biayaBbm = (totalKm / 3) * 0.05 * hargaBbm;
 
-                    document.getElementById('bbm').value = biayaBbm.toFixed(0); // dibulatkan
+                    // document.getElementById('bbm').value = biayaBbm.toFixed(0); // dibulatkan
+                    document.getElementById('bbm').value = formatNumber(biayaBbm.toFixed(0));
                 } else {
                     document.getElementById('bbm').value = 0;
                 }

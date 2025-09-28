@@ -2,6 +2,7 @@
     <thead class="table-light">
         <tr>
             <th>No Booking</th>
+            <th>Tanggal</th>
             <th>jmlh SPJ</th>
             <th>Jmlh Hari</th>
             <th>harga Standar</th>
@@ -18,6 +19,7 @@
         @forelse ($data as $item)
             <tr>
                 <td>{{ $item['no_booking'] }}</td>
+                <td>{{ \Carbon\Carbon::parse($item['tanggal'])->translatedFormat('d F Y') }}</td>
                 <td>{{ $item['jmlh_spj'] }}</td>
                 <td>{{ $item['jmlhHari'] }}</td>
                 <td>{{ $item['harga_std'] }}</td>
