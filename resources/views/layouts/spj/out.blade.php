@@ -325,7 +325,10 @@
                                     <tr>
                                         <td>Uang Makan</td>
                                         <td style="text-align: right">{{ number_format($spj->uang_makan) }}</td>
-
+                                    </tr>
+                                    <tr>
+                                        <td>Uang Makan 2</td>
+                                        <td style="text-align: right">{{ number_format($spj->uang_makan_2) }}</td>
                                     </tr>
                                     <tr>
                                         <td>uang kebersihan</td>
@@ -344,13 +347,13 @@
                                     <tr>
                                         <th style="text-align: right">Total Biaya Operasional: </th>
                                         <th style="text-align: right">
-                                            {{ number_format($spj->bbm + $spj->uang_makan + $spj->parkir + $spj->tol + $spj->biaya_lain) }}
+                                            {{ number_format($spj->bbm + $spj->uang_makan + $spj->uang_makan_2 + $spj->parkir + $spj->tol + $spj->biaya_lain) }}
                                         </th>
                                     </tr>
                                     <tr>
                                         <th style="text-align: right">Total Biaya yang harus dikembalikan: </th>
                                         <th style="text-align: right">
-                                            {{ number_format($spj->uang_jalan - $spj->bbm - $spj->uang_makan - $spj->parkir - $spj->tol - $spj->biaya_lain) }}
+                                            {{ number_format($spj->uang_jalan - $spj->bbm - $spj->uang_makan - $spj->uang_makan_2 - $spj->parkir - $spj->tol - $spj->biaya_lain) }}
                                         </th>
                                     </tr>
                                 </table>

@@ -8,6 +8,7 @@ use App\Models\Booking;
 use Illuminate\Http\Request;
 use App\Models\Booking_detail;
 use App\Models\Cso\BookingDetail;
+use App\Models\harga_bbm;
 use App\Models\Hrd\Kondektur;
 use App\Models\Hrd\Pengemudi;
 use Carbon\Carbon;
@@ -83,6 +84,28 @@ class SpjController extends Controller
             'pengemudi' => $pengemudi,
             'kondektur' => $kondektur,
         ]);
+    }
+
+    public function harga_bbm()
+    {
+        $harga_bbm = harga_bbm::where('id',1)->first();
+
+        return view('layouts.spj.bbm', [
+            'harga_bbm' => $harga_bbm,
+            // 'armada' => $armada,
+            // 'pengemudi' => $pengemudi,
+            // 'kondektur' => $kondektur
+        ]);
+    }
+
+    public function update_harga_bbm(Request $request)
+    {
+        $harga_bbm = harga_bbm::where('id', 1)->first();
+        $harga_bbm->harga = $request->input('harga');
+
+        $harga_bbm->save();
+
+        return redirect()->back();
     }
 
     public function data($id)
@@ -192,10 +215,15 @@ class SpjController extends Controller
     public function detail_in($id)
     {
         $spj = Spj::find($id);
+        $bbm = harga_bbm::where('id',1)->first();
+        $harga_bbm = $bbm->harga;
+        $spj_keluar = $spj->km_keluar;
 
 
         return view('layouts.spj.create_in', [
-            'spj' => $spj
+            'spj' => $spj,
+            'harga_bbm' => $harga_bbm,
+            'spj_keluar' => $spj_keluar,
         ]);
     }
 
@@ -244,12 +272,13 @@ class SpjController extends Controller
             $validatedData = $request->validate([
                 'bbm' => 'required',
                 'uang_makan' => 'required',
+                'uang_makan_2' => 'nullable',
                 'parkir' => 'required',
                 'tol' => 'required',
                 'km_masuk' => 'required',
 
             ]);
-            $pengeluaran = $request->bbm + $request->uang_makan + $request->parkir + $request->tol;
+            $pengeluaran = $request->bbm + $request->uang_makan + $request->parkir + $request->tol + $request->uang_makan_2;
 
             $spj = Spj::where('id', $request->spj_id)->first();
             $spj->sisa_uang_jalan = $spj->uang_jalan - $pengeluaran - $spj->biaya_lain;
@@ -360,6 +389,7 @@ class SpjController extends Controller
             SUM(
                 COALESCE(s.bbm, 0) + 
                 COALESCE(s.uang_makan, 0) + 
+                COALESCE(s.uang_makan_2, 0) + 
                 COALESCE(s.parkir, 0) + 
                 COALESCE(s.tol, 0) + 
                 COALESCE(s.biaya_lain, 0)
@@ -370,6 +400,7 @@ class SpjController extends Controller
                 s.uang_jalan - (
                     COALESCE(s.bbm, 0) + 
                     COALESCE(s.uang_makan, 0) + 
+                    COALESCE(s.uang_makan_2, 0) + 
                     COALESCE(s.parkir, 0) + 
                     COALESCE(s.tol, 0) + 
                     COALESCE(s.biaya_lain, 0)
@@ -378,7 +409,7 @@ class SpjController extends Controller
         ')
             )
             ->groupBy('b.no_booking')
-            ->orderBy('b.id','desc');
+            ->orderBy('b.id', 'desc');
 
 
         if ($request['customer']) {

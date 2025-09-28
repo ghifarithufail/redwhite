@@ -225,6 +225,11 @@
                             <div data-i18n="SPJ">SPJ</div>
                         </a>
                     </li>
+                    <li class="menu-item">
+                        <a href="{{ route('harga_bbm') }}" class="menu-link">
+                            <div data-i18n="harga Bbm">harga Bbm</div>
+                        </a>
+                    </li>
                 </ul>
             </li>
         @endif
@@ -400,6 +405,11 @@
                 <li class="menu-item">
                     <a href="{{ route('report.bus.keluar') }}" class="menu-link">
                         <div data-i18n="Report Bus Dalam Perjalanan">Report Bus Dalam Perjalanan</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ route('report.pendapatan') }}" class="menu-link">
+                        <div data-i18n="Report Pendapatan">Report Pendapatan</div>
                     </a>
                 </li>
             </ul>

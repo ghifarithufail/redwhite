@@ -156,6 +156,14 @@ Route::group(['middleware' => ['auth', 'role:super admin|admin|owner|Keuangan|ac
     Route::get('/report/bus_keluar', [ReportController::class, 'report_bus_keluar'])->name('report.bus.keluar');
     Route::get('/report/spj_masuk', [ReportController::class, 'report_spj_masuk'])->name('report.spj.masuk');
     Route::get('/report/spj_masuk_excel', [ReportController::class, 'spj_masuk_excel'])->name('report.spj.masuk.excel');
+    Route::get('/report/pendapatan', [ReportController::class, 'report_pendapatan'])->name('report.pendapatan');
+    Route::get('/report/pendapatan_excel', [ReportController::class, 'report_pendapatan_excel'])->name('report.pendapatan.excel');
+
+    Route::get('harga_bbm/', [SpjController::class, 'harga_bbm'])->name('harga_bbm');
+    Route::post('/update_harga_bbm', [SpjController::class, 'update_harga_bbm'])->name('update_harga_bbm');
+
+
+
 
 });
 

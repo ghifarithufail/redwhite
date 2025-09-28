@@ -75,7 +75,7 @@
                             <div class="form-group mt-3">
                                 <label class="control-label col-sm-3">KM Masuk :</label>
                                 <div class="col-sm-12 mt-2">
-                                    <input type="number" class="form-control input-quantity" name="km_masuk" required>
+                                    <input type="number" class="form-control input-quantity" name="km_masuk" id="km_masuk" required>
                                 </div>
                             </div>
                             <div class="form-group mt-3">
@@ -93,6 +93,13 @@
                                 <div class="col-sm-12 mt-2">
                                     <input type="text" class="form-control input-quantity" name="uang_makan"
                                         id="uang_makan" required>
+                                </div>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label class="control-label col-sm-3">Uang Makan 2 :</label>
+                                <div class="col-sm-12 mt-2">
+                                    <input type="text" class="form-control input-quantity" name="uang_makan_2"
+                                        id="uang_makan_2">
                                 </div>
                             </div>
                             <div class="form-group mt-3">
@@ -144,6 +151,13 @@
                                         class="form-control" />
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">Uang Makan 2</label>
+                                <div class="col-sm-9">
+                                    <input type="text" value="Rp. {{ number_format($spj->uang_makan_2) }}" disabled
+                                        class="form-control" />
+                                </div>
+                            </div>
                         </div>
 
                         <div class="col-xs-12 col-sm-6">
@@ -178,14 +192,17 @@
                             </div>
                         </div>
                         <div class="pt-5 d-flex justify-content-center">
-                            <form method="POST" action="{{ route('spj/save_detail_in', $spj->id) }}" onclick="return confirm('Apakah Anda yakin ingin print SPJ Masuk')" target="_blank"> 
+                            <form method="POST" action="{{ route('spj/save_detail_in', $spj->id) }}"
+                                onclick="return confirm('Apakah Anda yakin ingin print SPJ Masuk')" target="_blank">
                                 @csrf
                                 <button type="submit" class="btn btn-danger me-sm-3 me-1">Print SPJ Masuk</button>
                             </form>
-                            <a href="/spj/detail/{{ $spj->booking_details->booking_id }}" onclick="return confirm('Apakah Anda yakin ingin kembali')">
+                            <a href="/spj/detail/{{ $spj->booking_details->booking_id }}"
+                                onclick="return confirm('Apakah Anda yakin ingin kembali')">
                                 <button type="submit" class="btn btn-primary me-sm-3 me-1">KEMBALI</button>
                             </a>
-                            <a href="/spj/detail/{{ $spj->booking_details->booking_id }}" onclick="return confirm('Apakah Anda yakin bahwa SPJ Masuk ini telah selesai?')">
+                            <a href="/spj/detail/{{ $spj->booking_details->booking_id }}"
+                                onclick="return confirm('Apakah Anda yakin bahwa SPJ Masuk ini telah selesai?')">
                                 <button type="submit" class="btn btn-success me-sm-3 me-1">SPJ Masuk SELESAI</button>
                             </a>
                         </div>
@@ -206,7 +223,25 @@
             toastr.error("{{ session('error') }}");
         @endif
 
+
         $(document).ready(function() {
+            document.getElementById('km_masuk').addEventListener('input', function() {
+                let kmMasuk = parseFloat(this.value) || 0;
+                let kmKeluar = {{ $spj_keluar }};
+                let hargaBbm = {{ $harga_bbm }};
+
+                let totalKm = kmMasuk - kmKeluar;
+
+                if (totalKm > 0) {
+                    // sesuai rumusmu
+                    let biayaBbm = (totalKm / 3) * 0.05 * hargaBbm;
+
+                    document.getElementById('bbm').value = biayaBbm.toFixed(0); // dibulatkan
+                } else {
+                    document.getElementById('bbm').value = 0;
+                }
+            });
+
             function formatNumber(value) {
                 return value.replace(/\D/g, "") // Remove non-digit characters
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Add commas
@@ -226,11 +261,12 @@
 
             setupInputFormatting('bbm');
             setupInputFormatting('uang_makan');
+            setupInputFormatting('uang_makan_2');
             setupInputFormatting('parkir');
             setupInputFormatting('tol');
 
             $('#spj_in').on('submit', function() {
-                var fields = ['bbm', 'uang_makan', 'parkir', 'tol'];
+                var fields = ['bbm', 'uang_makan', 'parkir', 'tol', 'uang_makan_2'];
                 fields.forEach(function(fieldId) {
                     var input = $('#' + fieldId);
                     var value = input.val();

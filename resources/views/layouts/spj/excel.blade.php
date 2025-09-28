@@ -25,7 +25,7 @@
             <tbody class="table-border-bottom-0">
                 @foreach ($spj as $data)
                 @php
-                    $bop = $data->bbm + $data->uang_makan + $data->parkir + $data->tol + $data->biaya_lain;
+                    $bop = $data->bbm + $data->uang_makan + $data->uang_makan_2 + $data->parkir + $data->tol + $data->biaya_lain;
                     $sisa_uang_jalan = $data->uang_jalan - $bop
                 @endphp
                     <tr>
