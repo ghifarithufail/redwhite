@@ -37,7 +37,8 @@ class ReportPendapatanExport implements FromView, ShouldAutoSize
         $bookings = Booking::with('bookingDetails.spjs')
             ->orderBy('created_at', 'desc')
             ->whereDate('date_end', '>=', $start_date)
-            ->whereDate('date_end', '<=', $end_date);
+            ->whereDate('date_end', '<=', $end_date)
+            ->where('booking_status',0);
 
         if ($no_booking) {
             $bookings->where('no_booking', $no_booking);
@@ -59,7 +60,7 @@ class ReportPendapatanExport implements FromView, ShouldAutoSize
             $tol = $booking->bookingDetails->sum(fn($detail) => optional($detail->spjs)->tol ?? 0);
             $total_uang_makan = $uangMakan + $uangMakan2;
 
-            $pendapatan = $booking->harga_std + $booking->biaya_jemput - $booking->diskon
+            $pendapatan = ($booking->harga_std * $booking->total_bus) + $booking->biaya_jemput - $booking->diskon
                 - ($bbm + $parkir + $tol + $total_uang_makan);
 
             return [
