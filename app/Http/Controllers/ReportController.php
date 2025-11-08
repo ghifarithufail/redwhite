@@ -158,7 +158,7 @@ class ReportController extends Controller
             $tol = $booking->bookingDetails->sum(fn($detail) => optional($detail->spjs)->tol ?? 0);
             $total_uang_makan = $uangMakan + $uangMakan2;
 
-            $pendapatan = $booking->harga_std + $booking->biaya_jemput - $booking->diskon
+            $pendapatan = ($booking->harga_std * $booking->total_bus) + $booking->biaya_jemput - $booking->diskon
                 - ($bbm + $parkir + $tol + $total_uang_makan);
 
             return [
