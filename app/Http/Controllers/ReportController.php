@@ -136,7 +136,9 @@ class ReportController extends Controller
         $bookings = Booking::with('bookingDetails.spjs')
             ->orderBy('created_at', 'desc')
             ->whereDate('date_end', '>=', $start_date)
-            ->whereDate('date_end', '<=', $end_date);
+            ->whereDate('date_end', '<=', $end_date)
+            ->where('booking_status',0);
+
 
         if ($no_booking) {
             $bookings->where('no_booking', $no_booking);
