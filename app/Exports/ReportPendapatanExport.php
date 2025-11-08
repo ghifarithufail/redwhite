@@ -38,7 +38,8 @@ class ReportPendapatanExport implements FromView, ShouldAutoSize
             ->orderBy('created_at', 'desc')
             ->whereDate('date_end', '>=', $start_date)
             ->whereDate('date_end', '<=', $end_date)
-            ->where('booking_status',0);
+            ->where('booking_status',0)
+            ->orderBy('date_end', 'desc');
 
         if ($no_booking) {
             $bookings->where('no_booking', $no_booking);
