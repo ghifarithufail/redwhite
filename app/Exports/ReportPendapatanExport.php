@@ -34,7 +34,8 @@ class ReportPendapatanExport implements FromView, ShouldAutoSize
         $no_booking = $request->input('no_booking');
 
 
-        $bookings = Booking::with('bookingDetails.spjs')
+        $bookings = Booking::with(['bookingDetails.spjs',
+            'bookingDetails.armadas.type_armada'])
             ->orderBy('created_at', 'desc')
             ->whereDate('date_end', '>=', $start_date)
             ->whereDate('date_end', '<=', $end_date)
@@ -77,6 +78,11 @@ class ReportPendapatanExport implements FromView, ShouldAutoSize
                 'tol'              => $tol,
                 'pendapatan'       => $pendapatan,
                 'tanggal'          => $dateEnd,
+                'type_armada' => $booking->bookingDetails
+                    ->map(fn ($d) => optional(optional($d->armadas)->type_armada)->name)
+                    ->filter()
+                    ->unique()
+                    ->implode(', ')
 
             ];
         });

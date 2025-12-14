@@ -5,6 +5,7 @@
             <th>Tanggal</th>
             <th>jmlh SPJ</th>
             <th>Jmlh Hari</th>
+            <th>Type Armada</th>
             <th>harga Standar</th>
             <th>Biaya Jemput</th>
             <th>Discount</th>
@@ -22,6 +23,7 @@
                 <td>{{ \Carbon\Carbon::parse($item['tanggal'])->translatedFormat('d F Y') }}</td>
                 <td>{{ $item['jmlh_spj'] }}</td>
                 <td>{{ $item['jmlhHari'] }}</td>
+                <td>{{ $item['type_armada'] ?? '-' }}</td>
                 <td>{{ $item['harga_std'] }}</td>
                 <td>{{ $item['biaya_jemput'] }}</td>
                 <td>{{ $item['diskon'] }}</td>
